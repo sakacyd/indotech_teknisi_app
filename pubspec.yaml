@@ -1,0 +1,36 @@
+name: indotech_teknisi_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  cached_network_image: ^3.4.1
+  dotted_border: ^2.1.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.0
+  flutter_dotenv: ^5.2.1
+  flutter_markdown: ^0.7.7
+  fpdart: ^1.1.1
+  get_it: ^8.0.3
+  hive: ^4.0.0-dev.2
+  image_picker: ^1.1.2
+  internet_connection_checker_plus: ^2.7.1
+  intl: ^0.20.2
+  isar_flutter_libs: ^4.0.0-dev.13
+  path_provider: ^2.1.5
+  supabase_flutter: ^2.8.4
+  uuid: ^4.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
