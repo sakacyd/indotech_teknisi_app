@@ -21,15 +21,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required UserLogin userLogin,
     required CurrenUser currentUser,
     required AppUserCubit appUserCubit,
-  })  : _userSignUp = userSignUp,
-        _userLogin = userLogin,
-        _currenUser = currentUser,
-        _appUserCubit = appUserCubit,
-        super(AuthInitial()) {
+  }) : _userSignUp = userSignUp,
+       _userLogin = userLogin,
+       _currenUser = currentUser,
+       _appUserCubit = appUserCubit,
+       super(AuthInitial()) {
     on<AuthEvent>((_, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthSignIn>(_onAuthSignIn);
     on<AuthIsUserLoggedIn>(_isUserLoggedIn);
+    on<AuthSignOut>(_onAuthSignOut);
   }
 
   FutureOr<void> _onAuthSignUp(
@@ -38,7 +39,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     final res = await _userSignUp(
       UserSignUpParams(
-          email: event.email, password: event.password, name: event.name),
+        email: event.email,
+        password: event.password,
+        name: event.name,
+      ),
     );
     res.fold(
       (l) => emit(AuthFailure(l.message)),
@@ -51,10 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final res = await _userLogin(
-      UserLoginParams(
-        email: event.email,
-        password: event.password,
-      ),
+      UserLoginParams(email: event.email, password: event.password),
     );
     res.fold(
       (l) => emit(AuthFailure(l.message)),
@@ -70,15 +71,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     res.fold((l) {
       emit(AuthFailure(l.message));
-    }, (r) =>
-      _emitAuthSuccess(r, emit),
-    );
+    }, (r) => _emitAuthSuccess(r, emit));
   }
 
-  void _emitAuthSuccess(
-    User user,
+  FutureOr<void> _onAuthSignOut(
+    AuthSignOut event,
     Emitter<AuthState> emit,
-  ) {
+  ) async {
+    // Hapus user dari AppUserCubit
+    _appUserCubit.updateUser(null);
+
+    // Emit state AuthSignedOut
+    emit(AuthSignedOut());
+  }
+
+  void _emitAuthSuccess(User user, Emitter<AuthState> emit) {
     _appUserCubit.updateUser(user);
     emit(AuthSuccess(user));
   }

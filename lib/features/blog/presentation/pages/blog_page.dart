@@ -6,6 +6,7 @@ import 'package:indotech_teknisi_app/features/blog/presentation/widgets/blog_car
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indotech_teknisi_app/features/profile/presentation/pages/profile_page.dart';
 
 class BlogPage extends StatefulWidget {
   static route() => MaterialPageRoute(builder: (context) => const BlogPage());
@@ -39,7 +40,7 @@ class _BlogPageState extends State<BlogPage> {
             padding: const EdgeInsets.only(right: 8.0),
             child: IconButton(
               onPressed: () {
-                Navigator.push(context, AddNewBlogPage.route());
+                Navigator.push(context, ProfilePage.route());
               },
               icon: const Icon(
                 CupertinoIcons.add_circled,
