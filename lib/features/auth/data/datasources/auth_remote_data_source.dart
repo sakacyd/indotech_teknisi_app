@@ -82,7 +82,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             .eq('id', currentUserSession!.user.id);
         return UserModel.fromJson(
           userData.first,
-        ).copyWith(email: currentUserSession!.user.email);
+        ).copyWith(email: currentUserSession!.user.email, name: userData.first['name']);
       }
       return null;
     } on AuthException catch (e) {
