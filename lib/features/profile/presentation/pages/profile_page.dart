@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/core/common/cubits/cubit/app_user_cubit.dart';
+import 'package:indotech_teknisi_app/core/common/widgets/loader.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/pages/login_page.dart';
 
@@ -14,7 +15,7 @@ class ProfilePage extends StatelessWidget {
     final state = context.watch<AppUserCubit>().state;
 
     if (state is! AppUserLoggedIn) {
-      return const Center(child: Text('No user logged in.'));
+      return const Center(child: Loader());
     }
 
     final user = state.user;

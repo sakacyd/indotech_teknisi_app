@@ -40,11 +40,14 @@ class _LoginPageState extends State<LoginPage> {
               showSnackBar(context, state.message);
             } else if (state is AuthSuccess) {
               Navigator.pushAndRemoveUntil(
-                  context, BlogPage.route(), (route) => false);
+                context,
+                BlogPage.route(),
+                (route) => false,
+              );
             }
           },
           builder: (context, state) {
-            if (state is AuthLoading) {
+            if (state is AuthLoading || state is AuthSuccess) {
               return const Loader();
             }
             return Form(
@@ -54,17 +57,11 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const Text(
                     'Sign In',
-                    style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 30),
                   const SizedBox(height: 20),
-                  AuthField(
-                    hintText: 'Email',
-                    controller: emailController,
-                  ),
+                  AuthField(hintText: 'Email', controller: emailController),
                   const SizedBox(height: 20),
                   AuthField(
                     hintText: 'Password',
@@ -77,20 +74,17 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         context.read<AuthBloc>().add(
-                              AuthSignIn(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                              ),
-                            );
+                          AuthSignIn(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                          ),
+                        );
                       }
                     },
                   ),
                   const SizedBox(height: 25),
                   GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      SignUpPage.route(),
-                    ),
+                    onTap: () => Navigator.push(context, SignUpPage.route()),
                     child: RichText(
                       text: TextSpan(
                         text: 'Don\'thave an account? ',
@@ -98,13 +92,12 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           TextSpan(
                             text: 'Sign Up',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  color: AppPallete.gradient2,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.copyWith(
+                              color: AppPallete.gradient2,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
