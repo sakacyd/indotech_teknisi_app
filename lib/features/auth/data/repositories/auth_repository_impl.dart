@@ -56,7 +56,11 @@ class AuthRepositoryImpl implements AuthRepository {
           UserModel(
             id: session.user.id,
             email: session.user.email ?? '',
-            name: '',
+            name: /* session.user.userMetadata['name'] ??  */ '',
+            imageUrl: /* session.user.userMetadata['image_url'] ??  */ '',
+            phoneNumber: /* session.user.userMetadata['phone_number'] ?? */ '',
+            address: /* session.user.userMetadata['address'] ?? */ '',
+            bloodType: /* session.user.userMetadata['blood_type'] ?? */ '',
           ),
         );
       }

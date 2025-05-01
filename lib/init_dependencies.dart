@@ -8,13 +8,13 @@ import 'package:indotech_teknisi_app/features/auth/domain/usecases/current_user.
 import 'package:indotech_teknisi_app/features/auth/domain/usecases/user_login.dart';
 import 'package:indotech_teknisi_app/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:indotech_teknisi_app/features/blog/data/datasources/blog_local_data_source.dart';
-import 'package:indotech_teknisi_app/features/blog/data/datasources/blog_remote_data_source.dart';
-import 'package:indotech_teknisi_app/features/blog/data/repositories/blog_repository_impl.dart';
-import 'package:indotech_teknisi_app/features/blog/domain/repositories/blog_repositories.dart';
-import 'package:indotech_teknisi_app/features/blog/domain/usecases/get_all_blogs.dart';
-import 'package:indotech_teknisi_app/features/blog/domain/usecases/upload_blog.dart';
-import 'package:indotech_teknisi_app/features/blog/presentation/bloc/blog_bloc.dart';
+import 'package:indotech_teknisi_app/features/assignment/data/datasources/assignment_local_data_source.dart';
+import 'package:indotech_teknisi_app/features/assignment/data/datasources/assignment_remote_data_source.dart';
+import 'package:indotech_teknisi_app/features/assignment/data/repositories/assignment_repository_impl.dart';
+import 'package:indotech_teknisi_app/features/assignment/domain/repositories/assignment_repositories.dart';
+import 'package:indotech_teknisi_app/features/assignment/domain/usecases/get_all_assignments.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/assignment_bloc.dart';
+/* import 'package:indotech_teknisi_app/features/assignment/domain/usecases/upload_assignment.dart'; */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';

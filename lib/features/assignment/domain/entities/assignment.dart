@@ -1,0 +1,29 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+class Assignment {
+  final String id;
+  final String customerId;
+  final String technicianId;
+  final DateTime scheduledAt;
+  final List<String> assignmentType;
+  final String unit;
+  final String history;
+  final String status;
+  final String imageUrl;
+  final String? customerName;
+  final String? customerPhoneNumber;
+  final String? customerAddress;
+  Assignment({
+    required this.id,
+    required this.customerId,
+    required this.technicianId,
+    required this.scheduledAt,
+    required this.assignmentType,
+    required this.unit,
+    required this.history,
+    required this.status,
+    required this.imageUrl,
+    this.customerName,
+    this.customerPhoneNumber,
+    this.customerAddress,
+  });
+}

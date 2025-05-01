@@ -15,7 +15,7 @@ abstract interface class AuthRemoteDataSource {
   });
 
   Future<UserModel?> getCurrentUserData();
-  
+
   Future<void> signOut();
 }
 
@@ -77,12 +77,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     try {
       if (currentUserSession != null) {
         final userData = await supabaseClient
-            .from('profiles')
+            .from('technicians')
             .select()
             .eq('id', currentUserSession!.user.id);
-        return UserModel.fromJson(
-          userData.first,
-        ).copyWith(email: currentUserSession!.user.email, name: userData.first['name']);
+        return UserModel.fromJson(userData.first).copyWith(
+          email: currentUserSession!.user.email,
+          name: userData.first['name'],
+          imageUrl: userData.first['image_url'],
+          phoneNumber: userData.first['phone_number'],
+          address: userData.first['address'],
+          bloodType: userData.first['blood_type'],
+        );
       }
       return null;
     } on AuthException catch (e) {

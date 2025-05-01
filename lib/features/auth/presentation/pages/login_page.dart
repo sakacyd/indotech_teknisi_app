@@ -1,11 +1,11 @@
 import 'package:indotech_teknisi_app/core/common/widgets/loader.dart';
 import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/core/utils/show_snackbar.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/pages/assignment_page.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/widgets/auth_gradient_button.dart';
-import 'package:indotech_teknisi_app/features/blog/presentation/pages/blog_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             } else if (state is AuthSuccess) {
               Navigator.pushAndRemoveUntil(
                 context,
-                BlogPage.route(),
+                AssignmentPage.route(),
                 (route) => false,
               );
             }
