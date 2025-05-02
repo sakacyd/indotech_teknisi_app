@@ -1,0 +1,85 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
+import 'package:indotech_teknisi_app/core/constants/constants.dart';
+import 'package:indotech_teknisi_app/core/error/exceptions.dart';
+import 'package:indotech_teknisi_app/core/common/entities/user.dart';
+import 'package:indotech_teknisi_app/core/network/connection_checker.dart';
+import 'package:indotech_teknisi_app/features/dashboard/data/models/technician_model.dart';
+import 'package:indotech_teknisi_app/features/dashboard/data/models/assignment_model.dart';
+import 'package:fpdart/fpdart.dart';
+
+import 'package:indotech_teknisi_app/core/error/failures.dart';
+import 'package:indotech_teknisi_app/features/dashboard/data/datasources/dashboard_remote_data_source.dart';
+import 'package:indotech_teknisi_app/features/dashboard/data/datasources/dashboard_local_data_source.dart';
+import 'package:indotech_teknisi_app/features/dashboard/domain/repository/dashboard_repository.dart';
+
+class DashboardRepositoryImpl implements DashboardRepository {
+  final DashboardRemoteDataSource dashboardRemoteDataSource;
+  final DashboardLocalDataSource dashboardLocalDataSource;
+  final ConnectionChecker connectionChecker;
+  const DashboardRepositoryImpl(
+    this.dashboardRemoteDataSource,
+    this.dashboardLocalDataSource,
+    this.connectionChecker,
+  );
+
+  @override
+  Future<Either<Failure, User>> currentUser() async {
+    try {
+      if (!await connectionChecker.isConnected) {
+        final session = dashboardRemoteDataSource.currentUserSession;
+        if (session == null) {
+          return left(Failure('User not logged in!'));
+        }
+
+        return right(
+          TechnicianModel(
+            id: session.user.id,
+            email: session.user.email ?? '',
+            name: /* session.user.userMetadata['name'] ??  */ '',
+            imageUrl: /* session.user.userMetadata['image_url'] ??  */ '',
+            phoneNumber: /* session.user.userMetadata['phone_number'] ?? */ '',
+            address: /* session.user.userMetadata['address'] ?? */ '',
+            bloodType: /* session.user.userMetadata['blood_type'] ?? */ '',
+          ),
+        );
+      }
+
+      final user = await dashboardRemoteDataSource.getCurrentUserData();
+      if (user == null) {
+        return left(Failure('User not logged in!'));
+      }
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  Future<Either<Failure, User>> _getUser(Future<User> Function() fn) async {
+    try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure(Constants.noConnectionMessage));
+      }
+      final user = await fn();
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Assignment>>> getNearestAssignment() async {
+    try {
+      var assignments = <AssignmentModel>[];
+      if (!await connectionChecker.isConnected) {
+        assignments = dashboardLocalDataSource.getLastAssignments();
+      } else {
+        assignments = await dashboardRemoteDataSource.getNearestAssignment();
+        dashboardLocalDataSource.cacheAssignments(assignments);
+      }
+      return right(assignments);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+}

@@ -7,6 +7,7 @@ Future<void> initDependencies() async {
 
   _initAuth();
   _initAssignment();
+  _initDashboard();
 
   if (AppSecrets.supabaseUrl == null || AppSecrets.supabaseKey == null) {
     throw Exception('Supabase credentials not found');
@@ -84,5 +85,29 @@ void _initAssignment() {
         /* uploadAssignment: serviceLocator(), */
         getAllAssignments: serviceLocator(),
       ),
+    );
+}
+
+void _initDashboard() {
+  serviceLocator
+    // datasource
+    ..registerFactory<DashboardRemoteDataSource>(
+      () => DashboardRemoteDataSourceImpl(serviceLocator()),
+    )
+    ..registerFactory<DashboardLocalDataSource>(
+      () => DashboardLocalDataSourceImpl(serviceLocator()),
+    )
+    // repository
+    ..registerFactory<DashboardRepository>(
+      () => DashboardRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory(() => GetNearestAssignment(serviceLocator()))
+    // bloc
+    ..registerLazySingleton(
+      () => DashboardBloc(getNearestAssignment: serviceLocator()),
     );
 }

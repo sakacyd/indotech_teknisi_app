@@ -1,4 +1,4 @@
-import 'package:indotech_teknisi_app/features/assignment/domain/entities/assignment.dart';
+import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
 
 class AssignmentModel extends Assignment {
   AssignmentModel({

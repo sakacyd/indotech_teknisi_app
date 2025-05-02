@@ -7,7 +7,7 @@ import 'package:indotech_teknisi_app/core/network/connection_checker.dart';
 import 'package:indotech_teknisi_app/features/assignment/data/datasources/assignment_local_data_source.dart';
 import 'package:indotech_teknisi_app/features/assignment/data/datasources/assignment_remote_data_source.dart';
 import 'package:indotech_teknisi_app/features/assignment/data/models/assignment_model.dart';
-import 'package:indotech_teknisi_app/features/assignment/domain/entities/assignment.dart';
+import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
 import 'package:indotech_teknisi_app/features/assignment/domain/repositories/assignment_repositories.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:uuid/uuid.dart';

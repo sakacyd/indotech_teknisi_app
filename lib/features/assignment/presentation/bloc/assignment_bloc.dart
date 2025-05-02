@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:indotech_teknisi_app/core/usecase/usecase.dart';
-import 'package:indotech_teknisi_app/features/assignment/domain/entities/assignment.dart';
+import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
 import 'package:indotech_teknisi_app/features/assignment/domain/usecases/get_all_assignments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
