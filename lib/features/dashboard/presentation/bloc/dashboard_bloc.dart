@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:indotech_teknisi_app/core/common/cubits/cubit/app_user_cubit.dart';
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
 import 'package:indotech_teknisi_app/core/common/entities/user.dart';
 import 'package:indotech_teknisi_app/core/error/failures.dart';
@@ -18,7 +17,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc({
     required GetNearestAssignment getNearestAssignment,
     required GetCurrentUser getCurrentUser,
-    required AppUserCubit appUserCubit,
   }) : _getNearestAssignment = getNearestAssignment,
        _getCurrentUser = getCurrentUser,
        super(DashboardInitial()) {
@@ -35,7 +33,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     final technicianResult = await _getCurrentUser(NoParams());
     final assignmentResult = await _getNearestAssignment(NoParams());
 
-    // Tangani jika gagal mendapatkan teknisi
     if (technicianResult.isLeft()) {
       final failure = technicianResult.swap().getOrElse(
         (_) => Failure('Unknown error'),
@@ -44,7 +41,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
 
-    // Tangani jika gagal mendapatkan assignment
     if (assignmentResult.isLeft()) {
       final failure = assignmentResult.swap().getOrElse(
         (_) => Failure('Unknown error'),
@@ -53,14 +49,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
 
-    // Ambil hasil Right dari Either dengan cara benar
     final technician = technicianResult.getOrElse(
       (_) => throw Exception('Missing user'),
     );
     final assignments = assignmentResult.getOrElse((_) => []);
-
-    // Jika hanya ingin mengirim 1 data assignment (terdekat)
-    final nearestAssignment = assignments.isNotEmpty ? [assignments.first] : [];
 
     emit(DashboardGetAllSuccess(assignments, technician));
   }

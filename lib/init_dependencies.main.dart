@@ -111,7 +111,6 @@ void _initDashboard() {
       () => DashboardBloc(
         getNearestAssignment: serviceLocator(),
         getCurrentUser: serviceLocator(),
-        appUserCubit: serviceLocator(),
       ),
     );
 }

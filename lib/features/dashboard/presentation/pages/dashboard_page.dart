@@ -20,7 +20,7 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     super.initState();
-    context.read<DashboardBloc>().add(FetchNearestAssignment());
+    context.read<DashboardBloc>().add(FetchDashboardData());
   }
 
   @override
