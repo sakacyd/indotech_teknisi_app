@@ -108,6 +108,10 @@ void _initDashboard() {
     ..registerFactory(() => GetNearestAssignment(serviceLocator()))
     // bloc
     ..registerLazySingleton(
-      () => DashboardBloc(getNearestAssignment: serviceLocator()),
+      () => DashboardBloc(
+        getNearestAssignment: serviceLocator(),
+        getCurrentUser: serviceLocator(),
+        appUserCubit: serviceLocator(),
+      ),
     );
 }

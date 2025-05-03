@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:indotech_teknisi_app/core/common/cubits/cubit/app_user_cubit.dart';
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
 import 'package:indotech_teknisi_app/core/common/entities/user.dart';
+import 'package:indotech_teknisi_app/core/error/failures.dart';
 import 'package:indotech_teknisi_app/core/usecase/usecase.dart';
 import 'package:indotech_teknisi_app/features/dashboard/domain/usecases/get_nearest_assignments.dart';
 import 'package:indotech_teknisi_app/features/dashboard/domain/usecases/get_current_user.dart';
@@ -14,49 +15,53 @@ part 'dashboard_state.dart';
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   final GetNearestAssignment _getNearestAssignment;
   final GetCurrentUser _getCurrentUser;
-  final AppUserCubit _appUserCubit;
   DashboardBloc({
     required GetNearestAssignment getNearestAssignment,
     required GetCurrentUser getCurrentUser,
     required AppUserCubit appUserCubit,
   }) : _getNearestAssignment = getNearestAssignment,
        _getCurrentUser = getCurrentUser,
-       _appUserCubit = appUserCubit,
        super(DashboardInitial()) {
     on<DashboardEvent>((event, emit) => emit(DashboardLoading()));
-    on<FetchNearestAssignment>(_onAllAssignmentsRequested);
-    on<FetchTechnician>(_onTechnicianRequested);
+    on<FetchDashboardData>(_onDashboardDataRequested);
   }
 
-  FutureOr<void> _onAllAssignmentsRequested(
-    FetchNearestAssignment event,
+  FutureOr<void> _onDashboardDataRequested(
+    FetchDashboardData event,
     Emitter<DashboardState> emit,
   ) async {
-    final res = await _getNearestAssignment(NoParams());
+    emit(DashboardLoading());
 
-    res.fold(
-      (l) => emit(DashboardFailure(l.message)),
-      (r) => emit(DashboardGetAllSuccess(r)),
+    final technicianResult = await _getCurrentUser(NoParams());
+    final assignmentResult = await _getNearestAssignment(NoParams());
+
+    // Tangani jika gagal mendapatkan teknisi
+    if (technicianResult.isLeft()) {
+      final failure = technicianResult.swap().getOrElse(
+        (_) => Failure('Unknown error'),
+      );
+      emit(DashboardFailure(failure.message));
+      return;
+    }
+
+    // Tangani jika gagal mendapatkan assignment
+    if (assignmentResult.isLeft()) {
+      final failure = assignmentResult.swap().getOrElse(
+        (_) => Failure('Unknown error'),
+      );
+      emit(DashboardFailure(failure.message));
+      return;
+    }
+
+    // Ambil hasil Right dari Either dengan cara benar
+    final technician = technicianResult.getOrElse(
+      (_) => throw Exception('Missing user'),
     );
-  }
+    final assignments = assignmentResult.getOrElse((_) => []);
 
-  FutureOr<void> _onTechnicianRequested(
-    FetchTechnician event,
-    Emitter<DashboardState> emit,
-  ) async {
-    final res = await _getCurrentUser(NoParams());
+    // Jika hanya ingin mengirim 1 data assignment (terdekat)
+    final nearestAssignment = assignments.isNotEmpty ? [assignments.first] : [];
 
-    res.fold((l) {
-      emit(DashboardFailure(l.message));
-    }, (r) => _emitDashboardSuccess(r, emit));
-  }
-
-  void _emitDashboardSuccess(
-    List<Assignment> assignments,
-    User user,
-    Emitter<DashboardState> emit,
-  ) {
-    _appUserCubit.updateUser(user);
-    emit(DashboardGetAllSuccess(assignments, user));
+    emit(DashboardGetAllSuccess(assignments, technician));
   }
 }

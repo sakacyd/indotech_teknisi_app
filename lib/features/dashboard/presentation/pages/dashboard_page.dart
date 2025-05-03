@@ -47,15 +47,15 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: BlocConsumer<DashboardBloc, DashboardState>(
         listener: (context, state) {
-          if (state is AssignmentFailure) {
+          if (state is DashboardFailure) {
             showSnackBar(context, state.message);
           }
         },
         builder: (context, state) {
-          if (state is AssignmentLoading) {
+          if (state is DashboardLoading) {
             return const Loader();
           }
-          if (state is AssignmentGetAllSuccess) {
+          if (state is DashboardGetAllSuccess) {
             return ListView.builder(
               itemCount: state.assignments.length,
               itemBuilder: (context, index) {
