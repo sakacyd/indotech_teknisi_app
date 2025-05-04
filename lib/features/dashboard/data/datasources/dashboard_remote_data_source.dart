@@ -51,8 +51,8 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
           .from('assignments')
           .select('*, customers(name, phone_number, address)')
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
-          .gte('assignment_date', now)
-          .order('assignment_date', ascending: true)
+          .gte('scheduled_at', now)
+          .order('scheduled_at', ascending: true)
           .limit(1);
 
       return res
