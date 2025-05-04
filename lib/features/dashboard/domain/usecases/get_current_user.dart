@@ -10,6 +10,6 @@ class GetCurrentUser implements UseCase<User, NoParams> {
   GetCurrentUser(this.dashboardRepository);
   @override
   Future<Either<Failure, User>> call(NoParams params) async {
-    return await dashboardRepository.currentUser();
+    return await dashboardRepository.getCurrentUser();
   }
 }

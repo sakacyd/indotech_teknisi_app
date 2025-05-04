@@ -24,7 +24,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
   );
 
   @override
-  Future<Either<Failure, User>> currentUser() async {
+  Future<Either<Failure, User>> getCurrentUser() async {
     try {
       if (!await connectionChecker.isConnected) {
         final session = dashboardRemoteDataSource.currentUserSession;

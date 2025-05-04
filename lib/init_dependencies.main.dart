@@ -97,6 +97,7 @@ void _initDashboard() {
     ..registerFactory<DashboardLocalDataSource>(
       () => DashboardLocalDataSourceImpl(serviceLocator()),
     )
+
     // repository
     ..registerFactory<DashboardRepository>(
       () => DashboardRepositoryImpl(
@@ -105,7 +106,11 @@ void _initDashboard() {
         serviceLocator(),
       ),
     )
+
+    // usecases
     ..registerFactory(() => GetNearestAssignment(serviceLocator()))
+    ..registerFactory(() => GetCurrentUser(serviceLocator()))
+
     // bloc
     ..registerLazySingleton(
       () => DashboardBloc(

@@ -6,5 +6,5 @@ import 'package:fpdart/fpdart.dart';
 abstract interface class DashboardRepository {
   Future<Either<Failure, List<Assignment>>> getNearestAssignment();
 
-  Future<Either<Failure, User>> currentUser();
+  Future<Either<Failure, User>> getCurrentUser();
 }
