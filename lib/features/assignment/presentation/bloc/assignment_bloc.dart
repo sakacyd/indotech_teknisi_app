@@ -32,7 +32,7 @@ class AssignmentBloc extends Bloc<AssignmentEvent, AssignmentState> {
 
     res.fold(
       (l) => emit(AssignmentFailure(l.message)),
-      (r) => emit(AssignmentGetAllSuccess(r)),
+      (r) => emit(AssignmentGetTodaySuccess(r)),
     );
   }
 
@@ -44,7 +44,7 @@ class AssignmentBloc extends Bloc<AssignmentEvent, AssignmentState> {
 
     res.fold(
       (l) => emit(AssignmentFailure(l.message)),
-      (r) => emit(AssignmentGetAllSuccess(r)),
+      (r) => emit(AssignmentGetPreviousSuccess(r)),
     );
   }
 }

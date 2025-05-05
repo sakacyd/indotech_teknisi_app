@@ -44,7 +44,7 @@ class _HistoryAssignmentPageState extends State<HistoryAssignmentPage> {
           if (state is AssignmentLoading) {
             return const Loader();
           }
-          if (state is AssignmentGetAllSuccess) {
+          if (state is AssignmentGetPreviousSuccess) {
             if (state.assignments.isEmpty) {
               return const Center(
                 child: Text(

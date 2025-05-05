@@ -29,7 +29,7 @@ class _TodayAssignmentPageState extends State<TodayAssignmentPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'What\'s New?',
+          'Todays Assignment',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         centerTitle: false,
@@ -44,7 +44,8 @@ class _TodayAssignmentPageState extends State<TodayAssignmentPage> {
           if (state is AssignmentLoading) {
             return const Loader();
           }
-          if (state is AssignmentGetAllSuccess) {
+          if (state is AssignmentGetTodaySuccess) {
+            print("Assignments: ${state.assignments}");
             if (state.assignments.isEmpty) {
               return const Center(
                 child: Text(
@@ -58,6 +59,7 @@ class _TodayAssignmentPageState extends State<TodayAssignmentPage> {
               itemCount: state.assignments.length,
               itemBuilder: (context, index) {
                 final assignment = state.assignments[index];
+                print("Rendering assignment: ${assignment.id}");
                 return AssignmentCard(assignment: assignment);
               },
             );

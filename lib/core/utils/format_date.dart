@@ -11,3 +11,7 @@ String formatDateByHm(DateTime date) {
 String formatDateByEEEEddMMMM(DateTime date) {
   return  DateFormat('EEEE, dd MMMM').format(date);
 }
+
+String formatDateByddMMMMyyyy(DateTime date) {
+  return  DateFormat('dd MMMM yyyy').format(date);
+}

@@ -12,7 +12,83 @@ class AssignmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCompleted = assignment.status == "Done";
+    final statusLabel = isCompleted ? "Done" : "Pending";
+    final statusColor = isCompleted ? Colors.green : Colors.orange;
+
     return GestureDetector(
+      onTap:
+          () => Navigator.push(context, AssignmentViewerPage.route(assignment)),
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Leading Icon
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Icon(Icons.build, color: statusColor, size: 36),
+              ),
+              const SizedBox(width: 12),
+
+              // Main Text Content
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${assignment.assignmentType} - ${assignment.customerName ?? 'Customer'}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "${formatDateByDMMMYYYY(assignment.scheduledAt)} | ${formatDateByHm(assignment.scheduledAt)}",
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      assignment.customerAddress ?? 'Alamat tidak tersedia',
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 8),
+
+              // Status Badge
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: statusColor,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  statusLabel,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    /* return GestureDetector(
       onTap:
           () => Navigator.push(context, AssignmentViewerPage.route(assignment)),
       child: CachedNetworkImage(
@@ -150,6 +226,6 @@ class AssignmentCard extends StatelessWidget {
               ),
             ),
       ),
-    );
+    ); */
   }
 }

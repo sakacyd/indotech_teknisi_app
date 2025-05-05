@@ -21,7 +21,7 @@ class AssignmentModel extends Assignment {
       'id': id,
       'customer_id': customerId,
       'technician_id': technicianId,
-      'scheduled_start_time': scheduledAt.toIso8601String(),
+      'scheduled_at': scheduledAt.toIso8601String(),
       'assignment_type': assignmentType,
       'unit': unit,
       'history': history,
