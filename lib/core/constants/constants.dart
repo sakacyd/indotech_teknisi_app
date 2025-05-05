@@ -6,5 +6,12 @@ class Constants {
     'Business'
   ];
 
+  static const List<String> pages = [
+    'Dashboard',
+    'Assignments',
+    'History',
+    'Profile'
+  ];
+
   static const String noConnectionMessage = 'No internet connection!';
 }

@@ -8,6 +8,7 @@ import 'package:indotech_teknisi_app/features/auth/presentation/widgets/auth_fie
 import 'package:indotech_teknisi_app/features/auth/presentation/widgets/auth_gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indotech_teknisi_app/main_page.dart';
 
 class LoginPage extends StatefulWidget {
   static route() => MaterialPageRoute(builder: (context) => const LoginPage());
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
             } else if (state is AuthSuccess) {
               Navigator.pushAndRemoveUntil(
                 context,
-                DashboardPage.route(),
+                MainPage.route(),
                 (route) => false,
               );
             }
