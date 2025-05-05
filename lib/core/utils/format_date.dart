@@ -9,5 +9,5 @@ String formatDateByHm(DateTime date) {
 }
 
 String formatDateByEEEEddMMMM(DateTime date) {
-  return  DateFormat('EEEE, dd MMMM', 'id_ID').format(date);
+  return  DateFormat('EEEE, dd MMMM').format(date);
 }

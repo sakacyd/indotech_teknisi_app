@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract interface class DashboardRemoteDataSource {
   Session? get currentUserSession;
   Future<TechnicianModel?> getCurrentUserData();
-  Future<List<AssignmentModel>> getNearestAssignment();
+  Future<AssignmentModel> getNearestAssignment();
 }
 
 class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
@@ -43,7 +43,7 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
   }
 
   @override
-  Future<List<AssignmentModel>> getNearestAssignment() async {
+  Future<AssignmentModel> getNearestAssignment() async {
     try {
       final now = DateTime.now().toIso8601String();
 
@@ -55,15 +55,11 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
           .order('scheduled_at', ascending: true)
           .limit(1);
 
-      return res
-          .map(
-            (assignment) => AssignmentModel.fromJson(assignment).copyWith(
-              customerName: assignment['customers']['name'],
-              customerPhoneNumber: assignment['customers']['phone_number'],
-              customerAddress: assignment['customers']['address'],
-            ),
-          )
-          .toList();
+      return AssignmentModel.fromJson(res.first).copyWith(
+        customerName: res.first['customers']['name'],
+        customerPhoneNumber: res.first['customers']['phone_number'],
+        customerAddress: res.first['customers']['address'],
+      );
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

@@ -2,10 +2,11 @@ import 'package:indotech_teknisi_app/core/common/widgets/loader.dart';
 import 'package:indotech_teknisi_app/core/utils/show_snackbar.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/widgets/assignment_card.dart';
+import 'package:indotech_teknisi_app/features/dashboard/presentation/widgets/technician_card.dart';
+import 'package:indotech_teknisi_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:indotech_teknisi_app/features/profile/presentation/pages/profile_page.dart';
 
 class DashboardPage extends StatefulWidget {
   static route() =>
@@ -56,14 +57,23 @@ class _DashboardPageState extends State<DashboardPage> {
             return const Loader();
           }
           if (state is DashboardGetAllSuccess) {
-            return ListView.builder(
-              itemCount: state.assignments.length,
-              itemBuilder: (context, index) {
-                final assignment = state.assignments[index];
-                return AssignmentCard(assignment: assignment);
-              },
+            final assignment = state.assignments;
+            final technician = state.user;
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (technician != null) TechnicianCard(user: technician),
+                  const SizedBox(height: 16),
+                  if (assignment != null)
+                    AssignmentCard(assignment: assignment),
+                ],
+              ),
             );
           }
+
           return const SizedBox();
         },
       ),

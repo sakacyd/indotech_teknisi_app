@@ -15,7 +15,7 @@
 //                     ),
 // ),
 
-import 'package:indotech_teknisi_app/features/blog/presentation/utils/styles/markdown_style.dart';
+import 'package:indotech_teknisi_app/features/dashboard/presentation/utils/styles/markdown_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 

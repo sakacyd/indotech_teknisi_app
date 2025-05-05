@@ -6,7 +6,7 @@ Future<void> initDependencies() async {
   await dotenv.load(fileName: ".env");
 
   _initAuth();
-  _initAssignment();
+/*   _initAssignment(); */
   _initDashboard();
 
   if (AppSecrets.supabaseUrl == null || AppSecrets.supabaseKey == null) {
@@ -55,7 +55,7 @@ void _initAuth() {
     );
 }
 
-void _initAssignment() {
+/* void _initAssignment() {
   serviceLocator
     // datasource
     ..registerFactory<AssignmentRemoteDataSource>(
@@ -86,7 +86,7 @@ void _initAssignment() {
         getAllAssignments: serviceLocator(),
       ),
     );
-}
+} */
 
 void _initDashboard() {
   serviceLocator
@@ -94,14 +94,10 @@ void _initDashboard() {
     ..registerFactory<DashboardRemoteDataSource>(
       () => DashboardRemoteDataSourceImpl(serviceLocator()),
     )
-    ..registerFactory<DashboardLocalDataSource>(
-      () => DashboardLocalDataSourceImpl(serviceLocator()),
-    )
-
+    
     // repository
     ..registerFactory<DashboardRepository>(
       () => DashboardRepositoryImpl(
-        serviceLocator(),
         serviceLocator(),
         serviceLocator(),
       ),

@@ -2,7 +2,7 @@ import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/core/utils/calculate_reading_time.dart';
 import 'package:indotech_teknisi_app/core/utils/format_date.dart';
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
-import 'package:indotech_teknisi_app/features/assignment/presentation/widgets/markdown/custom_markdown_body.dart';
+import 'package:indotech_teknisi_app/features/dashboard/presentation/widgets/markdown/custom_markdown_body.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';

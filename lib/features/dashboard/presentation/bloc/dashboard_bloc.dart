@@ -52,8 +52,10 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     final technician = technicianResult.getOrElse(
       (_) => throw Exception('Missing user'),
     );
-    final assignments = assignmentResult.getOrElse((_) => []);
+    final assignment = assignmentResult.getOrElse(
+      (_) => throw Exception('Missing assignment'),
+    );
 
-    emit(DashboardGetAllSuccess(assignments, technician));
+    emit(DashboardGetAllSuccess(assignment, technician));
   }
 }

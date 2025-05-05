@@ -16,37 +16,20 @@ class AssignmentModel extends Assignment {
     super.customerAddress,
   });
 
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'id': id,
-      'customer_id': customerId,
-      'technician_id': technicianId,
-      'scheduled_start_time': scheduledAt.toIso8601String(),
-      'assignment_type': assignmentType,
-      'unit': unit,
-      'history': history,
-      'status': status,
-      'imageUrl': imageUrl,
-      'customer_name': customerName,
-      'customer_phone_number': customerPhoneNumber,
-      'customer_address': customerAddress,
-    };
-  }
-
-  factory AssignmentModel.fromJson(Map<String, dynamic> map) {
+  factory AssignmentModel.fromJson(Map<String, dynamic> json) {
     return AssignmentModel(
-      id: map['id'] as String,
-      customerId: map['customer_id'] as String,
-      technicianId: map['technician_id'] as String,
-      scheduledAt: DateTime.parse(map['scheduled_at']),
-      assignmentType: List<String>.from((map['assignment_type'] ?? [])),
-      unit: map['unit'] as String,
-      history: map['history'] as String,
-      status: map['status'] as String,
-      imageUrl: map['image_url'] as String,
-      customerName: map['customer_name'] as String?,
-      customerPhoneNumber: map['customer_phone_number'] as String?,
-      customerAddress: map['customer_address'] as String?,
+      id: json['id'] as String,
+      customerId: json['customer_id'] as String,
+      technicianId: json['technician_id'] as String,
+      scheduledAt: DateTime.parse(json['scheduled_at']),
+      assignmentType: List<String>.from((json['assignment_type'] ?? [])),
+      unit: json['unit'] as String,
+      history: json['history'] as String,
+      status: json['status'] as String,
+      imageUrl: json['image_url'] as String,
+      customerName: json['customer_name'] as String?,
+      customerPhoneNumber: json['customer_phone_number'] as String?,
+      customerAddress: json['customer_address'] as String?,
     );
   }
 

@@ -1,7 +1,7 @@
 import 'package:indotech_teknisi_app/core/common/widgets/loader.dart';
 import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/core/utils/show_snackbar.dart';
-import 'package:indotech_teknisi_app/features/assignment/presentation/pages/assignment_page.dart';
+import 'package:indotech_teknisi_app/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/widgets/auth_field.dart';
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             } else if (state is AuthSuccess) {
               Navigator.pushAndRemoveUntil(
                 context,
-                AssignmentPage.route(),
+                DashboardPage.route(),
                 (route) => false,
               );
             }
