@@ -1,6 +1,7 @@
 import 'package:indotech_teknisi_app/core/common/cubits/cubit/app_user_cubit.dart';
 import 'package:indotech_teknisi_app/core/common/cubits/cubit/bottom_nav_cubit.dart';
 import 'package:indotech_teknisi_app/core/theme/theme.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/assignment_bloc.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
         BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
         BlocProvider(create: (_) => serviceLocator<DashboardBloc>()),
+        BlocProvider(create: (_) => serviceLocator<AssignmentBloc>()),
         BlocProvider(create: (_) => BottomNavCubit()),
 
       ],

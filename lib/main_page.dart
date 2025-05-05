@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/core/common/cubits/cubit/bottom_nav_cubit.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/pages/history_assignment_page.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/pages/today_assignment_page.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:indotech_teknisi_app/features/profile/presentation/pages/profile_page.dart';
 
@@ -12,7 +14,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pages = const [DashboardPage(), ProfilePage()];
+    final pages = const [DashboardPage(), TodayAssignmentPage(), HistoryAssignmentPage()];
 
     return BlocBuilder<BottomNavCubit, int>(
       builder: (context, index) {

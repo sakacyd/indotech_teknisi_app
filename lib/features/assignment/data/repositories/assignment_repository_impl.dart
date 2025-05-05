@@ -22,50 +22,31 @@ class AssignmentRepositoryImpl implements AssignmentRepository {
     this.assignmentLocalDataSource,
     this.connectionChecker,
   );
-  /* @override
-  Future<Either<Failure, Blog>> uploadBlog({
-    required File image,
-    required String title,
-    required String content,
-    required String posterId,
-    required List<String> topics,
-  }) async {
-    try {
-      if (!await connectionChecker.isConnected) {
-        return left(Failure(Constants.noConnectionMessage));
-      }
-      BlogModel blogModel = BlogModel(
-        id: const Uuid().v1(),
-        title: title,
-        content: content,
-        posterId: posterId,
-        imageUrl: '',
-        updatedAt: DateTime.now(),
-        topics: topics,
-      );
-
-      final imageUrl = await blogRemoteDataSource.uploadBlogImage(
-        image: image,
-        blog: blogModel,
-      );
-
-      blogModel = blogModel.copyWith(imageUrl: imageUrl);
-
-      final uploadedBlog = await blogRemoteDataSource.uploadBlog(blogModel);
-      return right(uploadedBlog);
-    } on ServerException catch (e) {
-      return left(Failure(e.toString()));
-    }
-  } */
 
   @override
-  Future<Either<Failure, List<Assignment>>> getAllAssignments() async {
+  Future<Either<Failure, List<Assignment>>> getTodayAssignments() async {
     try {
       var assignments = <AssignmentModel>[];
       if (!await connectionChecker.isConnected) {
         assignments = assignmentLocalDataSource.getLastAssignments();
       } else {
-        assignments = await assignmentRemoteDataSource.getAllAssignments();
+        assignments = await assignmentRemoteDataSource.getTodayAssignments();
+        assignmentLocalDataSource.cacheAssignments(assignments);
+      }
+      return right(assignments);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Assignment>>> getPreviousAssignments() async {
+    try {
+      var assignments = <AssignmentModel>[];
+      if (!await connectionChecker.isConnected) {
+        assignments = assignmentLocalDataSource.getLastAssignments();
+      } else {
+        assignments = await assignmentRemoteDataSource.getPreviousAssignments();
         assignmentLocalDataSource.cacheAssignments(assignments);
       }
       return right(assignments);

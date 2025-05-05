@@ -6,7 +6,7 @@ Future<void> initDependencies() async {
   await dotenv.load(fileName: ".env");
 
   _initAuth();
-/*   _initAssignment(); */
+  _initAssignment();
   _initDashboard();
 
   if (AppSecrets.supabaseUrl == null || AppSecrets.supabaseKey == null) {
@@ -56,7 +56,7 @@ void _initAuth() {
     );
 }
 
-/* void _initAssignment() {
+void _initAssignment() {
   serviceLocator
     // datasource
     ..registerFactory<AssignmentRemoteDataSource>(
@@ -65,6 +65,7 @@ void _initAuth() {
     ..registerFactory<AssignmentLocalDataSource>(
       () => AssignmentLocalDataSourceImpl(serviceLocator()),
     )
+
     // repository
     ..registerFactory<AssignmentRepository>(
       () => AssignmentRepositoryImpl(
@@ -73,21 +74,19 @@ void _initAuth() {
         serviceLocator(),
       ),
     )
-    /* // usecases
-    ..registerFactory(
-      () => UploadAssignment(
-        serviceLocator(),
-      ),
-    ) */
-    ..registerFactory(() => GetAllAssignments(serviceLocator()))
+
+    // usecases
+    ..registerFactory(() => GetTodayAssignments(serviceLocator()))
+    ..registerFactory(() => GetPreviousAssignments(serviceLocator()))
+
     // bloc
     ..registerLazySingleton(
       () => AssignmentBloc(
-        /* uploadAssignment: serviceLocator(), */
-        getAllAssignments: serviceLocator(),
+        getTodayAssignments: serviceLocator(),
+        getPreviousAssignments: serviceLocator(),
       ),
     );
-} */
+}
 
 void _initDashboard() {
   serviceLocator
@@ -95,19 +94,13 @@ void _initDashboard() {
     ..registerFactory<DashboardRemoteDataSource>(
       () => DashboardRemoteDataSourceImpl(serviceLocator()),
     )
-    
     // repository
     ..registerFactory<DashboardRepository>(
-      () => DashboardRepositoryImpl(
-        serviceLocator(),
-        serviceLocator(),
-      ),
+      () => DashboardRepositoryImpl(serviceLocator(), serviceLocator()),
     )
-
     // usecases
     ..registerFactory(() => GetNearestAssignment(serviceLocator()))
     ..registerFactory(() => GetCurrentUser(serviceLocator()))
-
     // bloc
     ..registerLazySingleton(
       () => DashboardBloc(

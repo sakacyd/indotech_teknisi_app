@@ -7,7 +7,7 @@ import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/core/utils/pick_image.dart';
 import 'package:indotech_teknisi_app/core/utils/show_snackbar.dart';
 import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/assignment_bloc.dart';
-import 'package:indotech_teknisi_app/features/assignment/presentation/pages/assignment_page.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/pages/today_assignment_page.dart';
 import 'package:indotech_teknisi_app/features/assignment/presentation/pages/markdown_edit_page.dart';
 import 'package:indotech_teknisi_app/features/assignment/presentation/widgets/assignment_editor.dart';
 import 'package:dotted_border/dotted_border.dart';

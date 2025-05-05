@@ -8,19 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/features/profile/presentation/pages/profile_page.dart';
 
-class AssignmentPage extends StatefulWidget {
-  static route() => MaterialPageRoute(builder: (context) => const AssignmentPage());
-  const AssignmentPage({super.key});
+class HistoryAssignmentPage extends StatefulWidget {
+  static route() =>
+      MaterialPageRoute(builder: (context) => const HistoryAssignmentPage());
+  const HistoryAssignmentPage({super.key});
 
   @override
-  State<AssignmentPage> createState() => _AssignmentPageState();
+  State<HistoryAssignmentPage> createState() => _HistoryAssignmentPageState();
 }
 
-class _AssignmentPageState extends State<AssignmentPage> {
+class _HistoryAssignmentPageState extends State<HistoryAssignmentPage> {
   @override
   void initState() {
     super.initState();
-    context.read<AssignmentBloc>().add(AssignmentFetchAll());
+    context.read<AssignmentBloc>().add(FetchPreviousAssignments());
   }
 
   @override
@@ -29,26 +30,9 @@ class _AssignmentPageState extends State<AssignmentPage> {
       appBar: AppBar(
         title: const Text(
           'What\'s New?',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
         centerTitle: false,
-        
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(context, ProfilePage.route());
-              },
-              icon: const Icon(
-                CupertinoIcons.add_circled,
-                size: 30,
-              ),
-            ),
-          ),
-        ],
       ),
       body: BlocConsumer<AssignmentBloc, AssignmentState>(
         listener: (context, state) {
@@ -61,6 +45,15 @@ class _AssignmentPageState extends State<AssignmentPage> {
             return const Loader();
           }
           if (state is AssignmentGetAllSuccess) {
+            if (state.assignments.isEmpty) {
+              return const Center(
+                child: Text(
+                  'Tidak ada pekerjaan sebelumnya',
+                  style: TextStyle(fontSize: 16),
+                ),
+              );
+            }
+
             return ListView.builder(
               itemCount: state.assignments.length,
               itemBuilder: (context, index) {
@@ -69,6 +62,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
               },
             );
           }
+
           return const SizedBox();
         },
       ),

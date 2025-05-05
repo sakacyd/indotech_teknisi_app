@@ -41,7 +41,7 @@ class _DashboardPageState extends State<DashboardPage> {
               onPressed: () {
                 Navigator.push(context, ProfilePage.route());
               },
-              icon: const Icon(CupertinoIcons.add_circled, size: 30),
+              icon: const Icon(Icons.person_rounded, size: 30),
             ),
           ),
         ],

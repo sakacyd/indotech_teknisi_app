@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:indotech_teknisi_app/core/usecase/usecase.dart';
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
-import 'package:indotech_teknisi_app/features/assignment/domain/usecases/get_all_assignments.dart';
+import 'package:indotech_teknisi_app/features/assignment/domain/usecases/get_previous_assignments.dart';
+import 'package:indotech_teknisi_app/features/assignment/domain/usecases/get_today_assignments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,44 +11,36 @@ part 'assignment_event.dart';
 part 'assignment_state.dart';
 
 class AssignmentBloc extends Bloc<AssignmentEvent, AssignmentState> {
-  /* final UploadAssignment _uploadAssignment; */
-  final GetAllAssignments _getAllAssignments;
+  final GetTodayAssignments _getTodayAssignments;
+  final GetPreviousAssignments _getPreviousAssignments;
   AssignmentBloc({
-    /* required UploadAssignment uploadAssignment, */
-    required GetAllAssignments getAllAssignments,
-  }) : /* _uploadAssignment = uploadAssignment, */
-       _getAllAssignments = getAllAssignments,
+    required GetTodayAssignments getTodayAssignments,
+    required GetPreviousAssignments getPreviousAssignments,
+  }) : _getTodayAssignments = getTodayAssignments,
+       _getPreviousAssignments = getPreviousAssignments,
        super(AssignmentInitial()) {
     on<AssignmentEvent>((event, emit) => emit(AssignmentLoading()));
-    /* on<AssignmentUpload>(_onAssignmentUpload); */
-    on<AssignmentFetchAll>(_onAllAssignmentsRequested);
+    on<FetchTodayAssignments>(_onTodayAssignmentsRequested);
+    on<FetchPreviousAssignments>(_onPreviousAssignmentsRequested);
   }
 
-  /* FutureOr<void> _onAssignmentUpload(
-    AssignmentUpload event,
+  FutureOr<void> _onTodayAssignmentsRequested(
+    FetchTodayAssignments event,
     Emitter<AssignmentState> emit,
   ) async {
-    final res = await _uploadAssignment(
-      UploadAssignmentParams(
-        image: event.image,
-        title: event.title,
-        content: event.content,
-        posterId: event.posterId,
-        topics: event.topics,
-      ),
-    );
+    final res = await _getTodayAssignments(NoParams());
 
     res.fold(
       (l) => emit(AssignmentFailure(l.message)),
-      (_) => emit(AssignmentUploadSuccess()),
+      (r) => emit(AssignmentGetAllSuccess(r)),
     );
-  } */
+  }
 
-  FutureOr<void> _onAllAssignmentsRequested(
-    AssignmentFetchAll event,
+  FutureOr<void> _onPreviousAssignmentsRequested(
+    FetchPreviousAssignments event,
     Emitter<AssignmentState> emit,
   ) async {
-    final res = await _getAllAssignments(NoParams());
+    final res = await _getPreviousAssignments(NoParams());
 
     res.fold(
       (l) => emit(AssignmentFailure(l.message)),
