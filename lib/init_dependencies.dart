@@ -16,7 +16,8 @@ import 'package:indotech_teknisi_app/features/assignment/data/repositories/assig
 import 'package:indotech_teknisi_app/features/assignment/domain/repositories/assignment_repositories.dart';
 import 'package:indotech_teknisi_app/features/assignment/domain/usecases/get_today_assignments.dart';
 import 'package:indotech_teknisi_app/features/assignment/domain/usecases/get_previous_assignments.dart';
-import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/assignment_bloc.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/today/today_bloc.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/history/history_bloc.dart';
 import 'package:indotech_teknisi_app/features/dashboard/data/datasources/dashboard_remote_data_source.dart';
 import 'package:indotech_teknisi_app/features/dashboard/data/repositories/dashboard_repository_impl.dart';
 import 'package:indotech_teknisi_app/features/dashboard/domain/repository/dashboard_repository.dart';

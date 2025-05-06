@@ -1,6 +1,6 @@
 import 'package:indotech_teknisi_app/core/common/widgets/loader.dart';
 import 'package:indotech_teknisi_app/core/utils/show_snackbar.dart';
-import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/assignment_bloc.dart';
+import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/history/history_bloc.dart';
 /* import 'package:indotech_teknisi_app/features/assignment/presentation/pages/add_new_assignment_page.dart'; */
 import 'package:indotech_teknisi_app/features/assignment/presentation/widgets/assignment_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +21,7 @@ class _HistoryAssignmentPageState extends State<HistoryAssignmentPage> {
   @override
   void initState() {
     super.initState();
-    context.read<AssignmentBloc>().add(FetchPreviousAssignments());
+    context.read<HistoryBloc>().add(FetchPreviousAssignments());
   }
 
   @override
@@ -29,19 +29,19 @@ class _HistoryAssignmentPageState extends State<HistoryAssignmentPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'What\'s New?',
+          'History Pekerjaan',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         centerTitle: false,
       ),
-      body: BlocConsumer<AssignmentBloc, AssignmentState>(
+      body: BlocConsumer<HistoryBloc, AssignmentState>(
         listener: (context, state) {
           if (state is AssignmentFailure) {
             showSnackBar(context, state.message);
           }
         },
         builder: (context, state) {
-          if (state is AssignmentLoading) {
+          if (state is AssignmentLoadingPrevious) {
             return const Loader();
           }
           if (state is AssignmentGetPreviousSuccess) {

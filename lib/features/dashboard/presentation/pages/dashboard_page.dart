@@ -65,10 +65,9 @@ class _DashboardPageState extends State<DashboardPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (technician != null) TechnicianCard(user: technician),
+                  TechnicianCard(user: technician),
                   const SizedBox(height: 16),
-                  if (assignment != null)
-                    AssignmentCard(assignment: assignment),
+                  AssignmentCard(assignment: assignment),
                 ],
               ),
             );

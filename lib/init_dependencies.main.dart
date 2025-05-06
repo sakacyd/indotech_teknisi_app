@@ -65,7 +65,6 @@ void _initAssignment() {
     ..registerFactory<AssignmentLocalDataSource>(
       () => AssignmentLocalDataSourceImpl(serviceLocator()),
     )
-
     // repository
     ..registerFactory<AssignmentRepository>(
       () => AssignmentRepositoryImpl(
@@ -74,17 +73,15 @@ void _initAssignment() {
         serviceLocator(),
       ),
     )
-
     // usecases
     ..registerFactory(() => GetTodayAssignments(serviceLocator()))
     ..registerFactory(() => GetPreviousAssignments(serviceLocator()))
-
     // bloc
     ..registerLazySingleton(
-      () => AssignmentBloc(
-        getTodayAssignments: serviceLocator(),
-        getPreviousAssignments: serviceLocator(),
-      ),
+      () => TodayBloc(getTodayAssignments: serviceLocator()),
+    )
+    ..registerLazySingleton(
+      () => HistoryBloc(getPreviousAssignments: serviceLocator()),
     );
 }
 
