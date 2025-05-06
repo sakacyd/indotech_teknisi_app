@@ -3,7 +3,7 @@ import 'package:indotech_teknisi_app/core/utils/show_snackbar.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/widgets/assignment_card.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/widgets/technician_card.dart';
-import 'package:indotech_teknisi_app/features/profile/presentation/pages/profile_page.dart';
+import 'package:indotech_teknisi_app/features/auth/presentation/pages/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

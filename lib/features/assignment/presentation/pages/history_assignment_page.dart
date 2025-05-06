@@ -6,7 +6,7 @@ import 'package:indotech_teknisi_app/features/assignment/presentation/widgets/as
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:indotech_teknisi_app/features/profile/presentation/pages/profile_page.dart';
+import 'package:indotech_teknisi_app/features/auth/presentation/pages/profile_page.dart';
 
 class HistoryAssignmentPage extends StatefulWidget {
   static route() =>
