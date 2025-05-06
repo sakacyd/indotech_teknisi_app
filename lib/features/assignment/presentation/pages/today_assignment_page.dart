@@ -29,7 +29,7 @@ class _TodayAssignmentPageState extends State<TodayAssignmentPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'History Pekerjaan',
+          'Pekerjaan Hari Ini',
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
         centerTitle: false,

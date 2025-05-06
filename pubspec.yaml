@@ -7,8 +7,10 @@ environment:
   sdk: ^3.7.0
 
 dependencies:
+  action_slider: ^0.7.0
   cached_network_image: ^3.4.1
   dotted_border: ^2.1.0
+  easy_stepper: ^0.8.5+1
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.0

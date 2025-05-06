@@ -106,7 +106,7 @@ class AssignmentCard extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        AssignmentViewerPage.route(assignment),
+                        DashboardViewerPage.route(assignment),
                       );
                     },
                     child: const Text(
