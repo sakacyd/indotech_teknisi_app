@@ -56,12 +56,16 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Image.asset(
+                        'assets/logo.png',
+                        height: 200,
+                      ),
+                  const SizedBox(height: 30),
                   const Text(
                     'Sign In',
                     style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 30),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                   AuthField(hintText: 'Email', controller: emailController),
                   const SizedBox(height: 20),
                   AuthField(
@@ -84,26 +88,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   const SizedBox(height: 25),
-                  GestureDetector(
-                    onTap: () => Navigator.push(context, SignUpPage.route()),
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Don\'thave an account? ',
-                        style: Theme.of(context).textTheme.titleMedium,
-                        children: [
-                          TextSpan(
-                            text: 'Sign Up',
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium?.copyWith(
-                              color: AppPallete.gradient2,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             );
