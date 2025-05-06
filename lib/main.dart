@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Blog Application',
+      title: 'Indotech Technician App',
       theme: AppTheme.darkThemeMode,
       home: BlocSelector<AppUserCubit, AppUserState, bool>(
         selector: (state) {

@@ -73,6 +73,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
+  Future<void> signOut() async {
+    await supabaseClient.auth.signOut();
+  }
+
+  @override
   Future<UserModel?> getCurrentUserData() async {
     try {
       if (currentUserSession != null) {
@@ -95,10 +100,5 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
       throw ServerException(e.toString());
     }
-  }
-
-  @override
-  Future<void> signOut() async {
-    await supabaseClient.auth.signOut();
   }
 }
