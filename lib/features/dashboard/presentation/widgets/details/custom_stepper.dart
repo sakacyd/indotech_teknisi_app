@@ -29,9 +29,11 @@ class CustomStepper extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     EasyStepper(
+                      alignment: Alignment.center,
+                      fitWidth: true,
                       activeStep: currentStep,
                       lineStyle: LineStyle(
-                        lineLength: screenWidth * 0.13, // atau nilai konstan
+                        lineLength: screenWidth * 0.13,
                         lineThickness: 6,
                         lineSpace: 5,
                         lineType: LineType.normal,
@@ -66,7 +68,6 @@ class CustomStepper extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
           ],
         );
       },
