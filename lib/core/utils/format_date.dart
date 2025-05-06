@@ -5,11 +5,11 @@ String formatDateByDMMMYYYY(DateTime date) {
 }
 
 String formatDateByHm(DateTime date) {
-  return DateFormat('H m').format(date);
+  return DateFormat('H:m').format(date);
 }
 
 String formatDateByEEEEddMMMM(DateTime date) {
-  return  DateFormat('EEEE, dd MMMM').format(date);
+  return  DateFormat('EEEE, dd MMMM', 'id_ID').format(date);
 }
 
 String formatDateByddMMMMyyyy(DateTime date) {

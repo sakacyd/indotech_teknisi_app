@@ -10,9 +10,14 @@ import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashbo
 import 'package:indotech_teknisi_app/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:indotech_teknisi_app/init_dependencies.dart';
 import 'package:indotech_teknisi_app/main_page.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Intl.defaultLocale = 'id_ID';
+  initializeDateFormatting('id_ID', '');
 
   await initDependencies();
 
@@ -42,6 +47,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    initializeDateFormatting();
     context.read<AuthBloc>().add(AuthIsUserLoggedIn());
   }
 

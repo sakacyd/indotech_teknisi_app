@@ -41,7 +41,7 @@ class AssignmentCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${assignment.assignmentType} - ${assignment.customerName ?? 'Customer'}",
+                      "${assignment.assignmentType.join()} - ${assignment.customerName ?? 'Customer'}",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -49,7 +49,7 @@ class AssignmentCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "${formatDateByDMMMYYYY(assignment.scheduledAt)} | ${formatDateByHm(assignment.scheduledAt)}",
+                      "${formatDateByddMMMMyyyy(assignment.scheduledAt)} | ${formatDateByHm(assignment.scheduledAt)}",
                       style: const TextStyle(fontSize: 14),
                     ),
                     const SizedBox(height: 2),
