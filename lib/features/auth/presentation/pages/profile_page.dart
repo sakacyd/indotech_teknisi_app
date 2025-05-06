@@ -7,7 +7,8 @@ import 'package:indotech_teknisi_app/features/auth/presentation/pages/login_page
 import 'package:indotech_teknisi_app/features/auth/presentation/widgets/profile_details.dart';
 
 class ProfilePage extends StatelessWidget {
-  static route() => MaterialPageRoute(builder: (context) => const ProfilePage());
+  static route() =>
+      MaterialPageRoute(builder: (context) => const ProfilePage());
 
   const ProfilePage({super.key});
 
@@ -16,9 +17,7 @@ class ProfilePage extends StatelessWidget {
     return BlocBuilder<AppUserCubit, AppUserState>(
       builder: (context, state) {
         if (state is AuthLoading || state is AppUserInitial) {
-          return const Scaffold(
-            body: Center(child: Loader()),
-          );
+          return const Scaffold(body: Center(child: Loader()));
         }
 
         if (state is! AppUserLoggedIn) {
@@ -73,7 +72,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ProfileDetails(user: user),
-                const SizedBox(height: 20),
+                const SizedBox(height: 110),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
