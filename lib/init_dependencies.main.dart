@@ -8,7 +8,7 @@ Future<void> initDependencies() async {
   _initAuth();
   _initAssignment();
   _initDashboard();
-  _initStepper();
+  _initViewer();
 
   if (AppSecrets.supabaseUrl == null || AppSecrets.supabaseKey == null) {
     throw Exception('Supabase credentials not found');
@@ -110,8 +110,8 @@ void _initDashboard() {
     );
 }
 
-void _initStepper() {
+void _initViewer() {
   serviceLocator
     // bloc
-    ..registerLazySingleton(() => StepperBloc());
+    ..registerLazySingleton(() => ViewerBloc());
 }

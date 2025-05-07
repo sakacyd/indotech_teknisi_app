@@ -49,7 +49,7 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
 
       final res = await supabaseClient
           .from('assignments')
-          .select('*, customers(name, phone_number, address)')
+          .select('*, customers(name, phone_number, address), technicians(name, phone_number, address)')
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
           .gte('scheduled_at', now)
           .order('scheduled_at', ascending: true)
@@ -59,6 +59,9 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
         customerName: res.first['customers']['name'],
         customerPhoneNumber: res.first['customers']['phone_number'],
         customerAddress: res.first['customers']['address'],
+        technicianName: res.first['technicians']['name'],
+        technicianPhoneNumber: res.first['technicians']['phone_number'],
+        technicianAddress: res.first['technicians']['address'],
       );
     } on PostgrestException catch (e) {
       throw ServerException(e.message);

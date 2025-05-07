@@ -14,6 +14,9 @@ class AssignmentModel extends Assignment {
     super.customerName,
     super.customerPhoneNumber,
     super.customerAddress,
+    super.technicianName,
+    super.technicianPhoneNumber,
+    super.technicianAddress,
   });
 
   factory AssignmentModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +33,9 @@ class AssignmentModel extends Assignment {
       customerName: json['customer_name'] as String?,
       customerPhoneNumber: json['customer_phone_number'] as String?,
       customerAddress: json['customer_address'] as String?,
+      technicianName: json['technician_name'] as String?,
+      technicianPhoneNumber: json['technician_phone_number'] as String?,
+      technicianAddress: json['technician_address'] as String?,
     );
   }
 
@@ -46,6 +52,9 @@ class AssignmentModel extends Assignment {
     String? customerName,
     String? customerPhoneNumber,
     String? customerAddress,
+    String? technicianName,
+    String? technicianPhoneNumber,
+    String? technicianAddress,
   }) {
     return AssignmentModel(
       id: id ?? this.id,
@@ -60,6 +69,9 @@ class AssignmentModel extends Assignment {
       customerName: customerName ?? this.customerName,
       customerPhoneNumber: customerPhoneNumber ?? this.customerPhoneNumber,
       customerAddress: customerAddress ?? this.customerAddress,
+      technicianName: technicianName ?? this.technicianName,
+      technicianPhoneNumber: technicianPhoneNumber ?? this.technicianPhoneNumber,
+      technicianAddress: technicianAddress ?? this.technicianAddress,
     );
   }
 }

@@ -12,6 +12,9 @@ class Assignment {
   final String? customerName;
   final String? customerPhoneNumber;
   final String? customerAddress;
+  final String? technicianName;
+  final String? technicianPhoneNumber;
+  final String? technicianAddress;
   Assignment({
     required this.id,
     required this.customerId,
@@ -25,5 +28,8 @@ class Assignment {
     this.customerName,
     this.customerPhoneNumber,
     this.customerAddress,
+    this.technicianName,
+    this.technicianPhoneNumber,
+    this.technicianAddress,
   });
 }

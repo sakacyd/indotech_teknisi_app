@@ -5,7 +5,6 @@ import 'package:indotech_teknisi_app/core/common/cubits/cubit/bottom_nav_cubit.d
 import 'package:indotech_teknisi_app/features/assignment/presentation/pages/history_assignment_page.dart';
 import 'package:indotech_teknisi_app/features/assignment/presentation/pages/today_assignment_page.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:indotech_teknisi_app/features/auth/presentation/pages/profile_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});

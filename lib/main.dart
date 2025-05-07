@@ -8,8 +8,7 @@ import 'package:indotech_teknisi_app/features/auth/presentation/pages/login_page
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_bloc.dart';
-import 'package:indotech_teknisi_app/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:indotech_teknisi_app/features/dashboard/presentation/widgets/details/bloc/stepper_bloc.dart';
+import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_viewer_bloc/viewer_bloc.dart';
 import 'package:indotech_teknisi_app/init_dependencies.dart';
 import 'package:indotech_teknisi_app/main_page.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +30,7 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<DashboardBloc>()),
         BlocProvider(create: (_) => serviceLocator<TodayBloc>()),
         BlocProvider(create: (_) => serviceLocator<HistoryBloc>()),
-        BlocProvider(create: (_) => serviceLocator<StepperBloc>()),
+        BlocProvider(create: (_) => serviceLocator<ViewerBloc>()),
         BlocProvider(create: (_) => BottomNavCubit()),
 
       ],
