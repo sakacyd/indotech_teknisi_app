@@ -4,7 +4,6 @@ import 'package:indotech_teknisi_app/core/error/exceptions.dart';
 import 'package:indotech_teknisi_app/core/common/entities/user.dart';
 import 'package:indotech_teknisi_app/core/network/connection_checker.dart';
 import 'package:indotech_teknisi_app/features/dashboard/data/models/technician_model.dart';
-import 'package:indotech_teknisi_app/features/dashboard/data/models/assignment_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 import 'package:indotech_teknisi_app/core/error/failures.dart';

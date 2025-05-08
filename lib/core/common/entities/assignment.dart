@@ -9,13 +9,13 @@ class Assignment {
   final String status;
   final String imageUrl;
   final String assignmentTypeId;
-  final String assignmentTypeName;
-  final String customerName;
-  final String customerPhoneNumber;
-  final String customerAddress;
-  final String technicianName;
-  final String technicianPhoneNumber;
-  final String technicianAddress;
+  final String? assignmentTypeName;
+  final String? customerName;
+  final String? customerPhoneNumber;
+  final String? customerAddress;
+  final String? technicianName;
+  final String? technicianPhoneNumber;
+  final String? technicianAddress;
   Assignment({
     required this.id,
     required this.customerId,
@@ -26,12 +26,12 @@ class Assignment {
     required this.status,
     required this.imageUrl,
     required this.assignmentTypeId,
-    required this.assignmentTypeName,
-    required this.customerName,
-    required this.customerPhoneNumber,
-    required this.customerAddress,
-    required this.technicianName,
-    required this.technicianPhoneNumber,
-    required this.technicianAddress,
+    this.assignmentTypeName,
+    this.customerName,
+    this.customerPhoneNumber,
+    this.customerAddress,
+    this.technicianName,
+    this.technicianPhoneNumber,
+    this.technicianAddress,
   });
 }

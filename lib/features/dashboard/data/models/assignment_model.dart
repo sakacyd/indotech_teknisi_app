@@ -11,13 +11,13 @@ class AssignmentModel extends Assignment {
     required super.status,
     required super.imageUrl,
     required super.assignmentTypeId,
-    required super.assignmentTypeName,
-    required super.customerName,
-    required super.customerPhoneNumber,
-    required super.customerAddress,
-    required super.technicianName,
-    required super.technicianPhoneNumber,
-    required super.technicianAddress,
+    super.assignmentTypeName,
+    super.customerName,
+    super.customerPhoneNumber,
+    super.customerAddress,
+    super.technicianName,
+    super.technicianPhoneNumber,
+    super.technicianAddress,
   });
 
   factory AssignmentModel.fromJson(Map<String, dynamic> json) {
@@ -31,13 +31,13 @@ class AssignmentModel extends Assignment {
       status: json['status'] as String,
       imageUrl: json['image_url'] as String,
       assignmentTypeId: json['assignment_type_id'] as String,
-      assignmentTypeName: json['assignment_type_name'] as String,
-      customerName: json['customer_name'] as String,
-      customerPhoneNumber: json['customer_phone_number'] as String,
-      customerAddress: json['customer_address'] as String,
-      technicianName: json['technician_name'] as String,
-      technicianPhoneNumber: json['technician_phone_number'] as String,
-      technicianAddress: json['technician_address'] as String,
+      assignmentTypeName: json['assignment_type_name'] as String?,
+      customerName: json['customer_name'] as String?,
+      customerPhoneNumber: json['customer_phone_number'] as String?,
+      customerAddress: json['customer_address'] as String?,
+      technicianName: json['technician_name'] as String?,
+      technicianPhoneNumber: json['technician_phone_number'] as String?,
+      technicianAddress: json['technician_address'] as String?,
     );
   }
 
@@ -74,7 +74,8 @@ class AssignmentModel extends Assignment {
       customerPhoneNumber: customerPhoneNumber ?? this.customerPhoneNumber,
       customerAddress: customerAddress ?? this.customerAddress,
       technicianName: technicianName ?? this.technicianName,
-      technicianPhoneNumber: technicianPhoneNumber ?? this.technicianPhoneNumber,
+      technicianPhoneNumber:
+          technicianPhoneNumber ?? this.technicianPhoneNumber,
       technicianAddress: technicianAddress ?? this.technicianAddress,
     );
   }

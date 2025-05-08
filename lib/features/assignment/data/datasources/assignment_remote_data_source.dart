@@ -35,6 +35,7 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
       return res
           .map(
             (assignment) => AssignmentModel.fromJson(assignment).copyWith(
+              assignmentTypeName: assignment['assignment_type']['name'],
               customerName: assignment['customers']['name'],
               customerPhoneNumber: assignment['customers']['phone_number'],
               customerAddress: assignment['customers']['address'],
@@ -56,7 +57,7 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
 
       final res = await supabaseClient
           .from('assignments')
-          .select('*, customers(name, phone_number, address)')
+          .select('*, assignment_type(name), customers(name, phone_number, address)')
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
           .lt('scheduled_at', startOfDay)
           .order('scheduled_at', ascending: false);
@@ -64,7 +65,7 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
       return res
           .map(
             (assignment) => AssignmentModel.fromJson(assignment).copyWith(
-              assignmentType: assignment['customers']['name'],
+              assignmentTypeName: assignment['assignment_type']['name'],
               customerName: assignment['customers']['name'],
               customerPhoneNumber: assignment['customers']['phone_number'],
               customerAddress: assignment['customers']['address'],

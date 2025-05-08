@@ -32,7 +32,7 @@ class AssignmentCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    assignment.customerAddress,
+                    assignment.customerAddress ?? "Alamat customer tidak tersedia",
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   const SizedBox(height: 10),

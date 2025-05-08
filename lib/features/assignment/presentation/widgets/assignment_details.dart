@@ -34,7 +34,7 @@ class AssignmentDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              assignment.assignmentType.join(),
+              assignment.assignmentTypeName ?? "Tipe Pekerjaan",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5),

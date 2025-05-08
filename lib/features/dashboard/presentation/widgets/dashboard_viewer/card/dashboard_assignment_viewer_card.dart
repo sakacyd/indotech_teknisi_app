@@ -79,7 +79,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.assignmentTypeName,
+                      assignment.assignmentTypeName ?? "Tipe pekerjaan tidak tersedia",
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -156,7 +156,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.technicianName ?? 'Nama',
+                      assignment.technicianName ?? 'Nama teknisi tidak tersedia',
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -171,7 +171,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.technicianPhoneNumber,
+                      assignment.technicianPhoneNumber ?? "Nomor telefon teknisi tidak tersedia",
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -202,7 +202,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.customerName,
+                      assignment.customerName ?? "Nama customer tidak tersedia",
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -221,7 +221,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.customerPhoneNumber,
+                      assignment.customerPhoneNumber ?? "Nomor telefon customer tidak tersedia",
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -240,7 +240,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.customerAddress,
+                      assignment.customerAddress ?? "Alamat customer tidak tersedia",
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
