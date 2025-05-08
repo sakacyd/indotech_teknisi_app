@@ -10,10 +10,7 @@ class UpdateAssignmentFinishedAt implements UseCase<Assignment, NoParams> {
   UpdateAssignmentFinishedAt(this.repository);
 
   @override
-  Future<Either<Failure, Assignment>> call(
-    UpdateAssignmentFinishedAt params,
-  ) async {
+  Future<Either<Failure, Assignment>> call(NoParams params) async {
     return await repository.updateAssignmentFinishedAt();
   }
 }
-

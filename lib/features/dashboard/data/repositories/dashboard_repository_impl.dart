@@ -65,15 +65,14 @@ class DashboardRepositoryImpl implements DashboardRepository {
 
   @override
   Future<Either<Failure, Assignment>> updateTechnicianArrivedAt({
-    required DateTime technicianArrivedAt,
+    required AssignmentModel assignment,
   }) async {
     try {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constants.noConnectionMessage));
       }
-      final technicianArrivedAt = technicianArrivedAt.toIso8601String();
-      final uploadedBlog = await dashboardRemoteDataSource.updateTechnicianArrivedAt(assignment: technicianArrivedAt);
-      return right(uploadedBlog);
+      final updatedTechnicianArrivedAt = await dashboardRemoteDataSource.updateTechnicianArrivedAt();
+      return right(updatedTechnicianArrivedAt);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
     }
