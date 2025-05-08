@@ -45,7 +45,7 @@ class AssignmentCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        formatDateByDMMMYYYY(assignment.scheduledAt),
+                        formatDateByddMMMMyyyy(assignment.scheduledAt),
                         style: const TextStyle(fontSize: 14),
                       ),
                     ],

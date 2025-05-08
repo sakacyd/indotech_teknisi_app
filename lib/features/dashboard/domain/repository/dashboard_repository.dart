@@ -7,4 +7,12 @@ abstract interface class DashboardRepository {
   Future<Either<Failure, Assignment>> getNearestAssignment();
 
   Future<Either<Failure, User>> getCurrentUser();
+
+  Future<Either<Failure, Assignment>> updateTechnicianArrivedAt({
+    required DateTime technicianArrivedAt,
+  });
+
+  Future<Either<Failure, Assignment>> updateAssignmentStartedAt();
+
+  Future<Either<Failure, Assignment>> updateAssignmentFinishedAt();
 }

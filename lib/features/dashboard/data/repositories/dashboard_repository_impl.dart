@@ -1,14 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
+import 'package:indotech_teknisi_app/core/constants/constants.dart';
 import 'package:indotech_teknisi_app/core/error/exceptions.dart';
 import 'package:indotech_teknisi_app/core/common/entities/user.dart';
 import 'package:indotech_teknisi_app/core/network/connection_checker.dart';
+import 'package:indotech_teknisi_app/features/dashboard/data/models/assignment_model.dart';
 import 'package:indotech_teknisi_app/features/dashboard/data/models/technician_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 import 'package:indotech_teknisi_app/core/error/failures.dart';
 import 'package:indotech_teknisi_app/features/dashboard/data/datasources/dashboard_remote_data_source.dart';
 import 'package:indotech_teknisi_app/features/dashboard/domain/repository/dashboard_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class DashboardRepositoryImpl implements DashboardRepository {
   final DashboardRemoteDataSource dashboardRemoteDataSource;
@@ -54,6 +57,44 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<Either<Failure, Assignment>> getNearestAssignment() async {
     try {
       final assignment = await dashboardRemoteDataSource.getNearestAssignment();
+      return right(assignment);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Assignment>> updateTechnicianArrivedAt({
+    required DateTime technicianArrivedAt,
+  }) async {
+    try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure(Constants.noConnectionMessage));
+      }
+      final technicianArrivedAt = technicianArrivedAt.toIso8601String();
+      final uploadedBlog = await dashboardRemoteDataSource.updateTechnicianArrivedAt(assignment: technicianArrivedAt);
+      return right(uploadedBlog);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Assignment>> updateAssignmentStartedAt() async {
+    try {
+      final assignment =
+          await dashboardRemoteDataSource.updateAssignmentStartedAt();
+      return right(assignment);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Assignment>> updateAssignmentFinishedAt() async {
+    try {
+      final assignment =
+          await dashboardRemoteDataSource.updateAssignmentFinishedAt();
       return right(assignment);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
