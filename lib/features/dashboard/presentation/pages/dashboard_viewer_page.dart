@@ -1,3 +1,4 @@
+import 'package:indotech_teknisi_app/core/common/widgets/custom_dialog.dart';
 import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/core/utils/calculate_reading_time.dart';
 import 'package:indotech_teknisi_app/core/utils/format_date.dart';
@@ -47,12 +48,18 @@ class _DashboardViewerPageState extends State<DashboardViewerPage> {
         },
         builder: (context, state) {
           int currentStep = 0;
-          String text = "";
+          String text = "Konfirmasi teknisi sudah sampai lokasi";
           if (state is ViewerLoading) {
             return const Loader();
           } else if (state is StepperChanged) {
             currentStep = state.currentStep;
-            text = "Tes";
+            if (currentStep == 1) {
+              text = "Konfirmasi pekerjaan sudah dimulai";
+            } else if (currentStep == 2) {
+              text = "Konfirmasi pekerjaan sudah selesai";
+            } else if (currentStep == 3) {
+              context.read<ViewerBloc>().add(CompleteViewer());
+            }
           }
 
           return SingleChildScrollView(
@@ -64,7 +71,16 @@ class _DashboardViewerPageState extends State<DashboardViewerPage> {
                   CustomStepper(currentStep: currentStep),
                   DashboardAssignmentViewerCard(assignment: widget.assignment),
                   const SizedBox(height: 20),
-                  CustomActionSlider(text: text),
+                  CustomActionSlider(
+                    text: text,
+                    onSuccess: () {
+                      if (currentStep < 3) {
+                        context.read<ViewerBloc>().add(
+                          ChangeStep(currentStep + 1),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),

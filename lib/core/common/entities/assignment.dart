@@ -4,32 +4,34 @@ class Assignment {
   final String customerId;
   final String technicianId;
   final DateTime scheduledAt;
-  final List<String> assignmentType;
   final String unit;
   final String history;
   final String status;
   final String imageUrl;
-  final String? customerName;
-  final String? customerPhoneNumber;
-  final String? customerAddress;
-  final String? technicianName;
-  final String? technicianPhoneNumber;
-  final String? technicianAddress;
+  final String assignmentTypeId;
+  final String assignmentTypeName;
+  final String customerName;
+  final String customerPhoneNumber;
+  final String customerAddress;
+  final String technicianName;
+  final String technicianPhoneNumber;
+  final String technicianAddress;
   Assignment({
     required this.id,
     required this.customerId,
     required this.technicianId,
     required this.scheduledAt,
-    required this.assignmentType,
     required this.unit,
     required this.history,
     required this.status,
     required this.imageUrl,
-    this.customerName,
-    this.customerPhoneNumber,
-    this.customerAddress,
-    this.technicianName,
-    this.technicianPhoneNumber,
-    this.technicianAddress,
+    required this.assignmentTypeId,
+    required this.assignmentTypeName,
+    required this.customerName,
+    required this.customerPhoneNumber,
+    required this.customerAddress,
+    required this.technicianName,
+    required this.technicianPhoneNumber,
+    required this.technicianAddress,
   });
 }

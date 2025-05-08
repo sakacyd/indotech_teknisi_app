@@ -49,13 +49,14 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
 
       final res = await supabaseClient
           .from('assignments')
-          .select('*, customers(name, phone_number, address), technicians(name, phone_number, address)')
+          .select('*, assignment_type(name),customers(name, phone_number, address), technicians(name, phone_number, address)')
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
           .gte('scheduled_at', now)
           .order('scheduled_at', ascending: true)
           .limit(1);
 
       return AssignmentModel.fromJson(res.first).copyWith(
+        assignmentTypeName: res.first['assignment_type']['name'],
         customerName: res.first['customers']['name'],
         customerPhoneNumber: res.first['customers']['phone_number'],
         customerAddress: res.first['customers']['address'],

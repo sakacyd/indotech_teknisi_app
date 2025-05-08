@@ -79,7 +79,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.assignmentType.join(),
+                      assignment.assignmentTypeName,
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -171,7 +171,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.technicianPhoneNumber ?? 'Phone Number',
+                      assignment.technicianPhoneNumber,
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -202,7 +202,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.customerName ?? 'Customer Name',
+                      assignment.customerName,
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -221,7 +221,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.customerPhoneNumber ?? 'Phone Number',
+                      assignment.customerPhoneNumber,
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),
@@ -240,7 +240,7 @@ class DashboardAssignmentViewerCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      assignment.customerAddress ?? 'Alamat',
+                      assignment.customerAddress,
                       style: const TextStyle(fontSize: 14, height: 1.4),
                     ),
                   ),

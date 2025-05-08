@@ -27,12 +27,12 @@ class AssignmentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${assignment.assignmentType.join()} - ${assignment.customerName ?? 'Customer'}",
+                    "${assignment.assignmentTypeName} - ${assignment.customerName}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    assignment.customerAddress ?? 'Alamat tidak tersedia',
+                    assignment.customerAddress,
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   const SizedBox(height: 10),

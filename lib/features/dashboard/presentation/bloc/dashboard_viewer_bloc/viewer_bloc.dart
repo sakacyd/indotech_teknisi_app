@@ -8,6 +8,9 @@ part 'viewer_state.dart';
 class ViewerBloc extends Bloc<ViewerEvent, ViewerState> {
   ViewerBloc() : super(ViewerInitial()) {
     on<ViewerEvent>((event, emit) => emit(ViewerLoading()));
+    on<CompleteViewer>((event, emit) async {
+      emit(ViewerCompleted());
+    });
     on<ChangeStep>(_onSlideSuccess);
   }
 

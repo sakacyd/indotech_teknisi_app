@@ -8,3 +8,5 @@ final class ChangeStep extends ViewerEvent {
 
   ChangeStep(this.step);
 }
+
+final class CompleteViewer extends ViewerEvent {}

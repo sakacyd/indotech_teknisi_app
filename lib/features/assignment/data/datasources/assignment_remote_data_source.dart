@@ -64,6 +64,7 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
       return res
           .map(
             (assignment) => AssignmentModel.fromJson(assignment).copyWith(
+              assignmentType: assignment['customers']['name'],
               customerName: assignment['customers']['name'],
               customerPhoneNumber: assignment['customers']['phone_number'],
               customerAddress: assignment['customers']['address'],
