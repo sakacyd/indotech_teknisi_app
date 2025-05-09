@@ -9,11 +9,15 @@ abstract interface class DashboardRepository {
 
   Future<Either<Failure, User>> getCurrentUser();
 
-  Future<Either<Failure, Assignment>> updateTechnicianArrivedAt({
+ /*  Future<Either<Failure, Assignment>> updateTechnicianArrivedAt({
     required AssignmentModel assignment,
   });
 
-  Future<Either<Failure, Assignment>> updateAssignmentStartedAt();
+  Future<Either<Failure, Assignment>> updateAssignmentStartedAt({
+    required AssignmentModel assignment,
+  });
 
-  Future<Either<Failure, Assignment>> updateAssignmentFinishedAt();
+  Future<Either<Failure, Assignment>> updateAssignmentFinishedAt({
+    required AssignmentModel assignment,
+  }); */
 }

@@ -10,11 +10,10 @@ final class ChangeStep extends ViewerEvent {
 }
 
 final class UpdateTechnicianArrivedAtEvent extends ViewerEvent {
-  final Assignment assignment;
+  final AssignmentModel assignment;
 
   UpdateTechnicianArrivedAtEvent({required this.assignment});
 
-  @override
   List<Object?> get props => [assignment];
 }
 

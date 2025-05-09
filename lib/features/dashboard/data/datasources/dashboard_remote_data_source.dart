@@ -7,9 +7,9 @@ abstract interface class DashboardRemoteDataSource {
   Session? get currentUserSession;
   Future<TechnicianModel?> getCurrentUserData();
   Future<AssignmentModel> getNearestAssignment();
-  Future<AssignmentModel> updateTechnicianArrivedAt();
-  Future<AssignmentModel> updateAssignmentStartedAt();
-  Future<AssignmentModel> updateAssignmentFinishedAt();
+/*   Future<AssignmentModel> updateTechnicianArrivedAt(AssignmentModel assignment);
+  Future<AssignmentModel> updateAssignmentStartedAt(AssignmentModel assignment);
+  Future<AssignmentModel> updateAssignmentFinishedAt(AssignmentModel assignment); */
 }
 
 class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
@@ -76,7 +76,7 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
     }
   }
 
-  @override
+  /* @override
   Future<AssignmentModel> updateTechnicianArrivedAt(
     AssignmentModel assignment,
   ) async {
@@ -140,5 +140,5 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
     } catch (e) {
       throw ServerException(e.toString());
     }
-  }
+  } */
 }

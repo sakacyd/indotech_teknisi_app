@@ -11,10 +11,16 @@ class AssignmentModel extends Assignment {
     required super.status,
     required super.imageUrl,
     required super.assignmentTypeId,
+    required super.technicianArrivedAt,
+    required super.assignmentStartedAt,
+    required super.assignmentFinishedAt,
     super.assignmentTypeName,
     super.customerName,
     super.customerPhoneNumber,
     super.customerAddress,
+    super.technicianName,
+    super.technicianPhoneNumber,
+    super.technicianAddress,
   });
 
   Map<String, dynamic> toJson() {
@@ -26,30 +32,35 @@ class AssignmentModel extends Assignment {
       'unit': unit,
       'history': history,
       'status': status,
-      'imageUrl': imageUrl,
+      'image_url': imageUrl,
       'assignment_type_id': assignmentTypeId,
-      'assignment_type_name': assignmentTypeName,
-      'customer_name': customerName,
-      'customer_phone_number': customerPhoneNumber,
-      'customer_address': customerAddress,
+      'technician_arrived_at': technicianArrivedAt.toIso8601String(),
+      'assignment_started_at': assignmentStartedAt.toIso8601String(),
+      'assignment_finished_at': assignmentFinishedAt.toIso8601String(),
     };
   }
 
-  factory AssignmentModel.fromJson(Map<String, dynamic> map) {
+  factory AssignmentModel.fromJson(Map<String, dynamic> json) {
     return AssignmentModel(
-      id: map['id'] as String,
-      customerId: map['customer_id'] as String,
-      technicianId: map['technician_id'] as String,
-      scheduledAt: DateTime.parse(map['scheduled_at']),
-      unit: map['unit'] as String,
-      history: map['history'] as String,
-      status: map['status'] as String,
-      imageUrl: map['image_url'] as String,
-      assignmentTypeId: map['assignment_type_id'] as String,
-      assignmentTypeName: map['assignment_type_name'] as String?,
-      customerName: map['customer_name'] as String?,
-      customerPhoneNumber: map['customer_phone_number'] as String?,
-      customerAddress: map['customer_address'] as String?,
+      id: json['id'] as String,
+      customerId: json['customer_id'] as String,
+      technicianId: json['technician_id'] as String,
+      scheduledAt: DateTime.parse(json['scheduled_at']),
+      unit: json['unit'] as String,
+      history: json['history'] as String,
+      status: json['status'] as String,
+      imageUrl: json['image_url'] as String,
+      assignmentTypeId: json['assignment_type_id'] as String,
+      technicianArrivedAt: DateTime.parse(json['technician_arrived_at']),
+      assignmentStartedAt: DateTime.parse(json['assignment_started_at']),
+      assignmentFinishedAt: DateTime.parse(json['assignment_finished_at']),
+      assignmentTypeName: json['assignment_type_name'] as String?,
+      customerName: json['customer_name'] as String?,
+      customerPhoneNumber: json['customer_phone_number'] as String?,
+      customerAddress: json['customer_address'] as String?,
+      technicianName: json['technician_name'] as String?,
+      technicianPhoneNumber: json['technician_phone_number'] as String?,
+      technicianAddress: json['technician_address'] as String?,
     );
   }
 
@@ -58,16 +69,21 @@ class AssignmentModel extends Assignment {
     String? customerId,
     String? technicianId,
     DateTime? scheduledAt,
-    List<String>? assignmentType,
     String? unit,
     String? history,
     String? status,
     String? imageUrl,
     String? assignmentTypeId,
+    DateTime? technicianArrivedAt,
+    DateTime? assignmentStartedAt,
+    DateTime? assignmentFinishedAt,
     String? assignmentTypeName,
     String? customerName,
     String? customerPhoneNumber,
     String? customerAddress,
+    String? technicianName,
+    String? technicianPhoneNumber,
+    String? technicianAddress,
   }) {
     return AssignmentModel(
       id: id ?? this.id,
@@ -79,10 +95,17 @@ class AssignmentModel extends Assignment {
       status: status ?? this.status,
       imageUrl: imageUrl ?? this.imageUrl,
       assignmentTypeId: assignmentTypeId ?? this.assignmentTypeId,
-      customerName: customerName ?? this.customerName,
+      technicianArrivedAt: technicianArrivedAt ?? this.technicianArrivedAt,
+      assignmentStartedAt: assignmentStartedAt ?? this.assignmentStartedAt,
+      assignmentFinishedAt: assignmentFinishedAt ?? this.assignmentFinishedAt,
       assignmentTypeName: assignmentTypeName ?? this.assignmentTypeName,
+      customerName: customerName ?? this.customerName,
       customerPhoneNumber: customerPhoneNumber ?? this.customerPhoneNumber,
       customerAddress: customerAddress ?? this.customerAddress,
+      technicianName: technicianName ?? this.technicianName,
+      technicianPhoneNumber:
+          technicianPhoneNumber ?? this.technicianPhoneNumber,
+      technicianAddress: technicianAddress ?? this.technicianAddress,
     );
   }
 }

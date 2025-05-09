@@ -5,10 +5,10 @@ import 'package:indotech_teknisi_app/features/dashboard/data/models/assignment_m
 import 'package:indotech_teknisi_app/features/dashboard/domain/repository/dashboard_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class UpdateTechnicianArrivedAt implements UseCase<Assignment, NoParams> {
+class UpdateTechnicianArrivedAt implements UseCase<Assignment, UpdateTechnicianArrivedAtParams> {
   final DashboardRepository repository;
 
-  UpdateTechnicianArrivedAt(this.repository);
+  UpdateTechnicianArrivedAt(this.repository); 
 
   @override
   Future<Either<Failure, Assignment>> call(

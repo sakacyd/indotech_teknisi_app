@@ -1,41 +1,34 @@
 import 'package:indotech_teknisi_app/core/error/exceptions.dart';
-import 'package:indotech_teknisi_app/features/dashboard/data/models/assignment_model.dart';
-import 'package:indotech_teknisi_app/features/dashboard/data/models/technician_model.dart';
+import 'package:indotech_teknisi_app/features/report/data/models/report_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract interface class DashboardRemoteDataSource {
-  Session? get currentUserSession;
-  Future<TechnicianModel?> getCurrentUserData();
-  Future<AssignmentModel> getNearestAssignment();
+abstract interface class ReportRemoteDataSource {
+  Future<ReportModel> updateTechnicianArrivedAt(ReportModel report);
+  Future<ReportModel> updateAssignmentStartedAt(ReportModel report);
+  Future<ReportModel> updateAssignmentFinishedAt(ReportModel report);
 }
 
-class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
+class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   final SupabaseClient supabaseClient;
 
-  DashboardRemoteDataSourceImpl(this.supabaseClient);
+  ReportRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Session? get currentUserSession => supabaseClient.auth.currentSession;
-
-  @override
-  Future<TechnicianModel?> getCurrentUserData() async {
+  Future<ReportModel> updateTechnicianArrivedAt(
+    ReportModel report,
+  ) async {
     try {
-      if (currentUserSession != null) {
-        final userData = await supabaseClient
-            .from('technicians')
-            .select()
-            .eq('id', currentUserSession!.user.id);
-        return TechnicianModel.fromJson(userData.first).copyWith(
-          email: currentUserSession!.user.email,
-          name: userData.first['name'],
-          imageUrl: userData.first['image_url'],
-          phoneNumber: userData.first['phone_number'],
-          address: userData.first['address'],
-          bloodType: userData.first['blood_type'],
-        );
-      }
-      return null;
-    } on AuthException catch (e) {
+      final now = DateTime.now().toIso8601String();
+
+      final updatedReport =
+          await supabaseClient
+              .from('reports')
+              .update({'technician_arrived_at': now})
+              .eq('id', report.id)
+              .select();
+
+      return ReportModel.fromJson(updatedReport.first);
+    } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
@@ -43,27 +36,42 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
   }
 
   @override
-  Future<AssignmentModel> getNearestAssignment() async {
+  Future<ReportModel> updateAssignmentStartedAt(
+    ReportModel report,
+  ) async {
     try {
       final now = DateTime.now().toIso8601String();
 
-      final res = await supabaseClient
-          .from('assignments')
-          .select('*, assignment_type(name),customers(name, phone_number, address), technicians(name, phone_number, address)')
-          .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
-          .gte('scheduled_at', now)
-          .order('scheduled_at', ascending: true)
-          .limit(1);
+      final updatedReport =
+          await supabaseClient
+              .from('reports')
+              .update({'assignment_started_at': now})
+              .eq('id', report.id)
+              .select();
 
-      return AssignmentModel.fromJson(res.first).copyWith(
-        assignmentTypeName: res.first['assignment_type']['name'],
-        customerName: res.first['customers']['name'],
-        customerPhoneNumber: res.first['customers']['phone_number'],
-        customerAddress: res.first['customers']['address'],
-        technicianName: res.first['technicians']['name'],
-        technicianPhoneNumber: res.first['technicians']['phone_number'],
-        technicianAddress: res.first['technicians']['address'],
-      );
+      return ReportModel.fromJson(updatedReport.first);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<ReportModel> updateAssignmentFinishedAt(
+    ReportModel report,
+  ) async {
+    try {
+      final now = DateTime.now().toIso8601String();
+
+      final updatedReport =
+          await supabaseClient
+              .from('reports')
+              .update({'assignment_finished_at': now})
+              .eq('id', report.id)
+              .select();
+
+      return ReportModel.fromJson(updatedReport.first);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

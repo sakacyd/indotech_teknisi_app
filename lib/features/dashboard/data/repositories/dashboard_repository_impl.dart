@@ -63,7 +63,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
     }
   }
 
-  @override
+  /* @override
   Future<Either<Failure, Assignment>> updateTechnicianArrivedAt({
     required AssignmentModel assignment,
   }) async {
@@ -71,32 +71,36 @@ class DashboardRepositoryImpl implements DashboardRepository {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constants.noConnectionMessage));
       }
-      final updatedTechnicianArrivedAt = await dashboardRemoteDataSource.updateTechnicianArrivedAt();
-      return right(updatedTechnicianArrivedAt);
+      final updatedAssignment = await dashboardRemoteDataSource.updateTechnicianArrivedAt(assignment);
+      return right(updatedAssignment);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, Assignment>> updateAssignmentStartedAt() async {
+  Future<Either<Failure, Assignment>> updateAssignmentStartedAt({
+    required AssignmentModel assignment,
+  }) async {
     try {
-      final assignment =
-          await dashboardRemoteDataSource.updateAssignmentStartedAt();
-      return right(assignment);
+      final updatedAssignment =
+          await dashboardRemoteDataSource.updateAssignmentStartedAt(assignment);
+      return right(updatedAssignment);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, Assignment>> updateAssignmentFinishedAt() async {
+  Future<Either<Failure, Assignment>> updateAssignmentFinishedAt({
+    required AssignmentModel assignment,
+  }) async {
     try {
-      final assignment =
-          await dashboardRemoteDataSource.updateAssignmentFinishedAt();
-      return right(assignment);
+      final updatedAssignment =
+          await dashboardRemoteDataSource.updateAssignmentFinishedAt(assignment);
+      return right(updatedAssignment);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
     }
-  }
+  } */
 }

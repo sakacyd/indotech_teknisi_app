@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indotech_teknisi_app/features/assignment/data/models/assignment_model.dart';
 
 part 'viewer_event.dart';
 part 'viewer_state.dart';
@@ -11,7 +12,11 @@ class ViewerBloc extends Bloc<ViewerEvent, ViewerState> {
     on<CompleteViewer>((event, emit) async {
       emit(ViewerCompleted());
     });
+    on<UpdateTechnicianArrivedAtEvent>((event, emit) async {
+      emit(ViewerLoading());
+    });
     on<ChangeStep>(_onSlideSuccess);
+    
   }
 
   FutureOr<void> _onSlideSuccess(
