@@ -48,17 +48,17 @@ class CustomStepper extends StatelessWidget {
                   loadingAnimation: 'assets/loading_white.json',
                   steps: const [
                     EasyStep(
-                      icon: Icon(Icons.shopping_cart),
+                      icon: Icon(Icons.add_road),
                       title: 'Cart',
                       lineText: 'Add Address Info',
                     ),
                     EasyStep(
-                      icon: Icon(Icons.info),
+                      icon: Icon(Icons.location_city),
                       title: 'Address',
                       lineText: 'Go To Checkout',
                     ),
                     EasyStep(
-                      icon: Icon(Icons.shopping_cart_outlined),
+                      icon: Icon(Icons.share_arrival_time_rounded),
                       title: 'Checkout',
                       lineText: 'Choose Payment Method',
                     ),

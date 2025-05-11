@@ -14,9 +14,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   ReportRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<ReportModel> updateTechnicianArrivedAt(
-    ReportModel report,
-  ) async {
+  Future<ReportModel> updateTechnicianArrivedAt(ReportModel report) async {
     try {
       final now = DateTime.now().toIso8601String();
 
@@ -36,9 +34,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   }
 
   @override
-  Future<ReportModel> updateAssignmentStartedAt(
-    ReportModel report,
-  ) async {
+  Future<ReportModel> updateAssignmentStartedAt(ReportModel report) async {
     try {
       final now = DateTime.now().toIso8601String();
 
@@ -58,9 +54,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   }
 
   @override
-  Future<ReportModel> updateAssignmentFinishedAt(
-    ReportModel report,
-  ) async {
+  Future<ReportModel> updateAssignmentFinishedAt(ReportModel report) async {
     try {
       final now = DateTime.now().toIso8601String();
 

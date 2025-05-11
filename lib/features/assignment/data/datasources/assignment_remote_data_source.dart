@@ -19,8 +19,7 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
   @override
   Future<List<AssignmentModel>> getTodayAssignments() async {
     try {
-      final startOfDay =
-          DateTime(now.year, now.month, now.day).toIso8601String();
+      final startOfDay = DateTime.now().toIso8601String();
       final endOfDay =
           DateTime(now.year, now.month, now.day, 23, 59, 59).toIso8601String();
 
@@ -52,12 +51,13 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
   @override
   Future<List<AssignmentModel>> getPreviousAssignments() async {
     try {
-      final startOfDay =
-          DateTime(now.year, now.month, now.day).toIso8601String();
+      final startOfDay = DateTime.now().toIso8601String();
 
       final res = await supabaseClient
           .from('assignments')
-          .select('*, assignment_type(name), customers(name, phone_number, address)')
+          .select(
+            '*, assignment_type(name), customers(name, phone_number, address)',
+          )
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
           .lt('scheduled_at', startOfDay)
           .order('scheduled_at', ascending: false);

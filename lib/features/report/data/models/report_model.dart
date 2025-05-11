@@ -1,45 +1,47 @@
-import 'package:indotech_teknisi_app/core/common/entities/user.dart';
+import 'package:indotech_teknisi_app/core/common/entities/report.dart';
 
-class ReportModel extends User {
+class ReportModel extends Report {
   ReportModel({
     required super.id,
-    required super.name,
-    required super.email,
-    required super.imageUrl,
-    required super.phoneNumber,
-    required super.address,
-    required super.bloodType,
+    required super.assignmentId,
+    required super.technicianArrivedAt,
+    required super.assignmentStartedAt,
+    required super.assignmentFinishedAt,
   });
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'assignment_id': assignmentId,
+      'technician_arrived_at': technicianArrivedAt.toIso8601String(),
+      'assignment_started_at': assignmentStartedAt.toIso8601String(),
+      'assignment_finished_at': assignmentFinishedAt.toIso8601String(),
+    };
+  }
 
   factory ReportModel.fromJson(Map<String, dynamic> json) {
     return ReportModel(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-      email: json['email'] ?? '',
-      imageUrl: json['image_url'] ?? '',
-      phoneNumber: json['phone_number'] ?? '',
-      address: json['address'] ?? '',
-      bloodType: json['blood_type'] ?? '',
+      id: json['id'] as String,
+      assignmentId: json['assignment_id'] as String,
+      technicianArrivedAt: DateTime.parse(json['technician_arrived_at']),
+      assignmentStartedAt: DateTime.parse(json['assignment_started_at']),
+      assignmentFinishedAt: DateTime.parse(json['assignment_finished_at']),
     );
   }
 
   ReportModel copyWith({
     String? id,
-    String? name,
-    String? email,
-    String? imageUrl,
-    String? phoneNumber,
-    String? address,
-    String? bloodType,
+    String? assignmentId,
+    DateTime? technicianArrivedAt,
+    DateTime? assignmentStartedAt,
+    DateTime? assignmentFinishedAt,
   }) {
     return ReportModel(
       id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      imageUrl: imageUrl ?? this.imageUrl,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      address: address ?? this.address,
-      bloodType: bloodType ?? this.bloodType,
+      assignmentId: assignmentId ?? this.assignmentId,
+      technicianArrivedAt: technicianArrivedAt ?? this.technicianArrivedAt,
+      assignmentStartedAt: assignmentStartedAt ?? this.assignmentStartedAt,
+      assignmentFinishedAt: assignmentFinishedAt ?? this.assignmentFinishedAt,
     );
   }
 }

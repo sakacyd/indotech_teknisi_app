@@ -13,12 +13,4 @@ final class StepperChanged extends ViewerState {
   StepperChanged(this.currentStep);
 }
 
-class UpdateTechnicianArrivedSuccess extends ViewerState {
-  final AssignmentModel assignment;
-
-  UpdateTechnicianArrivedSuccess(this.assignment);
-
-  List<Object?> get props => [assignment];
-}
-
 final class ViewerCompleted extends ViewerState {}

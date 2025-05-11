@@ -5,7 +5,7 @@ String formatDateByDMMMYYYY(DateTime date) {
 }
 
 String formatDateByHm(DateTime date) {
-  return DateFormat('HH:m').format(date);
+  return DateFormat('HH:mm').format(date);
 }
 
 String formatDateByEEEEddMMMM(DateTime date) {

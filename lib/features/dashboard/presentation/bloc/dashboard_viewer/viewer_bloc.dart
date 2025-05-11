@@ -12,11 +12,7 @@ class ViewerBloc extends Bloc<ViewerEvent, ViewerState> {
     on<CompleteViewer>((event, emit) async {
       emit(ViewerCompleted());
     });
-    on<UpdateTechnicianArrivedAtEvent>((event, emit) async {
-      emit(ViewerLoading());
-    });
     on<ChangeStep>(_onSlideSuccess);
-    
   }
 
   FutureOr<void> _onSlideSuccess(

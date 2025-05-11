@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
-import 'package:indotech_teknisi_app/core/constants/constants.dart';
 import 'package:indotech_teknisi_app/core/error/exceptions.dart';
 import 'package:indotech_teknisi_app/core/common/entities/user.dart';
 import 'package:indotech_teknisi_app/core/network/connection_checker.dart';
-import 'package:indotech_teknisi_app/features/dashboard/data/models/assignment_model.dart';
 import 'package:indotech_teknisi_app/features/dashboard/data/models/technician_model.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -62,45 +60,4 @@ class DashboardRepositoryImpl implements DashboardRepository {
       return left(Failure(e.toString()));
     }
   }
-
-  /* @override
-  Future<Either<Failure, Assignment>> updateTechnicianArrivedAt({
-    required AssignmentModel assignment,
-  }) async {
-    try {
-      if (!await connectionChecker.isConnected) {
-        return left(Failure(Constants.noConnectionMessage));
-      }
-      final updatedAssignment = await dashboardRemoteDataSource.updateTechnicianArrivedAt(assignment);
-      return right(updatedAssignment);
-    } on ServerException catch (e) {
-      return left(Failure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Assignment>> updateAssignmentStartedAt({
-    required AssignmentModel assignment,
-  }) async {
-    try {
-      final updatedAssignment =
-          await dashboardRemoteDataSource.updateAssignmentStartedAt(assignment);
-      return right(updatedAssignment);
-    } on ServerException catch (e) {
-      return left(Failure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Assignment>> updateAssignmentFinishedAt({
-    required AssignmentModel assignment,
-  }) async {
-    try {
-      final updatedAssignment =
-          await dashboardRemoteDataSource.updateAssignmentFinishedAt(assignment);
-      return right(updatedAssignment);
-    } on ServerException catch (e) {
-      return left(Failure(e.toString()));
-    }
-  } */
 }

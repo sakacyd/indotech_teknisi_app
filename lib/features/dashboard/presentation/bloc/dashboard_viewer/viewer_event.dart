@@ -9,12 +9,4 @@ final class ChangeStep extends ViewerEvent {
   ChangeStep(this.step);
 }
 
-final class UpdateTechnicianArrivedAtEvent extends ViewerEvent {
-  final AssignmentModel assignment;
-
-  UpdateTechnicianArrivedAtEvent({required this.assignment});
-
-  List<Object?> get props => [assignment];
-}
-
 final class CompleteViewer extends ViewerEvent {}

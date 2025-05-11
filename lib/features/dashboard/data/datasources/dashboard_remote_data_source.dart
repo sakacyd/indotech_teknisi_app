@@ -7,9 +7,6 @@ abstract interface class DashboardRemoteDataSource {
   Session? get currentUserSession;
   Future<TechnicianModel?> getCurrentUserData();
   Future<AssignmentModel> getNearestAssignment();
-/*   Future<AssignmentModel> updateTechnicianArrivedAt(AssignmentModel assignment);
-  Future<AssignmentModel> updateAssignmentStartedAt(AssignmentModel assignment);
-  Future<AssignmentModel> updateAssignmentFinishedAt(AssignmentModel assignment); */
 }
 
 class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
@@ -75,70 +72,4 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
       throw ServerException(e.toString());
     }
   }
-
-  /* @override
-  Future<AssignmentModel> updateTechnicianArrivedAt(
-    AssignmentModel assignment,
-  ) async {
-    try {
-      final now = DateTime.now().toIso8601String();
-
-      final updatedAssignment =
-          await supabaseClient
-              .from('assignments')
-              .update({'technician_arrived_at': now})
-              .eq('id', assignment.id)
-              .select();
-
-      return AssignmentModel.fromJson(updatedAssignment.first);
-    } on PostgrestException catch (e) {
-      throw ServerException(e.message);
-    } catch (e) {
-      throw ServerException(e.toString());
-    }
-  }
-
-  @override
-  Future<AssignmentModel> updateAssignmentStartedAt(
-    AssignmentModel assignment,
-  ) async {
-    try {
-      final now = DateTime.now().toIso8601String();
-
-      final updatedAssignment =
-          await supabaseClient
-              .from('assignments')
-              .update({'assignment_started_at': now})
-              .eq('id', assignment.id)
-              .select();
-
-      return AssignmentModel.fromJson(updatedAssignment.first);
-    } on PostgrestException catch (e) {
-      throw ServerException(e.message);
-    } catch (e) {
-      throw ServerException(e.toString());
-    }
-  }
-
-  @override
-  Future<AssignmentModel> updateAssignmentFinishedAt(
-    AssignmentModel assignment,
-  ) async {
-    try {
-      final now = DateTime.now().toIso8601String();
-
-      final updatedAssignment =
-          await supabaseClient
-              .from('assignments')
-              .update({'assignment_finished_at': now})
-              .eq('id', assignment.id)
-              .select();
-
-      return AssignmentModel.fromJson(updatedAssignment.first);
-    } on PostgrestException catch (e) {
-      throw ServerException(e.message);
-    } catch (e) {
-      throw ServerException(e.toString());
-    }
-  } */
 }

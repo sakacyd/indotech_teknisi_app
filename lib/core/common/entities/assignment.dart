@@ -9,9 +9,6 @@ class Assignment {
   final String status;
   final String imageUrl;
   final String assignmentTypeId;
-  final DateTime technicianArrivedAt;
-  final DateTime assignmentStartedAt;
-  final DateTime assignmentFinishedAt;
   final String? assignmentTypeName;
   final String? customerName;
   final String? customerPhoneNumber;
@@ -29,9 +26,6 @@ class Assignment {
     required this.status,
     required this.imageUrl,
     required this.assignmentTypeId,
-    required this.technicianArrivedAt,
-    required this.assignmentStartedAt,
-    required this.assignmentFinishedAt,
     this.assignmentTypeName,
     this.customerName,
     this.customerPhoneNumber,
