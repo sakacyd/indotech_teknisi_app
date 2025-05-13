@@ -49,7 +49,6 @@ class _DashboardPageState extends State<DashboardPage> {
       body: BlocConsumer<DashboardBloc, DashboardState>(
         listener: (context, state) {
           if (state is DashboardFailure) {
-            debugPrint('[BlocListener] DashboardFailure: ${state.message}');
             showSnackBar(context, state.message);
           }
         },

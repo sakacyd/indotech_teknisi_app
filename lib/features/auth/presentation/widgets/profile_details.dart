@@ -11,9 +11,10 @@ class ProfileDetails extends StatelessWidget {
     final List<Map<String, String>> details = [
       {'title': 'ID Teknisi', 'value': user.id},
       {'title': 'Nama', 'value': user.name},
-      {'title': 'Phone Number', 'value': user.phoneNumber},
+      {'title': 'Nomor Telefon', 'value': user.phoneNumber},
       {'title': 'E-mail', 'value': user.email},
-      {'title': 'Address', 'value': user.address},
+      {'title': 'Alamat', 'value': user.address},
+      {'title': 'Golongan Darah', 'value': user.bloodType},
     ];
 
     return Column(
