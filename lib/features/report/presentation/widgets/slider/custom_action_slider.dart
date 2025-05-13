@@ -1,7 +1,7 @@
 import 'package:action_slider/action_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_viewer/viewer_bloc.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
 
 class CustomActionSlider extends StatefulWidget {
   final String text;
@@ -33,8 +33,8 @@ class _CustomActionSliderState extends State<CustomActionSlider> {
     super.dispose();
   }
 
-  void _handleBlocState(ViewerState state) {
-    if (state is ViewerCompleted && _isSliderEnabled) {
+  void _handleBlocState(ReportState state) {
+    if (state is ReportCompleted && _isSliderEnabled) {
       setState(() {
         _isSliderEnabled = false;
       });
@@ -43,7 +43,7 @@ class _CustomActionSliderState extends State<CustomActionSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ViewerBloc, ViewerState>(
+    return BlocListener<ReportBloc, ReportState>(
       listener: (context, state) {
         _handleBlocState(state);
       },

@@ -8,7 +8,7 @@ Future<void> initDependencies() async {
   _initAuth();
   _initAssignment();
   _initDashboard();
-  _initViewer();
+  _initReport();
 
   if (AppSecrets.supabaseUrl == null || AppSecrets.supabaseKey == null) {
     throw Exception('Supabase credentials not found');
@@ -110,8 +110,26 @@ void _initDashboard() {
     );
 }
 
-void _initViewer() {
+void _initReport() {
   serviceLocator
+    // datasource
+    ..registerFactory<ReportRemoteDataSource>(
+      () => ReportRemoteDataSourceImpl(serviceLocator()),
+    )
+    // repository
+    ..registerFactory<ReportRepository>(
+      () => ReportRepositoryImpl(serviceLocator(), serviceLocator()),
+    )
+    // usecases
+    ..registerFactory(() => UpdateTechnicianArrivedAt(serviceLocator()))
+    ..registerFactory(() => UpdateAssignmentStartedAt(serviceLocator()))
+    ..registerFactory(() => UpdateAssignmentFinishedAt(serviceLocator()))
     // bloc
-    ..registerLazySingleton(() => ViewerBloc());
+    ..registerLazySingleton(
+      () => ReportBloc(
+        updateTechnicianArrivedAt: serviceLocator(),
+        updateAssignmentStartedAt: serviceLocator(),
+        updateAssignmentFinishedAt: serviceLocator(),
+      ),
+    );
 }

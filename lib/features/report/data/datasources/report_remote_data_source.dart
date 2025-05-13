@@ -3,9 +3,9 @@ import 'package:indotech_teknisi_app/features/report/data/models/report_model.da
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class ReportRemoteDataSource {
-  Future<ReportModel> updateTechnicianArrivedAt(ReportModel report);
-  Future<ReportModel> updateAssignmentStartedAt(ReportModel report);
-  Future<ReportModel> updateAssignmentFinishedAt(ReportModel report);
+  Future<ReportModel> updateTechnicianArrivedAt(String assignmentId);
+  Future<ReportModel> updateAssignmentStartedAt(String assignmentId);
+  Future<ReportModel> updateAssignmentFinishedAt(String assignmentId);
 }
 
 class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
@@ -14,7 +14,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   ReportRemoteDataSourceImpl(this.supabaseClient);
 
   @override
-  Future<ReportModel> updateTechnicianArrivedAt(ReportModel report) async {
+  Future<ReportModel> updateTechnicianArrivedAt(String assignmentId) async {
     try {
       final now = DateTime.now().toIso8601String();
 
@@ -22,7 +22,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
           await supabaseClient
               .from('reports')
               .update({'technician_arrived_at': now})
-              .eq('id', report.id)
+              .eq('assignment_id', assignmentId)
               .select();
 
       return ReportModel.fromJson(updatedReport.first);
@@ -34,7 +34,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   }
 
   @override
-  Future<ReportModel> updateAssignmentStartedAt(ReportModel report) async {
+  Future<ReportModel> updateAssignmentStartedAt(String assignmentId) async {
     try {
       final now = DateTime.now().toIso8601String();
 
@@ -42,7 +42,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
           await supabaseClient
               .from('reports')
               .update({'assignment_started_at': now})
-              .eq('id', report.id)
+              .eq('assignment_id', assignmentId)
               .select();
 
       return ReportModel.fromJson(updatedReport.first);
@@ -54,7 +54,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   }
 
   @override
-  Future<ReportModel> updateAssignmentFinishedAt(ReportModel report) async {
+  Future<ReportModel> updateAssignmentFinishedAt(String assignmentId) async {
     try {
       final now = DateTime.now().toIso8601String();
 
@@ -62,7 +62,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
           await supabaseClient
               .from('reports')
               .update({'assignment_finished_at': now})
-              .eq('id', report.id)
+              .eq('assignment_id', assignmentId)
               .select();
 
       return ReportModel.fromJson(updatedReport.first);

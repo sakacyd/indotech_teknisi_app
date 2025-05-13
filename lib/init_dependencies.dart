@@ -23,8 +23,14 @@ import 'package:indotech_teknisi_app/features/dashboard/data/repositories/dashbo
 import 'package:indotech_teknisi_app/features/dashboard/domain/repository/dashboard_repository.dart';
 import 'package:indotech_teknisi_app/features/dashboard/domain/usecases/get_current_user.dart';
 import 'package:indotech_teknisi_app/features/dashboard/domain/usecases/get_nearest_assignments.dart';
-import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
-import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_viewer/viewer_bloc.dart';
+import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:indotech_teknisi_app/features/report/data/datasources/report_remote_data_source.dart';
+import 'package:indotech_teknisi_app/features/report/data/repositories/report_repository_impl.dart';
+import 'package:indotech_teknisi_app/features/report/domain/repository/report_repository.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/update_technician_arrived_at.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_started_at.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_finished_at.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';

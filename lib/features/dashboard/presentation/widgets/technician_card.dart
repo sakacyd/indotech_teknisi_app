@@ -3,7 +3,7 @@ import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/core/utils/calculate_reading_time.dart';
 import 'package:indotech_teknisi_app/core/utils/format_date.dart';
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
-import 'package:indotech_teknisi_app/features/dashboard/presentation/pages/dashboard_viewer_page.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/pages/report_page.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/pages/profile_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +31,21 @@ class TechnicianCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white,
-                  backgroundImage: AssetImage(user.imageUrl),
+                ClipOval(
+                  child: CachedNetworkImage(
+                    imageUrl: user.imageUrl,
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.cover,
+                    placeholder:
+                        (context, url) => const SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
+                    errorWidget:
+                        (context, url, error) => const Icon(Icons.error),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(

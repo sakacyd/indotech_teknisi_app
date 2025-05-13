@@ -67,8 +67,11 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
         technicianAddress: res.first['technicians']['address'],
       );
     } on PostgrestException catch (e) {
+      print('[getNearestAssignment] PostgrestException: ${e.message}');
       throw ServerException(e.message);
     } catch (e) {
+      print('[getNearestAssignment] Unknown error: $e');
+      print('[getNearestAssignment] Stacktrace: ${StackTrace.current}');
       throw ServerException(e.toString());
     }
   }

@@ -1,27 +1,78 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_finished_at.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_started_at.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/update_technician_arrived_at.dart';
 
 part 'report_event.dart';
 part 'report_state.dart';
 
 class ReportBloc extends Bloc<ReportEvent, ReportState> {
-  ReportBloc() : super(ReportInitial()) {
-    on<ReportEvent>((event, emit) => emit(ReportLoading()));
-    on<CompleteReport>((event, emit) async {
-      emit(ReportCompleted());
-    });
-    on<ChangeStep>(_onSlideSuccess);
+  final UpdateTechnicianArrivedAt _updateTechnicianArrivedAt;
+  final UpdateAssignmentStartedAt _updateAssignmentStartedAt;
+  final UpdateAssignmentFinishedAt _updateAssignmentFinishedAt;
+
+  ReportBloc({
+    required UpdateTechnicianArrivedAt updateTechnicianArrivedAt,
+    required UpdateAssignmentStartedAt updateAssignmentStartedAt,
+    required UpdateAssignmentFinishedAt updateAssignmentFinishedAt,
+  }) : _updateTechnicianArrivedAt = updateTechnicianArrivedAt,
+       _updateAssignmentStartedAt = updateAssignmentStartedAt,
+       _updateAssignmentFinishedAt = updateAssignmentFinishedAt,
+       super(ReportInitial()) {
+    on<UpdateArrived>(_onUpdateArrived);
+    on<UpdateStarted>(_onUpdateStarted);
+    on<UpdateFinished>(_onUpdateFinished);
+    on<CompleteReport>(_onCompleteReport);
   }
 
-  FutureOr<void> _onSlideSuccess(
-    ChangeStep event,
+  FutureOr<void> _onUpdateArrived(
+    UpdateArrived event,
     Emitter<ReportState> emit,
   ) async {
-    emit(ReportLoading());
+    emit(ReportLoading(currentStep: state.currentStep));
+    final res = await _updateTechnicianArrivedAt(
+      UpdateTechnicianArrivedAtParams(assignmentId: event.assignmentId),
+    );
+    res.fold(
+      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
+      (_) => emit(UpdateArrivedSuccess()),
+    );
+  }
 
-    await Future.delayed(const Duration(milliseconds: 300));
+  FutureOr<void> _onUpdateStarted(
+    UpdateStarted event,
+    Emitter<ReportState> emit,
+  ) async {
+    emit(ReportLoading(currentStep: state.currentStep));
+    final res = await _updateAssignmentStartedAt(
+      UpdateAssignmentStartedAtParams(assignmentId: event.assignmentId),
+    );
+    res.fold(
+      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
+      (_) => emit(UpdateStartedSuccess()),
+    );
+  }
 
-    emit(StepperChanged(event.step));
+  FutureOr<void> _onUpdateFinished(
+    UpdateFinished event,
+    Emitter<ReportState> emit,
+  ) async {
+    emit(ReportLoading(currentStep: state.currentStep));
+    final res = await _updateAssignmentFinishedAt(
+      UpdateAssignmentFinishedAtParams(assignmentId: event.assignmentId),
+    );
+    res.fold(
+      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
+      (_) => emit(UpdateFinishedSuccess()),
+    );
+  }
+
+  FutureOr<void> _onCompleteReport(
+    CompleteReport event,
+    Emitter<ReportState> emit,
+  ) async {
+    emit(ReportCompleted());
   }
 }

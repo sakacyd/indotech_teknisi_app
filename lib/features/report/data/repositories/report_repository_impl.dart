@@ -5,7 +5,6 @@ import 'package:indotech_teknisi_app/core/error/exceptions.dart';
 import 'package:indotech_teknisi_app/core/error/failures.dart';
 import 'package:indotech_teknisi_app/core/network/connection_checker.dart';
 import 'package:indotech_teknisi_app/features/report/data/datasources/report_remote_data_source.dart';
-import 'package:indotech_teknisi_app/features/report/data/models/report_model.dart';
 import 'package:indotech_teknisi_app/features/report/domain/repository/report_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -19,14 +18,16 @@ class ReportRepositoryImpl implements ReportRepository {
 
   @override
   Future<Either<Failure, Report>> updateTechnicianArrivedAt({
-    required ReportModel report,
+    required String assignmentId,
   }) async {
     try {
       if (!await connectionChecker.isConnected) {
         return left(Failure(Constants.noConnectionMessage));
       }
+
       final updatedReport = await reportRemoteDataSource
-          .updateTechnicianArrivedAt(report);
+          .updateTechnicianArrivedAt(assignmentId);
+
       return right(updatedReport);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
@@ -35,11 +36,11 @@ class ReportRepositoryImpl implements ReportRepository {
 
   @override
   Future<Either<Failure, Report>> updateAssignmentStartedAt({
-    required ReportModel report,
+    required String assignmentId,
   }) async {
     try {
       final updatedReport = await reportRemoteDataSource
-          .updateAssignmentStartedAt(report);
+          .updateAssignmentStartedAt(assignmentId);
       return right(updatedReport);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
@@ -48,11 +49,11 @@ class ReportRepositoryImpl implements ReportRepository {
 
   @override
   Future<Either<Failure, Report>> updateAssignmentFinishedAt({
-    required ReportModel report,
+    required String assignmentId,
   }) async {
     try {
       final updatedReport = await reportRemoteDataSource
-          .updateAssignmentFinishedAt(report);
+          .updateAssignmentFinishedAt(assignmentId);
       return right(updatedReport);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));

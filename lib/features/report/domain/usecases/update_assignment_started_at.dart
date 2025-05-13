@@ -1,7 +1,6 @@
 import 'package:indotech_teknisi_app/core/error/failures.dart';
 import 'package:indotech_teknisi_app/core/usecase/usecase.dart';
 import 'package:indotech_teknisi_app/core/common/entities/report.dart';
-import 'package:indotech_teknisi_app/features/report/data/models/report_model.dart';
 import 'package:indotech_teknisi_app/features/report/domain/repository/report_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -15,13 +14,13 @@ class UpdateAssignmentStartedAt implements UseCase<Report, UpdateAssignmentStart
     UpdateAssignmentStartedAtParams params,
   ) async {
     return await repository.updateAssignmentStartedAt(
-      report: params.report,
+      assignmentId: params.assignmentId,
     );
   }
 }
 
 class UpdateAssignmentStartedAtParams {
-  final ReportModel report;
+  final String assignmentId;
 
-  UpdateAssignmentStartedAtParams({required this.report});
+  UpdateAssignmentStartedAtParams({required this.assignmentId});
 }
