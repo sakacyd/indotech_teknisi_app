@@ -41,20 +41,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       return;
     }
 
-    if (assignmentResult.isLeft()) {
-      final failure = assignmentResult.swap().getOrElse(
-        (_) => Failure('Unknown error'),
-      );
-      emit(DashboardFailure(failure.message));
-      return;
-    }
-
     final technician = technicianResult.getOrElse(
       (_) => throw Exception('Missing user'),
     );
-    final assignment = assignmentResult.getOrElse(
-      (_) => throw Exception('Missing assignment'),
-    );
+
+    final assignment = assignmentResult.fold<Assignment?>((failure) {
+      return null;
+    }, (data) => data);
 
     emit(DashboardGetAllSuccess(assignment, technician));
   }

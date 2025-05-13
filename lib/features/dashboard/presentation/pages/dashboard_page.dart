@@ -67,7 +67,15 @@ class _DashboardPageState extends State<DashboardPage> {
                 children: [
                   TechnicianCard(user: technician),
                   const SizedBox(height: 16),
-                  AssignmentCard(assignment: assignment),
+                  if (assignment != null)
+                    AssignmentCard(assignment: assignment)
+                  else
+                    const Center(
+                      child: Text(
+                        'Tidak ada pekerjaan terdekat',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
                 ],
               ),
             );

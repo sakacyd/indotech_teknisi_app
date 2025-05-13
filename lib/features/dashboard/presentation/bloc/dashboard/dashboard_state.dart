@@ -8,7 +8,7 @@ final class DashboardInitial extends DashboardState {}
 final class DashboardLoading extends DashboardState {}
 
 final class DashboardGetAllSuccess extends DashboardState {
-  final Assignment assignments;
+  final Assignment? assignments;
   final User user;
 
   DashboardGetAllSuccess(this.assignments, this.user);

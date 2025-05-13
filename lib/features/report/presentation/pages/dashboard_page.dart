@@ -67,7 +67,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 children: [
                   TechnicianCard(user: technician),
                   const SizedBox(height: 16),
-                  AssignmentCard(assignment: assignment),
+                  AssignmentCard(assignment: assignment!),
                 ],
               ),
             );
