@@ -7,8 +7,9 @@ class Assignment {
   final String unit;
   final String history;
   final String status;
-  final String imageUrl;
+  final String? imageUrl;
   final String assignmentTypeId;
+  final String unitQuantity;
   final String? assignmentTypeName;
   final String? customerName;
   final String? customerPhoneNumber;
@@ -24,8 +25,9 @@ class Assignment {
     required this.unit,
     required this.history,
     required this.status,
-    required this.imageUrl,
+    this.imageUrl,
     required this.assignmentTypeId,
+    required this.unitQuantity,
     this.assignmentTypeName,
     this.customerName,
     this.customerPhoneNumber,

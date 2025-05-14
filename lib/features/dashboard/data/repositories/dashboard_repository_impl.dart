@@ -55,6 +55,9 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<Either<Failure, Assignment>> getNearestAssignment() async {
     try {
       final assignment = await dashboardRemoteDataSource.getNearestAssignment();
+      if (assignment == null) {
+        return left(Failure('Tidak ada pekerjaan terdekat'));
+      }
       return right(assignment);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));

@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract interface class DashboardRemoteDataSource {
   Session? get currentUserSession;
   Future<TechnicianModel?> getCurrentUserData();
-  Future<AssignmentModel> getNearestAssignment();
+  Future<AssignmentModel?> getNearestAssignment();
 }
 
 class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
@@ -43,7 +43,7 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
   }
 
   @override
-  Future<AssignmentModel> getNearestAssignment() async {
+  Future<AssignmentModel?> getNearestAssignment() async {
     try {
       final now = DateTime.now().toIso8601String();
 
@@ -57,21 +57,22 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
           .order('scheduled_at', ascending: true)
           .limit(1);
 
-      return AssignmentModel.fromJson(res.first).copyWith(
-        assignmentTypeName: res.first['assignment_type']['name'],
-        customerName: res.first['customers']['name'],
-        customerPhoneNumber: res.first['customers']['phone_number'],
-        customerAddress: res.first['customers']['address'],
-        technicianName: res.first['technicians']['name'],
-        technicianPhoneNumber: res.first['technicians']['phone_number'],
-        technicianAddress: res.first['technicians']['address'],
+      if (res.isEmpty) return null;
+
+      final data = res.first;
+
+      return AssignmentModel.fromJson(data).copyWith(
+        assignmentTypeName: data['assignment_type']['name'],
+        customerName: data['customers']['name'],
+        customerPhoneNumber: data['customers']['phone_number'],
+        customerAddress: data['customers']['address'],
+        technicianName: data['technicians']['name'],
+        technicianPhoneNumber: data['technicians']['phone_number'],
+        technicianAddress: data['technicians']['address'],
       );
     } on PostgrestException catch (e) {
-      print('[getNearestAssignment] PostgrestException: ${e.message}');
       throw ServerException(e.message);
     } catch (e) {
-      print('[getNearestAssignment] Unknown error: $e');
-      print('[getNearestAssignment] Stacktrace: ${StackTrace.current}');
       throw ServerException(e.toString());
     }
   }

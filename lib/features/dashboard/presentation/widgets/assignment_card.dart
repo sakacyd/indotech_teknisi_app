@@ -76,7 +76,7 @@ class AssignmentCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
-                    imageUrl: assignment.imageUrl,
+                    imageUrl: assignment.imageUrl ?? "",
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
@@ -87,7 +87,7 @@ class AssignmentCard extends StatelessWidget {
                           child: Center(child: CircularProgressIndicator()),
                         ),
                     errorWidget:
-                        (context, url, error) => const Icon(Icons.error),
+                        (context, url, error) => const Icon(Icons.person),
                   ),
                 ),
                 const SizedBox(height: 10),

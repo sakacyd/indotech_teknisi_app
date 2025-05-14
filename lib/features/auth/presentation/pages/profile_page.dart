@@ -7,11 +7,22 @@ import 'package:indotech_teknisi_app/features/auth/presentation/bloc/auth_bloc.d
 import 'package:indotech_teknisi_app/features/auth/presentation/pages/login_page.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/widgets/profile_details.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   static route() =>
       MaterialPageRoute(builder: (context) => const ProfilePage());
 
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthBloc>().add(AuthIsUserLoggedIn());
+  }
 
   @override
   Widget build(BuildContext context) {
