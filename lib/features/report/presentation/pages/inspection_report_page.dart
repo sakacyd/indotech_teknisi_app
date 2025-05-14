@@ -3,6 +3,7 @@ import 'package:indotech_teknisi_app/core/common/entities/report.dart';
 import 'package:indotech_teknisi_app/features/assignment/presentation/pages/history_assignment_page.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/card/report_card.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/widgets/customer_section.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/stepper/custom_stepper.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/slider/custom_action_slider.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class InspectionReportPageState extends State<InspectionReportPage> {
           children: [
             Text('Inspection Report'),
             Text('Report ID: ${widget.report.id}'),
+            CustomerSection(report: widget.report),
           ],
         ),
       ),

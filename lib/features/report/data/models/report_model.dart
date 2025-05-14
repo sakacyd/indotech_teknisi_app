@@ -7,6 +7,11 @@ class ReportModel extends Report {
     super.technicianArrivedAt,
     super.assignmentStartedAt,
     super.assignmentFinishedAt,
+    super.unit,
+    super.unitQuantity,
+    super.customerName,
+    super.customerPhoneNumber,
+    super.customerAddress,
   });
 
   Map<String, dynamic> toJson() {
@@ -16,6 +21,11 @@ class ReportModel extends Report {
       'technician_arrived_at': technicianArrivedAt?.toIso8601String(),
       'assignment_started_at': assignmentStartedAt?.toIso8601String(),
       'assignment_finished_at': assignmentFinishedAt?.toIso8601String(),
+      'unit': unit,
+      'unit_quantity': unitQuantity,
+      'customer_name': customerName,
+      'customer_phone_number': customerPhoneNumber,
+      'customer_address': customerAddress,
     };
   }
 
@@ -35,6 +45,11 @@ class ReportModel extends Report {
           json['assignment_finished_at'] != null
               ? DateTime.parse(json['assignment_finished_at'])
               : null,
+      unit: json['unit'] as String,
+      unitQuantity: json['unit_quantity'] as String,
+      customerName: json['customer_name'] as String,
+      customerPhoneNumber: json['customer_phone_number'] as String,
+      customerAddress: json['customer_address'] as String,
     );
   }
 
@@ -44,6 +59,11 @@ class ReportModel extends Report {
     DateTime? technicianArrivedAt,
     DateTime? assignmentStartedAt,
     DateTime? assignmentFinishedAt,
+    String? unit,
+    String? unitQuantity,
+    String? customerName,
+    String? customerPhoneNumber,
+    String? customerAddress,
   }) {
     return ReportModel(
       id: id ?? this.id,
@@ -51,6 +71,11 @@ class ReportModel extends Report {
       technicianArrivedAt: technicianArrivedAt ?? this.technicianArrivedAt,
       assignmentStartedAt: assignmentStartedAt ?? this.assignmentStartedAt,
       assignmentFinishedAt: assignmentFinishedAt ?? this.assignmentFinishedAt,
+      unit: unit ?? this.unit,
+      unitQuantity: unitQuantity ?? this.unitQuantity,
+      customerName: customerName ?? this.customerName,
+      customerPhoneNumber: customerPhoneNumber ?? this.customerPhoneNumber,
+      customerAddress: customerAddress ?? this.customerAddress,
     );
   }
 }
