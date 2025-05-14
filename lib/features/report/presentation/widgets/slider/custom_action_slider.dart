@@ -59,7 +59,9 @@ class _CustomActionSliderState extends State<CustomActionSlider> {
               ctrl.success();
               widget.onSuccess();
               await Future.delayed(const Duration(milliseconds: 500));
-              ctrl.reset();
+              if (mounted) {
+                ctrl.reset();
+              }
             },
             child: Text(widget.text),
           ),

@@ -282,6 +282,25 @@ class ReportCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 4),
               child: Row(
                 children: [
+                  Icon(
+                    Icons.format_list_numbered_outlined,
+                    size: 18,
+                    color: Colors.blue.shade600,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      assignment.unitQuantity,
+                      style: const TextStyle(fontSize: 14, height: 1.4),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Row(
+                children: [
                   Icon(Icons.history, size: 18, color: Colors.blue.shade600),
                   const SizedBox(width: 8),
                   Expanded(
