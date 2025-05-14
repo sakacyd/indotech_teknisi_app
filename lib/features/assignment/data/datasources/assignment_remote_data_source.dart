@@ -25,7 +25,9 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
 
       final res = await supabaseClient
           .from('assignments')
-          .select('*, customers(name, phone_number, address)')
+          .select(
+            '*, assignment_type(name), customers(name, phone_number, address)',
+          )
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
           .gte('scheduled_at', startOfDay)
           .lte('scheduled_at', endOfDay)
