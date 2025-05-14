@@ -53,6 +53,7 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
             '*, assignment_type(name),customers(name, phone_number, address), technicians(name, phone_number, address)',
           )
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
+          .eq('status', 'Pending')
           .gte('scheduled_at', now)
           .order('scheduled_at', ascending: true)
           .limit(1);

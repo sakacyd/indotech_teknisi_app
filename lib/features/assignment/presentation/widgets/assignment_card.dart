@@ -12,10 +12,12 @@ class AssignmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCompleted = assignment.status == "Done";
-    final statusLabel = isCompleted ? "Done" : "Pending";
-    final statusColor = isCompleted ? Colors.green : Colors.orange;
-
+    final statusLabel = assignment.status;
+    final MaterialColor statusColor = switch (statusLabel) {
+      'Pending' => Colors.orange,
+      'Completed' => Colors.green,
+      _ => Colors.grey,
+    };
     return GestureDetector(
       onTap:
           () => Navigator.push(context, AssignmentViewerPage.route(assignment)),

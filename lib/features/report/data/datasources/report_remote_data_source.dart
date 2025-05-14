@@ -1,4 +1,5 @@
 import 'package:indotech_teknisi_app/core/error/exceptions.dart';
+import 'package:indotech_teknisi_app/features/report/data/models/assignment_model.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/report_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -6,6 +7,7 @@ abstract interface class ReportRemoteDataSource {
   Future<ReportModel> updateTechnicianArrivedAt(String assignmentId);
   Future<ReportModel> updateAssignmentStartedAt(String assignmentId);
   Future<ReportModel> updateAssignmentFinishedAt(String assignmentId);
+  Future<AssignmentModel> updateAssignmentStatus(String assignmentId);
 }
 
 class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
@@ -66,6 +68,24 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
               .select();
 
       return ReportModel.fromJson(updatedReport.first);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<AssignmentModel> updateAssignmentStatus(String assignmentId) async {
+    try {
+      final updatedAssignment =
+          await supabaseClient
+              .from('assignments')
+              .update({'status': 'Completed'})
+              .eq('id', assignmentId)
+              .select();
+
+      return AssignmentModel.fromJson(updatedAssignment.first);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

@@ -26,6 +26,10 @@ final class UpdateFinishedSuccess extends ReportState {
   const UpdateFinishedSuccess() : super(currentStep: 3);
 }
 
+final class UpdateStatusSuccess extends ReportState {
+  const UpdateStatusSuccess() : super(currentStep: 3);
+}
+
 final class ReportCompleted extends ReportState {
   const ReportCompleted() : super(currentStep: 4);
 }

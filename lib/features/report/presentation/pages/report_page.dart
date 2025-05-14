@@ -65,6 +65,7 @@ class _ReportPageState extends State<ReportPage> {
                           bloc.add(UpdateStarted(id));
                         } else if (currentStep == 2) {
                           bloc.add(UpdateFinished(id));
+                          bloc.add(UpdateStatus(id));
                           bloc.add(CompleteReport());
                         }
                       },

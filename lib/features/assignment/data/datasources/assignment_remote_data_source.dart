@@ -29,6 +29,7 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
             '*, assignment_type(name), customers(name, phone_number, address)',
           )
           .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
+          .eq('status', 'Pending')
           .gte('scheduled_at', startOfDay)
           .lte('scheduled_at', endOfDay)
           .order('scheduled_at', ascending: true);
@@ -53,18 +54,40 @@ class AssignmentRemoteDataSourceImpl implements AssignmentRemoteDataSource {
   @override
   Future<List<AssignmentModel>> getPreviousAssignments() async {
     try {
-      final startOfDay = DateTime.now().toIso8601String();
+      final now = DateTime.now().toIso8601String();
 
-      final res = await supabaseClient
+      final technicianId = supabaseClient.auth.currentSession!.user.id;
+
+      // 1. Dapatkan assignment scheduled_at <= now
+      final resBeforeNow = await supabaseClient
           .from('assignments')
           .select(
             '*, assignment_type(name), customers(name, phone_number, address)',
           )
-          .eq('technician_id', supabaseClient.auth.currentSession!.user.id)
-          .lt('scheduled_at', startOfDay)
-          .order('scheduled_at', ascending: false);
+          .eq('technician_id', technicianId)
+          .lte('scheduled_at', now);
 
-      return res
+      // 2. Dapatkan assignment scheduled_at > now dan status == 'Completed'
+      final resCompletedFuture = await supabaseClient
+          .from('assignments')
+          .select(
+            '*, assignment_type(name), customers(name, phone_number, address)',
+          )
+          .eq('technician_id', technicianId)
+          .gt('scheduled_at', now)
+          .eq('status', 'Completed');
+
+      // Gabungkan hasil
+      final allResults = [...resBeforeNow, ...resCompletedFuture];
+
+      // Urutkan berdasarkan scheduled_at menurun (desc)
+      allResults.sort(
+        (a, b) => DateTime.parse(
+          b['scheduled_at'],
+        ).compareTo(DateTime.parse(a['scheduled_at'])),
+      );
+
+      return allResults
           .map(
             (assignment) => AssignmentModel.fromJson(assignment).copyWith(
               assignmentTypeName: assignment['assignment_type']['name'],

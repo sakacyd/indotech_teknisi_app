@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
 import 'package:indotech_teknisi_app/core/common/entities/report.dart';
 import 'package:indotech_teknisi_app/core/constants/constants.dart';
 import 'package:indotech_teknisi_app/core/error/exceptions.dart';
@@ -55,6 +56,19 @@ class ReportRepositoryImpl implements ReportRepository {
       final updatedReport = await reportRemoteDataSource
           .updateAssignmentFinishedAt(assignmentId);
       return right(updatedReport);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Assignment>> updateAssignmentStatus({
+    required String assignmentId,
+  }) async {
+    try {
+      final updatedAssignment = await reportRemoteDataSource
+          .updateAssignmentStatus(assignmentId);
+      return right(updatedAssignment);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
     }

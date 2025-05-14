@@ -124,12 +124,14 @@ void _initReport() {
     ..registerFactory(() => UpdateTechnicianArrivedAt(serviceLocator()))
     ..registerFactory(() => UpdateAssignmentStartedAt(serviceLocator()))
     ..registerFactory(() => UpdateAssignmentFinishedAt(serviceLocator()))
+    ..registerFactory(() => UpdateAssignmentStatus(serviceLocator()))
     // bloc
     ..registerLazySingleton(
       () => ReportBloc(
         updateTechnicianArrivedAt: serviceLocator(),
         updateAssignmentStartedAt: serviceLocator(),
         updateAssignmentFinishedAt: serviceLocator(),
+        updateAssignmentStatus: serviceLocator(),
       ),
     );
 }
