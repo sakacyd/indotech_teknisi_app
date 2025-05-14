@@ -27,4 +27,8 @@ final class UpdateStatus extends ReportEvent {
   UpdateStatus(this.assignmentId);
 }
 
-final class CompleteReport extends ReportEvent {}
+final class CompleteReport extends ReportEvent {
+  final String assignmentId;
+
+  CompleteReport(this.assignmentId);
+}

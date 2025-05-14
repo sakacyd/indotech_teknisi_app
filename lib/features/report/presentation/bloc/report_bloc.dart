@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:indotech_teknisi_app/core/common/entities/report.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/get_report_by_assignment_id.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_finished_at.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_started_at.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/update_technician_arrived_at.dart';
@@ -14,16 +16,19 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
   final UpdateAssignmentStartedAt _updateAssignmentStartedAt;
   final UpdateAssignmentFinishedAt _updateAssignmentFinishedAt;
   final UpdateAssignmentStatus _updateAssignmentStatus;
+  final GetReportByAssignmentId _getReportByAssignmentId;
 
   ReportBloc({
     required UpdateTechnicianArrivedAt updateTechnicianArrivedAt,
     required UpdateAssignmentStartedAt updateAssignmentStartedAt,
     required UpdateAssignmentFinishedAt updateAssignmentFinishedAt,
     required UpdateAssignmentStatus updateAssignmentStatus,
+    required GetReportByAssignmentId getReportByAssignmentId,
   }) : _updateTechnicianArrivedAt = updateTechnicianArrivedAt,
        _updateAssignmentStartedAt = updateAssignmentStartedAt,
        _updateAssignmentFinishedAt = updateAssignmentFinishedAt,
        _updateAssignmentStatus = updateAssignmentStatus,
+       _getReportByAssignmentId = getReportByAssignmentId,
        super(ReportInitial()) {
     on<UpdateArrived>(_onUpdateArrived);
     on<UpdateStarted>(_onUpdateStarted);
@@ -92,6 +97,12 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     CompleteReport event,
     Emitter<ReportState> emit,
   ) async {
-    emit(ReportCompleted());
+    final res = await _getReportByAssignmentId(
+      GetReportByAssignmentIdParams(assignmentId: event.assignmentId),
+    );
+    res.fold(
+      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
+      (report) => emit(ReportCompleted(report)),
+    );
   }
 }

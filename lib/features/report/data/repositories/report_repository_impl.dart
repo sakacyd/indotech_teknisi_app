@@ -73,4 +73,17 @@ class ReportRepositoryImpl implements ReportRepository {
       return left(Failure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, Report>> getReportByAssignmentId({
+    required String assignmentId,
+  }) async {
+    try {
+      final report = await reportRemoteDataSource
+          .getReportByAssignmentId(assignmentId);
+      return right(report);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 }

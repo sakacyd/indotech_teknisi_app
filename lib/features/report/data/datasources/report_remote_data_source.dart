@@ -8,6 +8,7 @@ abstract interface class ReportRemoteDataSource {
   Future<ReportModel> updateAssignmentStartedAt(String assignmentId);
   Future<ReportModel> updateAssignmentFinishedAt(String assignmentId);
   Future<AssignmentModel> updateAssignmentStatus(String assignmentId);
+  Future<ReportModel> getReportByAssignmentId(String assignmentId);
 }
 
 class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
@@ -86,6 +87,22 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
               .select();
 
       return AssignmentModel.fromJson(updatedAssignment.first);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<ReportModel> getReportByAssignmentId(String assignmentId) async {
+    try {
+      final res = await supabaseClient
+          .from('reports')
+          .select()
+          .eq('assignment_id', assignmentId);
+
+      return ReportModel.fromJson(res.first);
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

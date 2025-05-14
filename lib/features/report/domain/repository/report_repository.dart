@@ -16,4 +16,7 @@ abstract interface class ReportRepository {
   Future<Either<Failure, Assignment>> updateAssignmentStatus({
     required String assignmentId,
   });
+  Future<Either<Failure, Report>> getReportByAssignmentId({
+    required String assignmentId,
+  });
 }

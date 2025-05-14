@@ -31,6 +31,7 @@ import 'package:indotech_teknisi_app/features/report/domain/usecases/update_tech
 import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_started_at.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_finished_at.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/update_assignment_status.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/get_report_by_assignment_id.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';

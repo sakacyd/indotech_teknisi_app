@@ -1,6 +1,6 @@
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
-import 'package:indotech_teknisi_app/features/assignment/presentation/pages/history_assignment_page.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/pages/get_report_page_route.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/card/report_card.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/stepper/custom_stepper.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/slider/custom_action_slider.dart';
@@ -33,10 +33,12 @@ class _ReportPageState extends State<ReportPage> {
       body: BlocListener<ReportBloc, ReportState>(
         listener: (context, state) {
           if (state is ReportCompleted) {
+            final assignment = widget.assignment;
+            final report = state.report;
             Navigator.pushAndRemoveUntil(
               context,
-              HistoryAssignmentPage.route(),
-              (Route<dynamic> route) => false,
+              getReportPageRoute(assignment, report),
+              (route) => false,
             );
           }
         },
@@ -66,7 +68,7 @@ class _ReportPageState extends State<ReportPage> {
                         } else if (currentStep == 2) {
                           bloc.add(UpdateFinished(id));
                           bloc.add(UpdateStatus(id));
-                          bloc.add(CompleteReport());
+                          bloc.add(CompleteReport(id));
                         }
                       },
                     ),

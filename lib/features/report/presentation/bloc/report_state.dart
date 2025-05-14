@@ -11,7 +11,8 @@ final class ReportInitial extends ReportState {
 }
 
 final class ReportLoading extends ReportState {
-  const ReportLoading({required int currentStep}) : super(currentStep: currentStep);
+  const ReportLoading({required int currentStep})
+    : super(currentStep: currentStep);
 }
 
 final class UpdateArrivedSuccess extends ReportState {
@@ -31,7 +32,9 @@ final class UpdateStatusSuccess extends ReportState {
 }
 
 final class ReportCompleted extends ReportState {
-  const ReportCompleted() : super(currentStep: 4);
+  final Report report;
+
+  const ReportCompleted(this.report) : super(currentStep: 4);
 }
 
 final class ReportFailure extends ReportState {

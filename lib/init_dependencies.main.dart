@@ -125,6 +125,7 @@ void _initReport() {
     ..registerFactory(() => UpdateAssignmentStartedAt(serviceLocator()))
     ..registerFactory(() => UpdateAssignmentFinishedAt(serviceLocator()))
     ..registerFactory(() => UpdateAssignmentStatus(serviceLocator()))
+    ..registerFactory(() => GetReportByAssignmentId(serviceLocator()))
     // bloc
     ..registerLazySingleton(
       () => ReportBloc(
@@ -132,6 +133,7 @@ void _initReport() {
         updateAssignmentStartedAt: serviceLocator(),
         updateAssignmentFinishedAt: serviceLocator(),
         updateAssignmentStatus: serviceLocator(),
+        getReportByAssignmentId: serviceLocator(),
       ),
     );
 }
