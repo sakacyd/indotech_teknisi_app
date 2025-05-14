@@ -87,7 +87,7 @@ class AssignmentCard extends StatelessWidget {
                           child: Center(child: CircularProgressIndicator()),
                         ),
                     errorWidget:
-                        (context, url, error) => const Icon(Icons.person),
+                        (context, url, error) => const Icon(Icons.build, size: 50),
                   ),
                 ),
                 const SizedBox(height: 10),

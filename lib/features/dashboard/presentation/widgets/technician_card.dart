@@ -44,7 +44,7 @@ class TechnicianCard extends StatelessWidget {
                           child: Center(child: CircularProgressIndicator()),
                         ),
                     errorWidget:
-                        (context, url, error) => const Icon(Icons.error),
+                        (context, url, error) => const Icon(Icons.person),
                   ),
                 ),
                 const SizedBox(width: 10),
