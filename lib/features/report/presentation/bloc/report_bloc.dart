@@ -41,13 +41,20 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     UpdateArrived event,
     Emitter<ReportState> emit,
   ) async {
+    print('[Bloc] Event: UpdateArrived, assignmentId: \'${event.assignmentId}\'');
     emit(ReportLoading(currentStep: state.currentStep));
     final res = await _updateTechnicianArrivedAt(
       UpdateTechnicianArrivedAtParams(assignmentId: event.assignmentId),
     );
     res.fold(
-      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
-      (_) => emit(UpdateArrivedSuccess()),
+      (l) {
+        print('[Bloc] Failure: ${l.message}');
+        emit(ReportFailure(l.message, currentStep: state.currentStep));
+      },
+      (_) {
+        print('[Bloc] Success: UpdateArrivedSuccess');
+        emit(UpdateArrivedSuccess());
+      },
     );
   }
 
@@ -55,13 +62,20 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     UpdateStarted event,
     Emitter<ReportState> emit,
   ) async {
+    print('[Bloc] Event: UpdateStarted, assignmentId: \'${event.assignmentId}\'');
     emit(ReportLoading(currentStep: state.currentStep));
     final res = await _updateAssignmentStartedAt(
       UpdateAssignmentStartedAtParams(assignmentId: event.assignmentId),
     );
     res.fold(
-      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
-      (_) => emit(UpdateStartedSuccess()),
+      (l) {
+        print('[Bloc] Failure: ${l.message}');
+        emit(ReportFailure(l.message, currentStep: state.currentStep));
+      },
+      (_) {
+        print('[Bloc] Success: UpdateStartedSuccess');
+        emit(UpdateStartedSuccess());
+      },
     );
   }
 
@@ -69,13 +83,20 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     UpdateFinished event,
     Emitter<ReportState> emit,
   ) async {
+    print('[Bloc] Event: UpdateFinished, assignmentId: \'${event.assignmentId}\'');
     emit(ReportLoading(currentStep: state.currentStep));
     final res = await _updateAssignmentFinishedAt(
       UpdateAssignmentFinishedAtParams(assignmentId: event.assignmentId),
     );
     res.fold(
-      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
-      (_) => emit(UpdateFinishedSuccess()),
+      (l) {
+        print('[Bloc] Failure: ${l.message}');
+        emit(ReportFailure(l.message, currentStep: state.currentStep));
+      },
+      (_) {
+        print('[Bloc] Success: UpdateFinishedSuccess');
+        emit(UpdateFinishedSuccess());
+      },
     );
   }
 
@@ -83,13 +104,20 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     UpdateStatus event,
     Emitter<ReportState> emit,
   ) async {
+    print('[Bloc] Event: UpdateStatus, assignmentId: \'${event.assignmentId}\'');
     emit(ReportLoading(currentStep: state.currentStep));
     final res = await _updateAssignmentStatus(
       UpdateAssignmentStatusParams(assignmentId: event.assignmentId),
     );
     res.fold(
-      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
-      (_) => emit(UpdateStatusSuccess()),
+      (l) {
+        print('[Bloc] Failure: ${l.message}');
+        emit(ReportFailure(l.message, currentStep: state.currentStep));
+      },
+      (_) {
+        print('[Bloc] Success: UpdateStatusSuccess');
+        emit(UpdateStatusSuccess());
+      },
     );
   }
 
@@ -97,12 +125,19 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     CompleteReport event,
     Emitter<ReportState> emit,
   ) async {
+    print('[Bloc] Event: CompleteReport, assignmentId: \'${event.assignmentId}\'');
     final res = await _getReportByAssignmentId(
       GetReportByAssignmentIdParams(assignmentId: event.assignmentId),
     );
     res.fold(
-      (l) => emit(ReportFailure(l.message, currentStep: state.currentStep)),
-      (report) => emit(ReportCompleted(report)),
+      (l) {
+        print('[Bloc] Failure: ${l.message}');
+        emit(ReportFailure(l.message, currentStep: state.currentStep));
+      },
+      (report) {
+        print('[Bloc] Success: ReportCompleted');
+        emit(ReportCompleted(report));
+      },
     );
   }
 }

@@ -99,7 +99,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
     try {
       final res = await supabaseClient
           .from('reports')
-          .select('*, assignment_type(name),customers(name, phone_number, address), technicians(name, phone_number, address)')
+          .select('*, assignments(assignment_type(id, name), customers(name, phone_number, address), technicians(name, phone_number, address))')
           .eq('assignment_id', assignmentId);
 
       return ReportModel.fromJson(res.first).copyWith(

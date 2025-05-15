@@ -45,11 +45,11 @@ class ReportModel extends Report {
           json['assignment_finished_at'] != null
               ? DateTime.parse(json['assignment_finished_at'])
               : null,
-      unit: json['unit'] as String,
-      unitQuantity: json['unit_quantity'] as String,
-      customerName: json['customer_name'] as String,
-      customerPhoneNumber: json['customer_phone_number'] as String,
-      customerAddress: json['customer_address'] as String,
+      unit: json['unit'],
+      unitQuantity: json['unit_quantity'],
+      customerName: json['customer_name'],
+      customerPhoneNumber: json['customer_phone_number'],
+      customerAddress: json['customer_address'],
     );
   }
 

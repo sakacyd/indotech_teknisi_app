@@ -11,7 +11,7 @@ Route<dynamic> getReportPageRoute(Assignment assignment, Report report) {
   switch (type) {
     case 'survey':
       return SurveyReportPage.route(report);
-    case 'pemasangan':
+    case 'pemasangan & serah terima unit':
       return InstallationReportPage.route(report);
     case 'pengecekan':
       return InspectionReportPage.route(report);
