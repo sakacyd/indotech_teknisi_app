@@ -99,15 +99,15 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
     try {
       final res = await supabaseClient
           .from('reports')
-          .select('*, assignments(assignment_type(id, name), customers(name, phone_number, address), technicians(name, phone_number, address))')
+          .select('*, assignments(assignment_type(name), customers(name, phone_number, address), technicians(name, phone_number, address), unit, unit_quantity)')
           .eq('assignment_id', assignmentId);
 
       return ReportModel.fromJson(res.first).copyWith(
-          unit: res.first['unit'],
-          unitQuantity: res.first['unit_quantity'],
-          customerName: res.first['customer_name'],
-          customerPhoneNumber: res.first['customer_phone_number'],
-          customerAddress: res.first['customer_address'],
+          unit: res.first['assignments']['unit'],
+          unitQuantity: res.first['assignments']['unit_quantity'],
+          customerName: res.first['assignments']['customers']['name'],
+          customerPhoneNumber: res.first['assignments']['customers']['phone_number'],
+          customerAddress: res.first['assignments']['customers']['address'],
         );
     } on PostgrestException catch (e) {
       throw ServerException(e.message);

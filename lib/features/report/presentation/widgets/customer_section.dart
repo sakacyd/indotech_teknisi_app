@@ -1,3 +1,4 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:indotech_teknisi_app/core/common/entities/report.dart';
 import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/core/utils/calculate_reading_time.dart';
@@ -15,32 +16,96 @@ class CustomerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController namaCustomerController =
-        TextEditingController(text: report.customerName);
-    final TextEditingController noTelpController = TextEditingController(text: report.customerPhoneNumber);
-    final TextEditingController alamatController = TextEditingController(text: report.customerAddress);
+    final TextEditingController namaCustomerController = TextEditingController(
+      text: report.customerName,
+    );
+    final TextEditingController noTelpController = TextEditingController(
+      text: report.customerPhoneNumber,
+    );
+    final TextEditingController alamatController = TextEditingController(
+      text: report.customerAddress,
+    );
     final TextEditingController picController = TextEditingController();
     final TextEditingController noTelpPicController = TextEditingController();
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Table(
-        columnWidths: const {
-          0: FlexColumnWidth(1.5),
-          1: FlexColumnWidth(0.2),
-          2: FlexColumnWidth(3),
-        },
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: [
-          buildCustomTableRow(
-            "Nama Customer / Perusahaan",
-            namaCustomerController,
-          ),
-          buildCustomTableRow("No. Telp / HP", noTelpController),
-          buildCustomTableRow("Alamat", alamatController, maxLines: 2),
-          buildCustomTableRow("P.I.C.", picController),
-          buildCustomTableRow("No Telp / HP P.I.C.", noTelpPicController),
-        ],
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade200),
+      ),
+      color: AppPallete.cardColor,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            _buildTextField("Nama Customer", namaCustomerController),
+            _buildTextField(
+              "No. Telp / HP",
+              noTelpController,
+              keyboardType: TextInputType.phone,
+            ),
+            _buildTextField("Alamat", alamatController, maxLines: 3),
+            _buildTextField("PLC", picController),
+            _buildTextField(
+              "No. Telp / HP PLC",
+              noTelpPicController,
+              keyboardType: TextInputType.phone,
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+Widget _buildTextField(
+    String label,
+    TextEditingController controller, {
+    int maxLines = 1,
+    TextInputType? keyboardType,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+              color: AppPallete.secondaryColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: controller,
+            maxLines: maxLines,
+            keyboardType: keyboardType,
+            style: GoogleFonts.inter(fontSize: 14, color: Colors.grey.shade800),
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: Colors.grey.shade300),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(color: AppPallete.accentColor),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              filled: true,
+              fillColor: Colors.grey.shade50,
+            ),
+          ),
+        ],
+      ),
+    );
+  }

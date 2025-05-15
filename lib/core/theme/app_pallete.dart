@@ -13,4 +13,9 @@ class AppPallete {
   static const Color blogCardColor = Color.fromARGB(179, 41, 37, 41);
   static const Color blogCardRadiusColor= Color.fromARGB(179, 51, 50, 51);
   static const Color mutedTextColor = Color.fromARGB(179, 255, 255, 255);
+  static const Color primaryColor = Color(0xFF2563EB);
+  static const Color secondaryColor = Color(0xFF64748B);
+  static const Color backgroundColor2 = Color(0xFFF8FAFC);
+  static const Color cardColor = Colors.white;
+  static const Color accentColor = Color(0xFF3B82F6);
 }

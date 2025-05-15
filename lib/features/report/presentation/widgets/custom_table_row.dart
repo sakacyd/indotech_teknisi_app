@@ -27,7 +27,7 @@ TableRow buildCustomTableRow(
         child: TextField(
           controller: controller,
           maxLines: maxLines,
-          style: GoogleFonts.inter(fontSize: 12, color: Colors.white),
+          style: GoogleFonts.inter(fontSize: 12, color: Colors.black),
           decoration: InputDecoration(
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(

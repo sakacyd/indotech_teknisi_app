@@ -3,6 +3,9 @@ import 'package:indotech_teknisi_app/core/common/entities/report.dart';
 import 'package:indotech_teknisi_app/features/assignment/presentation/pages/history_assignment_page.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/card/report_card.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/widgets/customer_info_section.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/widgets/customer_section.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/widgets/section_title.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/stepper/custom_stepper.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/slider/custom_action_slider.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +32,15 @@ class InstallationReportPageState extends State<InstallationReportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: Text("Berita Acara Pemasangan")),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min, // Biar column gak memenuhi layar
           children: [
             Text('Installation Report'),
             Text('Report ID: ${widget.report.id}'),
+            SectionTitle(title: "Customer Info"),
+            CustomerSection(report: widget.report),
           ],
         ),
       ),
