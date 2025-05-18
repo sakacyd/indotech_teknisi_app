@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:indotech_teknisi_app/core/error/exceptions.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/assignment_model.dart';
+import 'package:indotech_teknisi_app/features/report/data/models/installation_report_model.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/report_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -9,6 +12,13 @@ abstract interface class ReportRemoteDataSource {
   Future<ReportModel> updateAssignmentFinishedAt(String assignmentId);
   Future<AssignmentModel> updateAssignmentStatus(String assignmentId);
   Future<ReportModel> getReportByAssignmentId(String assignmentId);
+  Future<InstallationReportModel> uploadInstallationReport(
+    InstallationReportModel installationReport,
+  );
+  Future<String> uploadInstallationReportImages({
+    required File image,
+    required InstallationReportModel installationReport,
+  });
 }
 
 class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
@@ -99,17 +109,57 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
     try {
       final res = await supabaseClient
           .from('reports')
-          .select('*, assignments(assignment_type(name), customers(name, phone_number, address), technicians(name, phone_number, address), unit, unit_quantity)')
+          .select(
+            '*, assignments(assignment_type(name), customers(name, phone_number, address), technicians(name, phone_number, address), unit, unit_quantity)',
+          )
           .eq('assignment_id', assignmentId);
 
       return ReportModel.fromJson(res.first).copyWith(
-          unit: res.first['assignments']['unit'],
-          unitQuantity: res.first['assignments']['unit_quantity'],
-          customerName: res.first['assignments']['customers']['name'],
-          customerPhoneNumber: res.first['assignments']['customers']['phone_number'],
-          customerAddress: res.first['assignments']['customers']['address'],
-        );
+        unit: res.first['assignments']['unit'],
+        unitQuantity: res.first['assignments']['unit_quantity'],
+        customerName: res.first['assignments']['customers']['name'],
+        customerPhoneNumber:
+            res.first['assignments']['customers']['phone_number'],
+        customerAddress: res.first['assignments']['customers']['address'],
+      );
     } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<InstallationReportModel> uploadInstallationReport(
+    InstallationReportModel installationReport,
+  ) async {
+    try {
+      final installationReportData =
+          await supabaseClient
+              .from('installation_reports')
+              .insert(installationReport.toJson())
+              .select();
+      return InstallationReportModel.fromJson(installationReportData.first);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<String> uploadInstallationReportImages({
+    required File image,
+    required InstallationReportModel installationReport,
+  }) async {
+    try {
+      await supabaseClient.storage
+          .from('installation_report_images')
+          .upload(installationReport.id, image);
+      return supabaseClient.storage
+          .from('installation_report_images')
+          .getPublicUrl(installationReport.id);
+    } on StorageException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());

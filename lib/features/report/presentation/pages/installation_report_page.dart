@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/core/common/entities/report.dart';
@@ -5,6 +7,7 @@ import 'package:indotech_teknisi_app/core/common/widgets/loader.dart';
 import 'package:indotech_teknisi_app/core/theme/app_pallete.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/submit_report_bloc.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/customer_info_widget.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/widgets/info_field.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/product_info_widget.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/signature_section.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/widgets/installation_status_widget.dart';
@@ -19,14 +22,56 @@ class InstallationReportPage extends StatefulWidget {
   const InstallationReportPage({super.key, required this.report});
 
   @override
-  State<InstallationReportPage> createState() => InstallationReportPageState();
+  State<InstallationReportPage> createState() => _InstallationReportPageState();
 }
 
-class InstallationReportPageState extends State<InstallationReportPage> {
+class _InstallationReportPageState extends State<InstallationReportPage> {
   Map<String, dynamic> installationData = {};
   String? selectedLocation;
+  final namaController = TextEditingController();
+  final noTelpController = TextEditingController();
+  final alamatController = TextEditingController();
+  final picController = TextEditingController();
+  final noTelpPicController = TextEditingController();
+  final namaProdukController = TextEditingController();
+  final jumlahController = TextEditingController();
+  final nomorSeriTangkiController = TextEditingController();
+  final nomorSeriKolektorController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  void uploadInstallationReport() async {
+    context.read<SubmitReportBloc>().add(
+      InstallationReportSubmit(
+        reportId: widget.report.id,
+        nomorSeriTangki: nomorSeriTangkiController.text,
+        nomorSeriKolektor: nomorSeriKolektorController.text,
+        pemasangan: selectedLocation ?? '',
+        tangki: installationData['tangki'] ?? '',
+        collector: installationData['collector'] ?? '',
+        elementHeating: installationData['elementHeating'] ?? '',
+        thermostat: installationData['thermostat'] ?? '',
+        safetyValve: installationData['safetyValve'] ?? '',
+        kabelListrik: installationData['kabelListrik'] ?? '',
+        pipa: installationData['pipa'] ?? '',
+        dinabolt: installationData['dinabolt'] ?? '',
+        alasan: installationData['alasan'] ?? '',
+        tanggal: DateTime.now(),
+        materialDari:
+            installationData['materialFromCompany'] == true
+                ? 'PT. INDOTECH'
+                : 'CUSTOMER',
+        instalasiOleh:
+            installationData['materialFromCustomer'] == true
+                ? 'CUSTOMER'
+                : 'PT. INDOTECH',
+        note: null,
+        technicianSignature: File(''),
+        customerSignature: File(''),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,9 +101,90 @@ class InstallationReportPageState extends State<InstallationReportPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    CustomerInfoWidget(report: widget.report),
+                    Card(
+                      margin: const EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Customer',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            InfoField(
+                              controller: namaController,
+                              label: 'Nama Customer',
+                              value: widget.report.customerName ?? '-',
+                            ),
+                            InfoField(
+                              controller: noTelpController,
+                              label: 'No. Telp / HP',
+                              value: widget.report.customerPhoneNumber ?? '-',
+                            ),
+                            InfoField(
+                              controller: alamatController,
+                              label: 'Alamat',
+                              value: widget.report.customerAddress ?? '-',
+                            ),
+                            InfoField(
+                              controller: picController,
+                              label: 'PIC',
+                              value: '',
+                            ),
+                            InfoField(
+                              controller: noTelpPicController,
+                              label: 'No Telp / HP PIC',
+                              value: '',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 16),
-                    ProductInfoWidget(report: widget.report),
+                    Card(
+                      margin: const EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Produk',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            InfoField(
+                              controller: namaProdukController,
+                              label: 'Nama Produk',
+                              value: widget.report.unit ?? '-',
+                            ),
+                            InfoField(
+                              controller: jumlahController,
+                              label: 'Jumlah',
+                              value: widget.report.unitQuantity ?? '-',
+                            ),
+                            InfoField(
+                              controller: nomorSeriTangkiController,
+                              label: 'Nomor Seri Tangki',
+                              value: '',
+                            ),
+                            InfoField(
+                              controller: nomorSeriKolektorController,
+                              label: 'Nomor Seri Kolektor',
+                              value: '',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     Card(
                       child: Padding(
@@ -277,6 +403,7 @@ class InstallationReportPageState extends State<InstallationReportPage> {
                     SubmitReportButton(
                       buttonText: 'Submit Berita Acara',
                       onPressed: () {
+                        uploadInstallationReport();
                         // Handle the submit action here
                         // You can access the installationData map to get the values
                         print(installationData);
