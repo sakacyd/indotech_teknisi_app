@@ -34,8 +34,8 @@ class SubmitInstallationReport
       materialDari: params.materialDari,
       instalasiOleh: params.instalasiOleh,
       note: params.note,
-      technicianSignature: params.technicianSignature,
       customerSignature: params.customerSignature,
+      technicianSignature: params.technicianSignature,
     );
   }
 }
@@ -58,8 +58,8 @@ class SubmitInstallationReportParams {
   final String materialDari;
   final String instalasiOleh;
   final String? note;
-  final File technicianSignature;
   final File customerSignature;
+  final File technicianSignature;
 
   SubmitInstallationReportParams({
     required this.reportId,
@@ -79,7 +79,7 @@ class SubmitInstallationReportParams {
     required this.materialDari,
     required this.instalasiOleh,
     this.note,
-    required this.technicianSignature,
     required this.customerSignature,
+    required this.technicianSignature,
   });
 }

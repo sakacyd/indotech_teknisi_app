@@ -123,10 +123,10 @@ class SurveyReportPageState extends State<SurveyReportPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              const SignatureSection(
+              /* const SignatureSection(
                 leftTitle: 'Surveyor',
                 rightTitle: 'Customer',
-              ),
+              ), */
             ],
           ),
         ),

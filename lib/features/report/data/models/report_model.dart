@@ -12,6 +12,7 @@ class ReportModel extends Report {
     super.customerName,
     super.customerPhoneNumber,
     super.customerAddress,
+    super.technicianName,
   });
 
   Map<String, dynamic> toJson() {
@@ -26,6 +27,7 @@ class ReportModel extends Report {
       'customer_name': customerName,
       'customer_phone_number': customerPhoneNumber,
       'customer_address': customerAddress,
+      'technician_name': technicianName,
     };
   }
 
@@ -50,6 +52,7 @@ class ReportModel extends Report {
       customerName: json['customer_name'],
       customerPhoneNumber: json['customer_phone_number'],
       customerAddress: json['customer_address'],
+      technicianName: json['technician_name'],
     );
   }
 
@@ -64,6 +67,7 @@ class ReportModel extends Report {
     String? customerName,
     String? customerPhoneNumber,
     String? customerAddress,
+    String? technicianName,
   }) {
     return ReportModel(
       id: id ?? this.id,
@@ -76,6 +80,7 @@ class ReportModel extends Report {
       customerName: customerName ?? this.customerName,
       customerPhoneNumber: customerPhoneNumber ?? this.customerPhoneNumber,
       customerAddress: customerAddress ?? this.customerAddress,
+      technicianName: technicianName ?? this.technicianName,
     );
   }
 }

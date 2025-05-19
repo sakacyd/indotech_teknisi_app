@@ -44,8 +44,8 @@ class SubmitReportBloc extends Bloc<SubmitReportEvent, SubmitReportState> {
         materialDari: event.materialDari,
         instalasiOleh: event.instalasiOleh,
         note: event.note,
-        technicianSignature: event.technicianSignature,
         customerSignature: event.customerSignature,
+        technicianSignature: event.technicianSignature,
       ),
     );
     res.fold(

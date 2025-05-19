@@ -18,6 +18,7 @@ abstract interface class ReportRemoteDataSource {
   Future<String> uploadInstallationReportImages({
     required File image,
     required InstallationReportModel installationReport,
+    required String type,
   });
 }
 
@@ -121,6 +122,7 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
         customerPhoneNumber:
             res.first['assignments']['customers']['phone_number'],
         customerAddress: res.first['assignments']['customers']['address'],
+        technicianName: res.first['assignments']['technicians']['name'],
       );
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
@@ -151,14 +153,16 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
   Future<String> uploadInstallationReportImages({
     required File image,
     required InstallationReportModel installationReport,
+    required String type,
   }) async {
     try {
+      final fileName = '${installationReport.id}_$type';
       await supabaseClient.storage
           .from('installation_report_images')
-          .upload(installationReport.id, image);
+          .upload(fileName, image);
       return supabaseClient.storage
           .from('installation_report_images')
-          .getPublicUrl(installationReport.id);
+          .getPublicUrl(fileName);
     } on StorageException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

@@ -41,7 +41,7 @@ abstract interface class ReportRepository {
     required String materialDari,
     required String instalasiOleh,
     required String? note,
-    required File technicianSignature,
     required File customerSignature,
+    required File technicianSignature,
   });
 }

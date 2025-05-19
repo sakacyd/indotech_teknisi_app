@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/bloc/submit_report_bloc.dart';
 import 'package:indotech_teknisi_app/init_dependencies.dart';
 import 'package:indotech_teknisi_app/main_page.dart';
 import 'package:intl/intl.dart';
@@ -31,6 +32,7 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<TodayBloc>()),
         BlocProvider(create: (_) => serviceLocator<HistoryBloc>()),
         BlocProvider(create: (_) => serviceLocator<ReportBloc>()),
+        BlocProvider(create: (_) => serviceLocator<SubmitReportBloc>()),
         BlocProvider(create: (_) => BottomNavCubit()),
 
       ],

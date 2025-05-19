@@ -105,10 +105,10 @@ class InspectionReportPageState extends State<InspectionReportPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              const SignatureSection(
+             /*  const SignatureSection(
                 leftTitle: 'Teknisi',
                 rightTitle: 'Customer',
-              ),
+              ), */
             ],
           ),
         ),

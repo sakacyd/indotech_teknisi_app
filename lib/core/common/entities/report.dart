@@ -9,6 +9,7 @@ class Report {
   final String? customerName;
   final String? customerPhoneNumber;
   final String? customerAddress;
+  final String? technicianName;
   Report({
     required this.id,
     required this.assignmentId,
@@ -20,5 +21,6 @@ class Report {
     this.customerName,
     this.customerPhoneNumber,
     this.customerAddress,
+    this.technicianName,
   });
 }

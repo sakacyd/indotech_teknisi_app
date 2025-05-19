@@ -112,8 +112,8 @@ class ReportRepositoryImpl implements ReportRepository {
     required String materialDari,
     required String instalasiOleh,
     required String? note,
-    required File technicianSignature,
     required File customerSignature,
+    required File technicianSignature,
   }) async {
     try {
       if (!await connectionChecker.isConnected) {
@@ -138,28 +138,30 @@ class ReportRepositoryImpl implements ReportRepository {
         materialDari: materialDari,
         instalasiOleh: instalasiOleh,
         note: note,
-        ttdTeknisi: '',
         ttdCustomer: '',
-      );
-
-      final ttdTeknisi = await reportRemoteDataSource
-          .uploadInstallationReportImages(
-            image: technicianSignature,
-            installationReport: installationReportModel,
-          );
-
-      installationReportModel = installationReportModel.copyWith(
-        ttdTeknisi: ttdTeknisi,
+        ttdTeknisi: '',
       );
 
       final ttdCustomer = await reportRemoteDataSource
           .uploadInstallationReportImages(
             image: customerSignature,
             installationReport: installationReportModel,
+            type: 'customer',
           );
 
       installationReportModel = installationReportModel.copyWith(
         ttdCustomer: ttdCustomer,
+      );
+
+      final ttdTeknisi = await reportRemoteDataSource
+          .uploadInstallationReportImages(
+            image: technicianSignature,
+            installationReport: installationReportModel,
+            type: 'technician',
+          );
+
+      installationReportModel = installationReportModel.copyWith(
+        ttdTeknisi: ttdTeknisi,
       );
 
       final uploadedReport = await reportRemoteDataSource

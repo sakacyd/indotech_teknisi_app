@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 class InstallationStatusWidget extends StatefulWidget {
   final Function(Map<String, bool>) onChanged;
 
-  const InstallationStatusWidget({
-    super.key,
-    required this.onChanged,
-  });
+  const InstallationStatusWidget({super.key, required this.onChanged});
 
   @override
-  State<InstallationStatusWidget> createState() => _InstallationStatusWidgetState();
+  State<InstallationStatusWidget> createState() =>
+      _InstallationStatusWidgetState();
 }
 
 class _InstallationStatusWidgetState extends State<InstallationStatusWidget> {
@@ -42,24 +40,56 @@ class _InstallationStatusWidgetState extends State<InstallationStatusWidget> {
   }
 
   Widget _buildInstallationItem(String label, String key) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 150,
-          child: Text(label),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 150,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Radio<bool>(
+                        value: true,
+                        groupValue: installationStatus[key],
+                        onChanged: (value) => _updateStatus(key, true),
+                      ),
+                      const Text('Terpasang'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Radio<bool>(
+                        value: false,
+                        groupValue: installationStatus[key],
+                        onChanged: (value) => _updateStatus(key, false),
+                      ),
+                      const Text('Belum Terpasang'),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        Radio<bool>(
-          value: true,
-          groupValue: installationStatus[key],
-          onChanged: (value) => _updateStatus(key, true),
-        ),
-        const Text('Terpasang'),
-        Radio<bool>(
-          value: false,
-          groupValue: installationStatus[key],
-          onChanged: (value) => _updateStatus(key, false),
-        ),
-        const Text('Belum Terpasang'),
+        Divider(height: 1, color: Colors.grey[300], thickness: 1),
       ],
     );
   }
