@@ -44,6 +44,7 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
   final jumlahController = TextEditingController();
   final nomorSeriTangkiController = TextEditingController();
   final nomorSeriKolektorController = TextEditingController();
+  final noteController = TextEditingController();
   final SignatureController _technicianSignatureController =
       SignatureController(
         penStrokeWidth: 3,
@@ -167,7 +168,7 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
             installationData['installationByCompany'] == true
                 ? 'PT. INDOTECH'
                 : 'CUSTOMER',
-        note: null,
+        note: noteController.text,
         technicianSignature: technicianFile,
         customerSignature: customerFile,
       ),
@@ -178,6 +179,15 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
   void dispose() {
     _technicianSignatureController.dispose();
     _customerSignatureController.dispose();
+    namaTeknisiController.dispose();
+    namaCustomerController.dispose();
+    noTelpController.dispose();
+    alamatController.dispose();
+    namaProdukController.dispose();
+    jumlahController.dispose();
+    nomorSeriTangkiController.dispose();
+    nomorSeriKolektorController.dispose();
+    noteController.dispose();
     super.dispose();
   }
 
@@ -192,6 +202,7 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
     jumlahController.text = widget.report.unitQuantity ?? '';
     nomorSeriTangkiController.text = '';
     nomorSeriKolektorController.text = '';
+    noteController.text = '';
   }
 
   @override
@@ -208,11 +219,13 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Berita Acara berhasil dikirim')),
             );
-            Navigator.pushAndRemoveUntil(
-              context,
-              MainPage.route(),
-              (route) => false,
-            );
+            Future.delayed(const Duration(milliseconds: 300), () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MainPage.route(),
+                (route) => false,
+              );
+            });
           }
         },
         builder: (context, state) {
@@ -259,6 +272,7 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
                             }
                             return null;
                           },
+                          maxLines: 3,
                         ),
                         InfoField(
                           controller: picController,
@@ -461,6 +475,25 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
                               ),
                             ),
                           ],
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    SubmitReportCard(
+                      title: 'Note',
+                      children: [
+                        InfoField(
+                          controller: noteController,
+                          label: 'Note',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Note wajib diisi';
+                            }
+                            return null;
+                          },
+                          maxLines: 5,
                         ),
                       ],
                     ),

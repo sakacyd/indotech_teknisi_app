@@ -4,12 +4,14 @@ class InfoField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final FormFieldValidator<String>? validator;
+  final int? maxLines;
 
   const InfoField({
     super.key,
     required this.controller,
     required this.label,
-    required this.validator,
+    this.validator,
+    this.maxLines,
   });
 
   @override
@@ -30,6 +32,7 @@ class InfoField extends StatelessWidget {
               ),
             ),
             validator: validator,
+            maxLines: maxLines ?? 1,
           ),
         ],
       ),
