@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/widgets/installation_section.dart';
+import 'package:indotech_teknisi_app/main_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:signature/signature.dart';
 import 'package:indotech_teknisi_app/core/common/entities/report.dart';
@@ -66,8 +68,41 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
     return await file.writeAsBytes(bytes);
   }
 
+  bool _validateMaterialAndInstallation() {
+    final materialFromCompany =
+        installationData['materialFromCompany'] ?? false;
+    final materialFromCustomer =
+        installationData['materialFromCustomer'] ?? false;
+    final installationByCompany =
+        installationData['installationByCompany'] ?? false;
+    final installationByCustomer =
+        installationData['installationByCustomer'] ?? false;
+
+    if (!(materialFromCompany || materialFromCustomer)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Pilih minimal satu opsi untuk Material Dari'),
+        ),
+      );
+      return false;
+    }
+
+    if (!(installationByCompany || installationByCustomer)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Pilih minimal satu opsi untuk Instalasi Oleh'),
+        ),
+      );
+      return false;
+    }
+
+    return true;
+  }
+
   void uploadInstallationReport() async {
     if (!formKey.currentState!.validate()) return;
+
+    if (!_validateMaterialAndInstallation()) return;
 
     if (_customerSignatureBytes == null || _technicianSignatureBytes == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -90,14 +125,38 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
         nomorSeriTangki: nomorSeriTangkiController.text,
         nomorSeriKolektor: nomorSeriKolektorController.text,
         pemasangan: selectedLocation ?? '',
-        tangki: installationData['tangki'] ?? '',
-        collector: installationData['collector'] ?? '',
-        elementHeating: installationData['elementHeating'] ?? '',
-        thermostat: installationData['thermostat'] ?? '',
-        safetyValve: installationData['safetyValve'] ?? '',
-        kabelListrik: installationData['kabelListrik'] ?? '',
-        pipa: installationData['pipa'] ?? '',
-        dinabolt: installationData['dinabolt'] ?? '',
+        tangki:
+            (installationData['installationStatus']?['tangki'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
+        collector:
+            (installationData['installationStatus']?['kolektor'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
+        elementHeating:
+            (installationData['installationStatus']?['elementHeating'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
+        thermostat:
+            (installationData['installationStatus']?['thermostat'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
+        safetyValve:
+            (installationData['installationStatus']?['safetyValve'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
+        kabelListrik:
+            (installationData['installationStatus']?['kabelListrik'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
+        pipa:
+            (installationData['installationStatus']?['pipa'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
+        dinabolt:
+            (installationData['installationStatus']?['dinabolt'] ?? false)
+                ? 'Terpasang'
+                : 'Belum terpasang',
         alasan: installationData['alasan'] ?? '',
         tanggal: DateTime.now(),
         materialDari:
@@ -149,8 +208,9 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Berita Acara berhasil dikirim')),
             );
-            Navigator.of(context).pushNamedAndRemoveUntil(
-              DashboardPage.route(),
+            Navigator.pushAndRemoveUntil(
+              context,
+              MainPage.route(),
               (route) => false,
             );
           }
@@ -173,19 +233,52 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
                         InfoField(
                           controller: namaCustomerController,
                           label: 'Nama Customer',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Nama Customer wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
                         InfoField(
                           controller: noTelpController,
                           label: 'No. Telp / HP',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'No. Telp / HP wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
                         InfoField(
                           controller: alamatController,
                           label: 'Alamat',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Alamat wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
-                        InfoField(controller: picController, label: 'PIC'),
+                        InfoField(
+                          controller: picController,
+                          label: 'PIC',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'PIC wajib diisi';
+                            }
+                            return null;
+                          },
+                        ),
                         InfoField(
                           controller: noTelpPicController,
                           label: 'No Telp / HP PIC',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'No Telp / HP PIC wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
                       ],
                     ),
@@ -196,18 +289,42 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
                         InfoField(
                           controller: namaProdukController,
                           label: 'Nama Produk',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Nama Produk wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
                         InfoField(
                           controller: jumlahController,
                           label: 'Jumlah',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Jumlah wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
                         InfoField(
                           controller: nomorSeriTangkiController,
                           label: 'Nomor Seri Tangki',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Nomor Seri Tangki wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
                         InfoField(
                           controller: nomorSeriKolektorController,
                           label: 'Nomor Seri Kolektor',
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Nomor Seri Kolektor wajib diisi';
+                            }
+                            return null;
+                          },
                         ),
                       ],
                     ),
@@ -215,129 +332,13 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
                     SubmitReportCard(
                       title: 'Pemasangan',
                       children: [
-                        Wrap(
-                          spacing: 8.0,
-                          runSpacing: 8.0,
-                          children: [
-                            ChoiceChip(
-                              label: const Text(
-                                'Genteng',
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              selected: selectedLocation == 'Genteng',
-                              onSelected: (selected) {
-                                setState(() {
-                                  selectedLocation =
-                                      selected ? 'Genteng' : null;
-                                });
-                              },
-                              labelPadding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              selectedColor: Colors.blue.shade200,
-                              backgroundColor: Colors.grey.shade200,
-                            ),
-                            ChoiceChip(
-                              label: const Text(
-                                'Dak/Atap Datar',
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              selected: selectedLocation == 'Dak',
-                              onSelected: (selected) {
-                                setState(() {
-                                  selectedLocation = selected ? 'Dak' : null;
-                                });
-                              },
-                              labelPadding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              selectedColor: Colors.blue.shade200,
-                              backgroundColor: Colors.grey.shade200,
-                            ),
-                            ChoiceChip(
-                              label: const Text(
-                                'Plafon',
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              selected: selectedLocation == 'Plafon',
-                              onSelected: (selected) {
-                                setState(() {
-                                  selectedLocation = selected ? 'Plafon' : null;
-                                });
-                              },
-                              labelPadding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              selectedColor: Colors.blue.shade200,
-                              backgroundColor: Colors.grey.shade200,
-                            ),
-                            ChoiceChip(
-                              label: const Text(
-                                'Dinding',
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              selected: selectedLocation == 'Dinding',
-                              onSelected: (selected) {
-                                setState(() {
-                                  selectedLocation =
-                                      selected ? 'Dinding' : null;
-                                });
-                              },
-                              labelPadding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              selectedColor: Colors.blue.shade200,
-                              backgroundColor: Colors.grey.shade200,
-                            ),
-                            Container(
-                              width: 120,
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Lainnya...',
-                                  filled: true,
-                                  fillColor: AppPallete.backgroundColor,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 8,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedLocation =
-                                        value.isNotEmpty ? value : null;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
+                        InstallationSection(
+                          initialValue: selectedLocation,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedLocation = value;
+                            });
+                          },
                         ),
                         const SizedBox(height: 16),
                         Divider(

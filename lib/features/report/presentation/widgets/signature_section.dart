@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:indotech_teknisi_app/features/report/presentation/widgets/info_field.dart';
 import 'package:signature/signature.dart';
+import 'package:indotech_teknisi_app/features/report/presentation/widgets/info_field.dart';
 
 class SignatureSection extends StatefulWidget {
   final String value;
@@ -77,6 +77,12 @@ class _SignatureSectionState extends State<SignatureSection> {
         InfoField(
           controller: widget.textController,
           label: 'Nama',
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Nama ${widget.textController} wajib diisi';
+            }
+            return null;
+          },
         ),
       ],
     );
