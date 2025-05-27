@@ -8,8 +8,12 @@ import 'package:indotech_teknisi_app/core/error/exceptions.dart';
 import 'package:indotech_teknisi_app/core/error/failures.dart';
 import 'package:indotech_teknisi_app/core/network/connection_checker.dart';
 import 'package:indotech_teknisi_app/features/report/data/datasources/report_remote_data_source.dart';
+import 'package:indotech_teknisi_app/features/report/data/models/inspection_item_model.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/installation_report_model.dart';
+import 'package:indotech_teknisi_app/features/report/data/models/inspection_report_model.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_item.dart';
 import 'package:indotech_teknisi_app/features/report/domain/entities/installation_report.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/repository/report_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:uuid/uuid.dart';
@@ -167,6 +171,97 @@ class ReportRepositoryImpl implements ReportRepository {
       final uploadedReport = await reportRemoteDataSource
           .uploadInstallationReport(installationReportModel);
       return right(uploadedReport);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, InspectionReport>> uploadInspectionReport({
+    required int reportId,
+    required DateTime date,
+    required String tankSerialNumber,
+    required String collectorSerialNumber,
+    required String isUnderWarranty,
+    required String remarks,
+    String? notes,
+    required File customerSignature,
+    required File technicianSignature,
+  }) async {
+    try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure(Constants.noConnectionMessage));
+      }
+      InspectionReportModel inspectionReportModel = InspectionReportModel(
+        id: const Uuid().v1(),
+        reportId: reportId,
+        date: date,
+        tankSerialNumber: tankSerialNumber,
+        collectorSerialNumber: collectorSerialNumber,
+        isUnderWarranty: isUnderWarranty,
+        remarks: remarks,
+        notes: notes,
+        technicianSignatureUrl: '',
+        customerSignatureUrl: '',
+      );
+
+      final customerSignatureUrl = await reportRemoteDataSource
+          .uploadInspectionReportImages(
+            image: customerSignature,
+            inspectionReport: inspectionReportModel,
+            type: 'customer',
+          );
+
+      inspectionReportModel = inspectionReportModel.copyWith(
+        customerSignatureUrl: customerSignatureUrl,
+      );
+
+      final technicianSignatureUrl = await reportRemoteDataSource
+          .uploadInspectionReportImages(
+            image: technicianSignature,
+            inspectionReport: inspectionReportModel,
+            type: 'technician',
+          );
+
+      inspectionReportModel = inspectionReportModel.copyWith(
+        technicianSignatureUrl: technicianSignatureUrl,
+      );
+
+      final uploadedReport = await reportRemoteDataSource
+          .uploadInspectionReport(inspectionReportModel);
+
+      return right(uploadedReport);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, InspectionItem>> uploadInspectionItem({
+    required String reportId,
+    String? itemName,
+    String? condition,
+    String? quantity,
+    String? notes,
+  }) async {
+    try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure(Constants.noConnectionMessage));
+      }
+      InspectionItemModel inspectionItemModel = InspectionItemModel(
+        id: const Uuid().v1(),
+        reportId: reportId,
+        itemName: itemName,
+        condition: condition,
+        quantity: quantity,
+        notes: notes,
+      );
+
+      final uploadedItem = await reportRemoteDataSource.uploadInspectionItem(
+        inspectionItemModel,
+      );
+
+      return right(uploadedItem);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
     }

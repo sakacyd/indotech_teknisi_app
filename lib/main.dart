@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:indotech_teknisi_app/init_dependencies.dart';
+import 'package:indotech_teknisi_app/main_page.dart';
 import 'package:indotech_teknisi_app/core/common/cubits/cubit/app_user_cubit.dart';
 import 'package:indotech_teknisi_app/core/common/cubits/cubit/bottom_nav_cubit.dart';
 import 'package:indotech_teknisi_app/core/theme/theme.dart';
@@ -5,16 +11,9 @@ import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/histo
 import 'package:indotech_teknisi_app/features/assignment/presentation/bloc/today/today_bloc.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:indotech_teknisi_app/features/auth/presentation/pages/login_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:indotech_teknisi_app/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/submit_report_bloc.dart';
-import 'package:indotech_teknisi_app/init_dependencies.dart';
-import 'package:indotech_teknisi_app/main_page.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +33,6 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<ReportBloc>()),
         BlocProvider(create: (_) => serviceLocator<SubmitReportBloc>()),
         BlocProvider(create: (_) => BottomNavCubit()),
-
       ],
       child: const MyApp(),
     ),

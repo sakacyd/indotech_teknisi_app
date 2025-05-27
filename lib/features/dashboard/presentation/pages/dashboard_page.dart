@@ -60,23 +60,28 @@ class _DashboardPageState extends State<DashboardPage> {
             final assignment = state.assignments;
             final technician = state.user;
 
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TechnicianCard(user: technician),
-                  const SizedBox(height: 16),
-                  if (assignment != null)
-                    AssignmentCard(assignment: assignment)
-                  else
-                    const Center(
-                      child: Text(
-                        'Tidak ada pekerjaan terdekat',
-                        style: TextStyle(fontSize: 16),
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<DashboardBloc>().add(FetchDashboardData());
+              },
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TechnicianCard(user: technician),
+                    const SizedBox(height: 16),
+                    if (assignment != null)
+                      AssignmentCard(assignment: assignment)
+                    else
+                      const Center(
+                        child: Text(
+                          'Tidak ada pekerjaan terdekat',
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             );
           }

@@ -1,0 +1,41 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:indotech_teknisi_app/core/error/failures.dart';
+import 'package:indotech_teknisi_app/core/usecase/usecase.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_item.dart';
+import 'package:indotech_teknisi_app/features/report/domain/repository/report_repository.dart';
+
+class UploadInspectionItem
+    implements UseCase<InspectionItem, UploadInspectionItemParams> {
+  final ReportRepository reportRepository;
+
+  UploadInspectionItem(this.reportRepository);
+
+  @override
+  Future<Either<Failure, InspectionItem>> call(
+    UploadInspectionItemParams params,
+  ) async {
+    return await reportRepository.uploadInspectionItem(
+      reportId: params.reportId,
+      itemName: params.itemName,
+      condition: params.condition,
+      quantity: params.quantity,
+      notes: params.notes,
+    );
+  }
+}
+
+class UploadInspectionItemParams {
+  final String reportId;
+  final String? itemName;
+  final String? condition;
+  final String? quantity;
+  final String? notes;
+
+  UploadInspectionItemParams({
+    required this.reportId,
+    this.itemName,
+    this.condition,
+    this.quantity,
+    this.notes,
+  });
+}

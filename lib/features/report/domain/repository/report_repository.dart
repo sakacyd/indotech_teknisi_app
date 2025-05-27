@@ -4,6 +4,8 @@ import 'package:indotech_teknisi_app/core/error/failures.dart';
 import 'package:indotech_teknisi_app/core/common/entities/assignment.dart';
 import 'package:indotech_teknisi_app/core/common/entities/report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/entities/installation_report.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_report.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_item.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class ReportRepository {
@@ -43,5 +45,25 @@ abstract interface class ReportRepository {
     required String? note,
     required File customerSignature,
     required File technicianSignature,
+  });
+
+  Future<Either<Failure, InspectionReport>> uploadInspectionReport({
+    required int reportId,
+    required DateTime date,
+    required String tankSerialNumber,
+    required String collectorSerialNumber,
+    required String isUnderWarranty,
+    required String remarks,
+    String? notes,
+    required File customerSignature,
+    required File technicianSignature,
+  });
+
+  Future<Either<Failure, InspectionItem>> uploadInspectionItem({
+    required String reportId,
+    String? itemName,
+    String? condition,
+    String? quantity,
+    String? notes,
   });
 }
