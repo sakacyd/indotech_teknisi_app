@@ -9,6 +9,8 @@ final class SubmitReportLoading extends SubmitReportState {}
 
 final class SubmitReportSuccess extends SubmitReportState {}
 
+final class SubmitInspectionReportSuccess extends SubmitReportState {}
+
 final class SubmitReportFailure extends SubmitReportState {
   final String message;
 

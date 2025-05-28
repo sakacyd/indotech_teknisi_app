@@ -60,10 +60,10 @@ abstract interface class ReportRepository {
   });
 
   Future<Either<Failure, InspectionItem>> uploadInspectionItem({
-    required String reportId,
+    required String inspectionReportId,
     String? itemName,
     String? condition,
-    String? quantity,
+    int? quantity,
     String? notes,
   });
 }

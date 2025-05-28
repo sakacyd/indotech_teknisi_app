@@ -15,7 +15,7 @@ class UploadInspectionItem
     UploadInspectionItemParams params,
   ) async {
     return await reportRepository.uploadInspectionItem(
-      reportId: params.reportId,
+      inspectionReportId: params.inspectionReportId,
       itemName: params.itemName,
       condition: params.condition,
       quantity: params.quantity,
@@ -25,14 +25,14 @@ class UploadInspectionItem
 }
 
 class UploadInspectionItemParams {
-  final String reportId;
+  final String inspectionReportId;
   final String? itemName;
   final String? condition;
-  final String? quantity;
+  final int? quantity;
   final String? notes;
 
   UploadInspectionItemParams({
-    required this.reportId,
+    required this.inspectionReportId,
     this.itemName,
     this.condition,
     this.quantity,

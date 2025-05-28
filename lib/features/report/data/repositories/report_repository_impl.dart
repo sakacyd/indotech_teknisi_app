@@ -238,10 +238,10 @@ class ReportRepositoryImpl implements ReportRepository {
 
   @override
   Future<Either<Failure, InspectionItem>> uploadInspectionItem({
-    required String reportId,
+    required String inspectionReportId,
     String? itemName,
     String? condition,
-    String? quantity,
+    int? quantity,
     String? notes,
   }) async {
     try {
@@ -250,7 +250,7 @@ class ReportRepositoryImpl implements ReportRepository {
       }
       InspectionItemModel inspectionItemModel = InspectionItemModel(
         id: const Uuid().v1(),
-        reportId: reportId,
+        inspectionReportId: inspectionReportId,
         itemName: itemName,
         condition: condition,
         quantity: quantity,

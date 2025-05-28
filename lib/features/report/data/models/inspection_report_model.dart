@@ -33,7 +33,7 @@ class InspectionReportModel extends InspectionReport {
     return {
       'id': id,
       'report_id': reportId,
-      'tanggal': date.toIso8601String(),
+      'date': date.toIso8601String(),
       'tank_serial_number': tankSerialNumber,
       'collector_serial_number': collectorSerialNumber,
       'is_under_warranty': isUnderWarranty,

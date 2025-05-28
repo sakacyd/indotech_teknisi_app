@@ -1,114 +1,168 @@
 import 'package:flutter/material.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_item.dart';
 
 class InspectionChecklistWidget extends StatefulWidget {
-  final Function(Map<String, String>) onChanged;
+  final Function(List<InspectionItem>) onChanged;
 
-  const InspectionChecklistWidget({
-    super.key,
-    required this.onChanged,
-  });
+  const InspectionChecklistWidget({super.key, required this.onChanged});
 
   @override
-  State<InspectionChecklistWidget> createState() => _InspectionChecklistWidgetState();
+  State<InspectionChecklistWidget> createState() =>
+      _InspectionChecklistWidgetState();
 }
 
 class _InspectionChecklistWidgetState extends State<InspectionChecklistWidget> {
-  final Map<String, String> checklistStatus = {
-    'Tangki': '',
-    'Kolektor': '',
-    'Safety Valve': '',
-    'Element Heating': '',
-    'Anode': '',
-    'Thermostat': '',
-    'Listrik/Power': '',
-    'Instalasi Pipa': '',
-    'Bracket/Strap': '',
-  };
+  List<InspectionItem> items = [
+    InspectionItem(id: '1', inspectionReportId: '', itemName: 'Tangki'),
+    InspectionItem(id: '2', inspectionReportId: '', itemName: 'Kolektor'),
+    InspectionItem(id: '3', inspectionReportId: '', itemName: 'Safety Valve'),
+    InspectionItem(
+      id: '4',
+      inspectionReportId: '',
+      itemName: 'Element Heating',
+    ),
+    InspectionItem(id: '5', inspectionReportId: '', itemName: 'Anode'),
+    InspectionItem(id: '6', inspectionReportId: '', itemName: 'Thermostat'),
+    InspectionItem(id: '7', inspectionReportId: '', itemName: 'Listrik/Power'),
+    InspectionItem(id: '8', inspectionReportId: '', itemName: 'Instalasi Pipa'),
+    InspectionItem(id: '9', inspectionReportId: '', itemName: 'Bracket/Strap'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildHeaderRow(),
-        const Divider(),
-        ...checklistStatus.entries.map((entry) => _buildChecklistRow(entry.key)),
+        const Divider(height: 16, thickness: 1),
+        ...items.asMap().entries.map((entry) => _buildChecklistRow(entry.key)),
       ],
     );
   }
 
-  Widget _buildHeaderRow() {
-    return Row(
+  Widget _buildChecklistRow(int index) {
+    final item = items[index];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(width: 8),
-        Expanded(
-          flex: 2,
-          child: Text(
-            'Nama Sparepart/Service',
-            style: Theme.of(context).textTheme.titleSmall,
+        // Baris pertama: itemName di tengah
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          child: Center(
+            child: Text(
+              item.itemName ?? '',
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
-        Expanded(
-          flex: 2,
-          child: Text(
-            'Kondisi/Keterangan',
-            style: Theme.of(context).textTheme.titleSmall,
+
+        // Baris kedua: Quantity
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+          child: Row(
+            children: [
+              const Expanded(flex: 2, child: Text('Quantity')),
+              Expanded(
+                flex: 3,
+                child: TextFormField(
+                  initialValue: item.quantity?.toString(),
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    hintText: 'Qty',
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 8,
+                    ),
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      items[index] = item.copyWith(
+                        quantity: int.tryParse(val) ?? 1,
+                      );
+                      widget.onChanged(items);
+                    });
+                  },
+                ),
+              ),
+            ],
           ),
         ),
-        const Expanded(
-          child: Text(''),
+
+        // Baris ketiga: Kondisi/Keterangan
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+          child: Row(
+            children: [
+              const Expanded(flex: 2, child: Text('Kondisi/Keterangan')),
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    Radio<String>(
+                      value: 'OK',
+                      groupValue: item.condition,
+                      onChanged: (value) {
+                        setState(() {
+                          items[index] = item.copyWith(condition: value);
+                          widget.onChanged(items);
+                        });
+                      },
+                    ),
+                    const Text('OK'),
+                    const SizedBox(width: 16),
+                    Radio<String>(
+                      value: 'Rusak',
+                      groupValue: item.condition,
+                      onChanged: (value) {
+                        setState(() {
+                          items[index] = item.copyWith(condition: value);
+                          widget.onChanged(items);
+                        });
+                      },
+                    ),
+                    const Text('Rusak'),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
+
+        // Baris keempat: Catatan
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+          child: Row(
+            children: [
+              const Expanded(flex: 2, child: Text('Catatan')),
+              Expanded(
+                flex: 3,
+                child: TextFormField(
+                  initialValue: item.notes ?? '',
+                  decoration: const InputDecoration(
+                    hintText: 'Catatan',
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 8,
+                    ),
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      items[index] = item.copyWith(notes: val);
+                      widget.onChanged(items);
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 8),
+        const Divider(height: 16, thickness: 1),
       ],
     );
-  }
-
-  Widget _buildChecklistRow(String item) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 2,
-            child: Text(item),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              children: [
-                Radio<String>(
-                  value: 'OK',
-                  groupValue: checklistStatus[item],
-                  onChanged: (value) => _updateStatus(item, value!),
-                ),
-                const Text('OK'),
-                const SizedBox(width: 16),
-                Radio<String>(
-                  value: 'Rusak',
-                  groupValue: checklistStatus[item],
-                  onChanged: (value) => _updateStatus(item, value!),
-                ),
-                const Text('Rusak'),
-              ],
-            ),
-          ),
-          Expanded(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Catatan',
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _updateStatus(String item, String value) {
-    setState(() {
-      checklistStatus[item] = value;
-      widget.onChanged(checklistStatus);
-    });
   }
 }

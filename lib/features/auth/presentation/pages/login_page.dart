@@ -51,44 +51,56 @@ class _LoginPageState extends State<LoginPage> {
             if (state is AuthLoading || state is AuthSuccess) {
               return const Loader();
             }
-            return Form(
-              key: formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                        'assets/logo.png',
-                        height: 200,
-                      ),
-                  const SizedBox(height: 30),
-                  const Text(
-                    'Sign In',
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 50),
-                  AuthField(hintText: 'Email', controller: emailController),
-                  const SizedBox(height: 20),
-                  AuthField(
-                    hintText: 'Password',
-                    controller: passwordController,
-                    isObscureText: true,
-                  ),
-                  const SizedBox(height: 25),
-                  AuthGradientButton(
-                    buttonText: 'Sign In',
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                          AuthSignIn(
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
+            return SafeArea(
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height:
+                      MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top,
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/logo.png', height: 200),
+                        const SizedBox(height: 30),
+                        const Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      }
-                    },
+                        ),
+                        const SizedBox(height: 50),
+                        AuthField(
+                          hintText: 'Email',
+                          controller: emailController,
+                        ),
+                        const SizedBox(height: 20),
+                        AuthField(
+                          hintText: 'Password',
+                          controller: passwordController,
+                          isObscureText: true,
+                        ),
+                        const SizedBox(height: 25),
+                        AuthGradientButton(
+                          buttonText: 'Sign In',
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              context.read<AuthBloc>().add(
+                                AuthSignIn(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 25),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 25),
-                ],
+                ),
               ),
             );
           },

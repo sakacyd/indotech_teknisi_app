@@ -3,7 +3,7 @@ import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_
 class InspectionItemModel extends InspectionItem {
   InspectionItemModel({
     required super.id,
-    required super.reportId,
+    required super.inspectionReportId,
     super.itemName,
     super.condition,
     super.quantity,
@@ -13,10 +13,10 @@ class InspectionItemModel extends InspectionItem {
   factory InspectionItemModel.fromJson(Map<String, dynamic> json) {
     return InspectionItemModel(
       id: json['id'] as String,
-      reportId: json['report_id'] as String,
+      inspectionReportId: json['inspection_report_id'] as String,
       itemName: json['item_name'] as String?,
       condition: json['condition'] as String?,
-      quantity: json['quantity']?.toString(),
+      quantity: json['quantity'] as int?,
       notes: json['notes'] as String?,
     );
   }
@@ -24,7 +24,7 @@ class InspectionItemModel extends InspectionItem {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'report_id': reportId,
+      'inspection_report_id': inspectionReportId,
       'item_name': itemName,
       'condition': condition,
       'quantity': quantity,
@@ -34,15 +34,15 @@ class InspectionItemModel extends InspectionItem {
 
   InspectionItemModel copyWith({
     String? id,
-    String? reportId,
+    String? inspectionReportId,
     String? itemName,
     String? condition,
-    String? quantity,
+    int? quantity,
     String? notes,
   }) {
     return InspectionItemModel(
       id: id ?? this.id,
-      reportId: reportId ?? this.reportId,
+      inspectionReportId: inspectionReportId ?? this.inspectionReportId,
       itemName: itemName ?? this.itemName,
       condition: condition ?? this.condition,
       quantity: quantity ?? this.quantity,

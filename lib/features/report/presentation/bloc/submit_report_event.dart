@@ -57,6 +57,7 @@ final class InspectionReportSubmit extends SubmitReportEvent {
   final String? notes;
   final File technicianSignature;
   final File customerSignature;
+  final List<InspectionItem> inspectionItems;
 
   InspectionReportSubmit({
     required this.reportId,
@@ -68,5 +69,22 @@ final class InspectionReportSubmit extends SubmitReportEvent {
     this.notes,
     required this.technicianSignature,
     required this.customerSignature,
+    required this.inspectionItems,
+  });
+}
+
+final class InspectionItemSubmit extends SubmitReportEvent {
+  final String inspectionReportId;
+  final String? itemName;
+  final String? condition;
+  final int? quantity;
+  final String? notes;
+
+  InspectionItemSubmit({
+    required this.inspectionReportId,
+    this.itemName,
+    this.condition,
+    this.quantity,
+    this.notes,
   });
 }

@@ -52,7 +52,7 @@ class _SignatureSectionState extends State<SignatureSection> {
               icon: const Icon(Icons.clear),
               label: const Text("Hapus"),
             ),
-            const SizedBox(width: 8),
+            const Spacer(),
             ElevatedButton.icon(
               onPressed: () async {
                 if (widget.controller.isNotEmpty) {

@@ -128,6 +128,7 @@ void _initReport() {
     ..registerFactory(() => GetReportByAssignmentId(serviceLocator()))
     ..registerFactory(() => SubmitInstallationReport(serviceLocator()))
     ..registerFactory(() => UploadInspectionReport(serviceLocator()))
+    ..registerFactory(() => UploadInspectionItem(serviceLocator()))
     // bloc
     ..registerLazySingleton(
       () => ReportBloc(
@@ -143,6 +144,7 @@ void _initReport() {
       () => SubmitReportBloc(
         submitInstallationReportForm: serviceLocator(),
         uploadInspectionReport: serviceLocator(),
+        uploadInspectionItem: serviceLocator(),
       ),
     );
 }
