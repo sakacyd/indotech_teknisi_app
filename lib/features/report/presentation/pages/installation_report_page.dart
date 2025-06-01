@@ -353,6 +353,9 @@ class _InstallationReportPageState extends State<InstallationReportPage> {
                               selectedLocation = value;
                             });
                           },
+                          options: ['Genteng', 'Dak / Atap Datar / Lahan Datar', 'Plafon', 'Dinding'],
+                          label: 'Isi lokasi lain',
+                          otherOptionLabel: 'Lainnya',
                         ),
                         const SizedBox(height: 16),
                         Divider(

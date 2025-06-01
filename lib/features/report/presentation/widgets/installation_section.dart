@@ -4,11 +4,17 @@ import 'info_field.dart'; // pastikan import ini sudah sesuai path kamu
 class InstallationSection extends StatefulWidget {
   final String? initialValue;
   final ValueChanged<String> onChanged;
+  final List<String> options;
+  final String label;
+  final String otherOptionLabel;
 
   const InstallationSection({
     super.key,
     this.initialValue,
     required this.onChanged,
+    required this.options,
+    required this.label,
+    required this.otherOptionLabel,
   });
 
   @override
@@ -16,31 +22,27 @@ class InstallationSection extends StatefulWidget {
 }
 
 class _InstallationSectionState extends State<InstallationSection> {
-  final List<String> _options = [
-    'Genteng',
-    'Dak / Atap Datar',
-    'Plafon',
-    'Dinding',
-  ];
-
+  late List<String> _options;
   String? _selectedOption;
   final TextEditingController _otherController = TextEditingController();
+  final String _internalOtherKey = '__OTHER__';
 
   @override
   void initState() {
     super.initState();
+    _options = widget.options;
 
     if (widget.initialValue != null) {
       if (_options.contains(widget.initialValue)) {
         _selectedOption = widget.initialValue;
       } else {
-        _selectedOption = 'Lainnya';
+        _selectedOption = _internalOtherKey;
         _otherController.text = widget.initialValue!;
       }
     }
 
     _otherController.addListener(() {
-      if (_selectedOption == 'Lainnya') {
+      if (_selectedOption == _internalOtherKey) {
         widget.onChanged(_otherController.text);
       }
     });
@@ -53,7 +55,7 @@ class _InstallationSectionState extends State<InstallationSection> {
   }
 
   void _notifyChange() {
-    if (_selectedOption == 'Lainnya') {
+    if (_selectedOption == _internalOtherKey) {
       widget.onChanged(_otherController.text);
     } else {
       widget.onChanged(_selectedOption ?? '');
@@ -61,7 +63,8 @@ class _InstallationSectionState extends State<InstallationSection> {
   }
 
   String? _validateOtherField(String? value) {
-    if (_selectedOption == 'Lainnya' && (value == null || value.isEmpty)) {
+    if (_selectedOption == _internalOtherKey &&
+        (value == null || value.isEmpty)) {
       return 'Mohon isi lokasi lain';
     }
     return null;
@@ -100,12 +103,12 @@ class _InstallationSectionState extends State<InstallationSection> {
               ),
             ),
             ChoiceChip(
-              label: const Text('Lainnya'),
-              selected: _selectedOption == 'Lainnya',
+              label: Text(widget.otherOptionLabel),
+              selected: _selectedOption == _internalOtherKey,
               onSelected: (selected) {
                 setState(() {
                   if (selected) {
-                    _selectedOption = 'Lainnya';
+                    _selectedOption = _internalOtherKey;
                   } else {
                     _selectedOption = null;
                     _otherController.clear();
@@ -122,13 +125,12 @@ class _InstallationSectionState extends State<InstallationSection> {
             ),
           ],
         ),
-
-        if (_selectedOption == 'Lainnya') ...[
+        if (_selectedOption == _internalOtherKey) ...[
           const SizedBox(height: 8),
           SizedBox(
             child: InfoField(
               controller: _otherController,
-              label: 'Isi lokasi lain',
+              label: widget.label,
               validator: _validateOtherField,
             ),
           ),
