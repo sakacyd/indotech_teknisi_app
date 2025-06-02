@@ -7,6 +7,7 @@ import 'package:indotech_teknisi_app/features/report/domain/entities/installatio
 import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_item.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/survey_report.dart';
 
 abstract interface class ReportRepository {
   Future<Either<Failure, Report>> updateTechnicianArrivedAt({
@@ -65,5 +66,40 @@ abstract interface class ReportRepository {
     String? condition,
     int? quantity,
     String? notes,
+  });
+
+  Future<Either<Failure, SurveyReport>> uploadSurveyReport({
+    required int reportId,
+    required String installationLocation,
+    required String roofFrameType,
+    required String needsReinforcement,
+    required String installationDirection,
+    required String obstructedByShade,
+    required String coldWaterLine,
+    required String hotWaterLine,
+    required String waterLineProvider,
+    required String estimatedWaterLineInstallation,
+    required String electricalCableLine,
+    required String cableLineProvider,
+    required String estimatedCableLineInstallation,
+    required String voltage,
+    required String amperage,
+    required String hertz,
+    required String watt,
+    required String coldWaterSource,
+    required String waterFromReservoir,
+    required String boosterPump,
+    required String pressureBar,
+    String? poolVolume,
+    String? poolLength,
+    String? poolWidth,
+    String? poolHeight,
+    String? initialTemperature,
+    String? targetTemperature,
+    required DateTime visitDate,
+    String? note,
+    required File imageFile,
+    required File surveyorSignature,
+    required File customerSignature,
   });
 }

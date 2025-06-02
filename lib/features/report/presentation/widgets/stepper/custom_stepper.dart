@@ -7,18 +7,6 @@ class CustomStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progress;
-    if (currentStep == 0) {
-      progress = 0.0;
-    } else if (currentStep == 1) {
-      progress = 0.33;
-    } else if (currentStep == 2) {
-      progress = 0.66;
-    } else if (currentStep == 3) {
-      progress = 1.0;
-    } else {
-      progress = 0.0;
-    }
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Column(
@@ -40,8 +28,10 @@ class CustomStepper extends StatelessWidget {
                     lineThickness: 6,
                     lineSpace: 5,
                     lineType: LineType.normal,
-                    defaultLineColor: Colors.purple.shade300,
-                    progress: progress,
+                    defaultLineColor: Colors.blue,
+                    progressColor: Colors.blue.shade800,
+                    finishedLineColor: Colors.blue.shade800,
+                    progress: 0.0,
                   ),
                   borderThickness: 5,
                   internalPadding: 20,

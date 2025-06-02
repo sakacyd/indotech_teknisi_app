@@ -11,9 +11,11 @@ import 'package:indotech_teknisi_app/features/report/data/datasources/report_rem
 import 'package:indotech_teknisi_app/features/report/data/models/inspection_item_model.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/installation_report_model.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/inspection_report_model.dart';
+import 'package:indotech_teknisi_app/features/report/data/models/survey_report_model.dart';
 import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_item.dart';
 import 'package:indotech_teknisi_app/features/report/domain/entities/installation_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_report.dart';
+import 'package:indotech_teknisi_app/features/report/domain/entities/survey_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/repository/report_repository.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:uuid/uuid.dart';
@@ -262,6 +264,121 @@ class ReportRepositoryImpl implements ReportRepository {
       );
 
       return right(uploadedItem);
+    } on ServerException catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SurveyReport>> uploadSurveyReport({
+    required int reportId,
+    required String installationLocation,
+    required String roofFrameType,
+    required String needsReinforcement,
+    required String installationDirection,
+    required String obstructedByShade,
+    required String coldWaterLine,
+    required String hotWaterLine,
+    required String waterLineProvider,
+    required String estimatedWaterLineInstallation,
+    required String electricalCableLine,
+    required String cableLineProvider,
+    required String estimatedCableLineInstallation,
+    required String voltage,
+    required String amperage,
+    required String hertz,
+    required String watt,
+    required String coldWaterSource,
+    required String waterFromReservoir,
+    required String boosterPump,
+    required String pressureBar,
+    String? poolVolume,
+    String? poolLength,
+    String? poolWidth,
+    String? poolHeight,
+    String? initialTemperature,
+    String? targetTemperature,
+    required DateTime visitDate,
+    String? note,
+    required File imageFile,
+    required File surveyorSignature,
+    required File customerSignature,
+  }) async {
+    try {
+      if (!await connectionChecker.isConnected) {
+        return left(Failure(Constants.noConnectionMessage));
+      }
+      SurveyReportModel surveyReportModel = SurveyReportModel(
+        id: const Uuid().v1(),
+        reportId: reportId,
+        installationLocation: installationLocation,
+        roofFrameType: roofFrameType,
+        needsReinforcement: needsReinforcement,
+        installationDirection: installationDirection,
+        obstructedByShade: obstructedByShade,
+        coldWaterLine: coldWaterLine,
+        hotWaterLine: hotWaterLine,
+        waterLineProvider: waterLineProvider,
+        estimatedWaterLineInstallation: estimatedWaterLineInstallation,
+        electricalCableLine: electricalCableLine,
+        cableLineProvider: cableLineProvider,
+        estimatedCableLineInstallation: estimatedCableLineInstallation,
+        voltage: voltage,
+        amperage: amperage,
+        hertz: hertz,
+        watt: watt,
+        coldWaterSource: coldWaterSource,
+        waterFromReservoir: waterFromReservoir,
+        boosterPump: boosterPump,
+        pressureBar: pressureBar,
+        poolVolume: poolVolume,
+        poolLength: poolLength,
+        poolWidth: poolWidth,
+        poolHeight: poolHeight,
+        initialTemperature: initialTemperature,
+        targetTemperature: targetTemperature,
+        visitDate: visitDate,
+        note: note,
+        imageUrl: '',
+        surveyorSignatureUrl: '',
+        customerSignatureUrl: '',
+      );
+
+      final imageUrl = await reportRemoteDataSource.uploadSurveyReportImages(
+        image: imageFile,
+        surveyReport: surveyReportModel,
+        type: 'image',
+      );
+
+      surveyReportModel = surveyReportModel.copyWith(imageUrl: imageUrl);
+
+      final customerSignatureUrl = await reportRemoteDataSource
+          .uploadSurveyReportImages(
+            image: customerSignature,
+            surveyReport: surveyReportModel,
+            type: 'customer',
+          );
+
+      surveyReportModel = surveyReportModel.copyWith(
+        customerSignatureUrl: customerSignatureUrl,
+      );
+
+      final surveyorSignatureUrl = await reportRemoteDataSource
+          .uploadSurveyReportImages(
+            image: surveyorSignature,
+            surveyReport: surveyReportModel,
+            type: 'technician',
+          );
+
+      surveyReportModel = surveyReportModel.copyWith(
+        surveyorSignatureUrl: surveyorSignatureUrl,
+      );
+
+      final uploadedReport = await reportRemoteDataSource.uploadSurveyReport(
+        surveyReportModel,
+      );
+
+      return right(uploadedReport);
     } on ServerException catch (e) {
       return left(Failure(e.toString()));
     }

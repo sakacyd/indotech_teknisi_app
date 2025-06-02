@@ -35,6 +35,7 @@ import 'package:indotech_teknisi_app/features/report/domain/usecases/get_report_
 import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_installation_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_inspection_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_inspection_item.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_survey_report.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/report_bloc.dart';
 import 'package:indotech_teknisi_app/features/report/presentation/bloc/submit_report_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

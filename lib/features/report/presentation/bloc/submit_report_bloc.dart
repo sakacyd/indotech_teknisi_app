@@ -8,6 +8,7 @@ import 'package:indotech_teknisi_app/features/report/domain/entities/inspection_
 import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_installation_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_inspection_report.dart';
 import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_inspection_item.dart';
+import 'package:indotech_teknisi_app/features/report/domain/usecases/upload_survey_report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,17 +19,21 @@ class SubmitReportBloc extends Bloc<SubmitReportEvent, SubmitReportState> {
   final SubmitInstallationReport _submitInstallationReport;
   final UploadInspectionReport _uploadInspectionReport;
   final UploadInspectionItem _uploadInspectionItem;
+  final UploadSurveyReport _uploadSurveyReport;
   SubmitReportBloc({
     required SubmitInstallationReport submitInstallationReportForm,
     required UploadInspectionReport uploadInspectionReport,
     required UploadInspectionItem uploadInspectionItem,
+    required UploadSurveyReport uploadSurveyReport,
   }) : _submitInstallationReport = submitInstallationReportForm,
        _uploadInspectionReport = uploadInspectionReport,
        _uploadInspectionItem = uploadInspectionItem,
+       _uploadSurveyReport = uploadSurveyReport,
        super(SubmitReportInitial()) {
     on<SubmitReportEvent>((event, emit) => emit(SubmitReportLoading()));
     on<InstallationReportSubmit>(_onInstallationReportSubmit);
     on<InspectionReportSubmit>(_onInspectionReportSubmit);
+    on<SurveyReportSubmit>(_onSurveyReportSubmit);
   }
 
   FutureOr<void> _onInstallationReportSubmit(
@@ -117,5 +122,52 @@ class SubmitReportBloc extends Bloc<SubmitReportEvent, SubmitReportState> {
     if (!emit.isDone) {
       emit(SubmitReportSuccess());
     }
+  }
+
+  FutureOr<void> _onSurveyReportSubmit(
+    SurveyReportSubmit event,
+    Emitter<SubmitReportState> emit,
+  ) async {
+    final res = await _uploadSurveyReport(
+      UploadSurveyReportParams(
+        reportId: event.reportId,
+        installationLocation: event.installationLocation,
+        roofFrameType: event.roofFrameType,
+        needsReinforcement: event.needsReinforcement,
+        installationDirection: event.installationDirection,
+        obstructedByShade: event.obstructedByShade,
+        coldWaterLine: event.coldWaterLine,
+        hotWaterLine: event.hotWaterLine,
+        waterLineProvider: event.waterLineProvider,
+        estimatedWaterLineInstallation: event.estimatedWaterLineInstallation,
+        electricalCableLine: event.electricalCableLine,
+        cableLineProvider: event.cableLineProvider,
+        estimatedCableLineInstallation: event.estimatedCableLineInstallation,
+        voltage: event.voltage,
+        amperage: event.amperage,
+        hertz: event.hertz,
+        watt: event.watt,
+        coldWaterSource: event.coldWaterSource,
+        waterFromReservoir: event.waterFromReservoir,
+        boosterPump: event.boosterPump,
+        pressureBar: event.pressureBar,
+        poolVolume: event.poolVolume,
+        poolLength: event.poolLength,
+        poolWidth: event.poolWidth,
+        poolHeight: event.poolHeight,
+        initialTemperature: event.initialTemperature,
+        targetTemperature: event.targetTemperature,
+        visitDate: event.visitDate,
+        note: event.note,
+        imageFile: event.imageFile,
+        surveyorSignature: event.surveyorSignature,
+        customerSignature: event.customerSignature,
+      ),
+    );
+
+    res.fold(
+      (l) => emit(SubmitReportFailure(l.message)),
+      (r) => emit(SubmitReportSuccess()),
+    );
   }
 }

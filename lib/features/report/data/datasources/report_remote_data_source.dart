@@ -6,6 +6,7 @@ import 'package:indotech_teknisi_app/features/report/data/models/report_model.da
 import 'package:indotech_teknisi_app/features/report/data/models/installation_report_model.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/inspection_report_model.dart';
 import 'package:indotech_teknisi_app/features/report/data/models/inspection_item_model.dart';
+import 'package:indotech_teknisi_app/features/report/data/models/survey_report_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class ReportRemoteDataSource {
@@ -23,6 +24,7 @@ abstract interface class ReportRemoteDataSource {
   Future<InspectionItemModel> uploadInspectionItem(
     InspectionItemModel inspectionItem,
   );
+  Future<SurveyReportModel> uploadSurveyReport(SurveyReportModel surveyReport);
   Future<String> uploadInstallationReportImages({
     required File image,
     required InstallationReportModel installationReport,
@@ -31,6 +33,11 @@ abstract interface class ReportRemoteDataSource {
   Future<String> uploadInspectionReportImages({
     required File image,
     required InspectionReportModel inspectionReport,
+    required String type,
+  });
+  Future<String> uploadSurveyReportImages({
+    required File image,
+    required SurveyReportModel surveyReport,
     required String type,
   });
 }
@@ -232,6 +239,45 @@ class ReportRemoteDataSourceImpl implements ReportRemoteDataSource {
           .upload(fileName, image);
       return supabaseClient.storage
           .from('inspection_report_images')
+          .getPublicUrl(fileName);
+    } on StorageException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<SurveyReportModel> uploadSurveyReport(
+    SurveyReportModel surveyReport,
+  ) async {
+    try {
+      final surveyReportData =
+          await supabaseClient
+              .from('survey_reports')
+              .insert(surveyReport.toJson())
+              .select();
+      return SurveyReportModel.fromJson(surveyReportData.first);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<String> uploadSurveyReportImages({
+    required File image,
+    required SurveyReportModel surveyReport,
+    required String type,
+  }) async {
+    try {
+      final fileName = '${surveyReport.id}_$type';
+      await supabaseClient.storage
+          .from('survey_report_images')
+          .upload(fileName, image);
+      return supabaseClient.storage
+          .from('survey_report_images')
           .getPublicUrl(fileName);
     } on StorageException catch (e) {
       throw ServerException(e.message);
